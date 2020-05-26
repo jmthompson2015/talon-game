@@ -53,20 +53,24 @@ QUnit.test("shipArcReinforcements()", (assert) => {
   assert.equal(result, reinforcements);
 });
 
-QUnit.test("shipArcShields()", (assert) => {
+QUnit.test("shipArcShieldCount()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
   const arcKey = Arc.FORWARD;
-  const shields = 4;
-  const action = ActionCreator.setShipArcShields(shipId, arcKey, shields);
+  const shieldCount = 4;
+  const action = ActionCreator.setShipArcShieldCount(
+    shipId,
+    arcKey,
+    shieldCount
+  );
   const state = Reducer.root(state0, action);
 
   // Run.
-  const result = Selector.shipArcShields(shipId, arcKey, state);
+  const result = Selector.shipArcShieldCount(shipId, arcKey, state);
 
   // Verify.
-  assert.equal(result, shields);
+  assert.equal(result, shieldCount);
 });
 
 QUnit.test("shipBatteries()", (assert) => {

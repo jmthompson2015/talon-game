@@ -187,20 +187,24 @@ QUnit.test("setShipArcReinforcements()", (assert) => {
   );
 });
 
-QUnit.test("setShipArcShields()", (assert) => {
+QUnit.test("setShipArcShieldCount()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
   const arcKey = Arc.FORWARD;
-  const shields = 3;
-  const action = ActionCreator.setShipArcShields(shipId, arcKey, shields);
+  const shieldCount = 3;
+  const action = ActionCreator.setShipArcShieldCount(
+    shipId,
+    arcKey,
+    shieldCount
+  );
 
   // Run.
   const result = Reducer.root(state, action);
 
   // Verify.
   assert.ok(result);
-  assert.equal(result.shipArcToShields[`${shipId}${arcKey}`], shields);
+  assert.equal(result.shipArcToShieldCount[`${shipId}${arcKey}`], shieldCount);
 });
 
 QUnit.test("setShipBatteries()", (assert) => {

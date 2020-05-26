@@ -65,11 +65,11 @@ ActionCreator.setShipArcReinforcements = makeActionCreator(
   "reinforcements"
 );
 
-ActionCreator.setShipArcShields = makeActionCreator(
-  ActionType.SET_SHIP_ARC_SHIELDS,
+ActionCreator.setShipArcShieldCount = makeActionCreator(
+  ActionType.SET_SHIP_ARC_SHIELD_COUNT,
   "shipId",
   "arcKey",
-  "shields"
+  "shieldCount"
 );
 
 ActionCreator.setShipBatteries = makeActionCreator(

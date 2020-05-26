@@ -129,10 +129,10 @@ Reducer.root = (state, action) => {
         [key]: action.reinforcements,
       };
       return { ...state, shipArcToReinforcements: newShipMap };
-    case ActionType.SET_SHIP_ARC_SHIELDS:
+    case ActionType.SET_SHIP_ARC_SHIELD_COUNT:
       key = StateUtils.shipArcKey(action.shipId, action.arcKey);
-      newShipMap = { ...state.shipArcToShields, [key]: action.shields };
-      return { ...state, shipArcToShields: newShipMap };
+      newShipMap = { ...state.shipArcToShieldCount, [key]: action.shieldCount };
+      return { ...state, shipArcToShieldCount: newShipMap };
     case ActionType.SET_SHIP_BATTERIES:
       newShipMap = {
         ...state.shipToBatteries,

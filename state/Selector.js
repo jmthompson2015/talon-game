@@ -46,10 +46,10 @@ Selector.shipArcReinforcements = (shipId, arcKey, state) => {
   return state.shipArcToReinforcements[key];
 };
 
-Selector.shipArcShields = (shipId, arcKey, state) => {
+Selector.shipArcShieldCount = (shipId, arcKey, state) => {
   const key = StateUtils.shipArcKey(shipId, arcKey);
 
-  return state.shipArcToShields[key];
+  return state.shipArcToShieldCount[key];
 };
 
 Selector.shipBatteries = (shipId, state) => state.shipToBatteries[shipId];
