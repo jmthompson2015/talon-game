@@ -29,7 +29,7 @@ AppState.create = ({
   shipToIsSideSlipped = {},
   shipToMissiles = {},
   shipToPowerCurveIndex = {},
-  shipToTurnRadiusMarkers = {},
+  shipToTurnRadius = {},
   shipToWeaponGroups = {},
 
   playerInstances = {},
@@ -64,7 +64,7 @@ AppState.create = ({
     shipToMissiles,
     shipToPowerCurveIndex,
     shipToIsSideSlipped,
-    shipToTurnRadiusMarkers,
+    shipToTurnRadius,
     shipToWeaponGroups,
 
     playerInstances,

@@ -180,12 +180,12 @@ Reducer.root = (state, action) => {
         [action.shipId]: action.isSideSlipped,
       };
       return { ...state, shipToIsSideSlipped: newShipMap };
-    case ActionType.SET_SHIP_TURN_RADIUS_MARKERS:
+    case ActionType.SET_SHIP_TURN_RADIUS:
       newShipMap = {
-        ...state.shipToTurnRadiusMarkers,
-        [action.shipId]: action.turnRadiusMarkers,
+        ...state.shipToTurnRadius,
+        [action.shipId]: action.turnRadius,
       };
-      return { ...state, shipToTurnRadiusMarkers: newShipMap };
+      return { ...state, shipToTurnRadius: newShipMap };
     case ActionType.SET_SHIP_WEAPON_GROUPS:
       newShipMap = {
         ...state.shipToWeaponGroups,

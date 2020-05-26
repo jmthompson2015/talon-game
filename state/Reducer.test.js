@@ -328,22 +328,19 @@ QUnit.test("setShipSideSlipped()", (assert) => {
   assert.equal(result.shipToIsSideSlipped[shipId], isSideSlipped);
 });
 
-QUnit.test("setShipTurnRadiusMarkers()", (assert) => {
+QUnit.test("setShipTurnRadius()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const turnRadiusMarkers = 2;
-  const action = ActionCreator.setShipTurnRadiusMarkers(
-    shipId,
-    turnRadiusMarkers
-  );
+  const turnRadius = 2;
+  const action = ActionCreator.setShipTurnRadius(shipId, turnRadius);
 
   // Run.
   const result = Reducer.root(state, action);
 
   // Verify.
   assert.ok(result);
-  assert.equal(result.shipToTurnRadiusMarkers[shipId], turnRadiusMarkers);
+  assert.equal(result.shipToTurnRadius[shipId], turnRadius);
 });
 
 QUnit.test("setShipWeaponGroups()", (assert) => {

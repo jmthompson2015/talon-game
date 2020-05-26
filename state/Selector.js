@@ -25,7 +25,7 @@ Selector.isShipArcReinforced = (shipId, arcKey, state) => {
 };
 
 Selector.isShipSideSlipped = (shipId, state) =>
-  state.shipToIsSideSlipped[shipId];
+  state.shipToIsSideSlipped[shipId] || false;
 
 Selector.player = (playerId, state) => state.playerInstances[playerId];
 
@@ -60,10 +60,10 @@ Selector.shipBatteryCount = (shipId, state) =>
   state.shipToBatteryCount[shipId] || 0;
 
 Selector.shipChangeInitiativeCount = (shipId, state) =>
-  state.shipToChangeInitiativeCount[shipId];
+  state.shipToChangeInitiativeCount[shipId] || 0;
 
 Selector.shipDefendInitiativeCount = (shipId, state) =>
-  state.shipToDefendInitiativeCount[shipId];
+  state.shipToDefendInitiativeCount[shipId] || 0;
 
 Selector.shipHullIndex = (shipId, state) => state.shipToHullIndex[shipId] || 0;
 
@@ -72,8 +72,7 @@ Selector.shipMissiles = (shipId, state) => state.shipToMissiles[shipId];
 Selector.shipPowerCurveIndex = (shipId, state) =>
   state.shipToPowerCurveIndex[shipId];
 
-Selector.shipTurnRadiusMarkers = (shipId, state) =>
-  state.shipToTurnRadiusMarkers[shipId];
+Selector.shipTurnRadius = (shipId, state) => state.shipToTurnRadius[shipId];
 
 Selector.shipWeaponGroups = (shipId, state) => state.shipToWeaponGroups[shipId];
 

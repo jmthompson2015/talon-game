@@ -114,10 +114,10 @@ ActionCreator.setShipSideSlipped = makeActionCreator(
   "isSideSlipped"
 );
 
-ActionCreator.setShipTurnRadiusMarkers = makeActionCreator(
-  ActionType.SET_SHIP_TURN_RADIUS_MARKERS,
+ActionCreator.setShipTurnRadius = makeActionCreator(
+  ActionType.SET_SHIP_TURN_RADIUS,
   "shipId",
-  "turnRadiusMarkers"
+  "turnRadius"
 );
 
 ActionCreator.setShipWeaponGroups = makeActionCreator(

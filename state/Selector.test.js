@@ -184,19 +184,19 @@ QUnit.test("shipPowerCurveIndex()", (assert) => {
   assert.equal(result, powerCurveIndex);
 });
 
-QUnit.test("shipTurnRadiusMarkers()", (assert) => {
+QUnit.test("shipTurnRadius()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
-  const markers = 4;
-  const action = ActionCreator.setShipTurnRadiusMarkers(shipId, markers);
+  const turnRadius = 4;
+  const action = ActionCreator.setShipTurnRadius(shipId, turnRadius);
   const state = Reducer.root(state0, action);
 
   // Run.
-  const result = Selector.shipTurnRadiusMarkers(shipId, state);
+  const result = Selector.shipTurnRadius(shipId, state);
 
   // Verify.
-  assert.equal(result, markers);
+  assert.equal(result, turnRadius);
 });
 
 QUnit.test("shipWeaponGroups()", (assert) => {
