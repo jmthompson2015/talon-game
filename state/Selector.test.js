@@ -18,6 +18,26 @@ QUnit.test("delay()", (assert) => {
   assert.equal(result, 1000);
 });
 
+QUnit.test("isShipArcReinforced()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const shipId = 3;
+  const arcKey = Arc.FORWARD;
+  const isReinforced = true;
+  const action = ActionCreator.setShipArcReinforced(
+    shipId,
+    arcKey,
+    isReinforced
+  );
+  const state = Reducer.root(state0, action);
+
+  // Run.
+  const result = Selector.isShipArcReinforced(shipId, arcKey, state);
+
+  // Verify.
+  assert.equal(result, isReinforced);
+});
+
 QUnit.test("shipAfterburnerCount()", (assert) => {
   // Setup.
   const state0 = AppState.create();
@@ -31,26 +51,6 @@ QUnit.test("shipAfterburnerCount()", (assert) => {
 
   // Verify.
   assert.equal(result, afterburners);
-});
-
-QUnit.test("shipArcReinforcements()", (assert) => {
-  // Setup.
-  const state0 = AppState.create();
-  const shipId = 3;
-  const arcKey = Arc.FORWARD;
-  const reinforcements = 4;
-  const action = ActionCreator.setShipArcReinforcements(
-    shipId,
-    arcKey,
-    reinforcements
-  );
-  const state = Reducer.root(state0, action);
-
-  // Run.
-  const result = Selector.shipArcReinforcements(shipId, arcKey, state);
-
-  // Verify.
-  assert.equal(result, reinforcements);
 });
 
 QUnit.test("shipArcShieldCount()", (assert) => {

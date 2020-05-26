@@ -18,6 +18,12 @@ Selector.initiativePlayer = (state) => {
   return state.playerInstances[id];
 };
 
+Selector.isShipArcReinforced = (shipId, arcKey, state) => {
+  const key = StateUtils.shipArcKey(shipId, arcKey);
+
+  return state.shipArcToIsReinforced[key] || false;
+};
+
 Selector.player = (playerId, state) => state.playerInstances[playerId];
 
 Selector.playerCount = (state) => Object.keys(state.playerInstances).length;
@@ -39,21 +45,16 @@ Selector.round = (state) => state.round;
 Selector.ship = (shipId, state) => state.shipInstances[shipId];
 
 Selector.shipAfterburnerCount = (shipId, state) =>
-  state.shipToAfterburnerCount[shipId];
-
-Selector.shipArcReinforcements = (shipId, arcKey, state) => {
-  const key = StateUtils.shipArcKey(shipId, arcKey);
-
-  return state.shipArcToReinforcements[key];
-};
+  state.shipToAfterburnerCount[shipId] || 0;
 
 Selector.shipArcShieldCount = (shipId, arcKey, state) => {
   const key = StateUtils.shipArcKey(shipId, arcKey);
 
-  return state.shipArcToShieldCount[key];
+  return state.shipArcToShieldCount[key] || 0;
 };
 
-Selector.shipBatteryCount = (shipId, state) => state.shipToBatteryCount[shipId];
+Selector.shipBatteryCount = (shipId, state) =>
+  state.shipToBatteryCount[shipId] || 0;
 
 Selector.shipChangeInitiatives = (shipId, state) =>
   state.shipToChangeInitiatives[shipId];
@@ -61,7 +62,7 @@ Selector.shipChangeInitiatives = (shipId, state) =>
 Selector.shipDefendInitiatives = (shipId, state) =>
   state.shipToDefendInitiatives[shipId];
 
-Selector.shipHullIndex = (shipId, state) => state.shipToHullIndex[shipId];
+Selector.shipHullIndex = (shipId, state) => state.shipToHullIndex[shipId] || 0;
 
 Selector.shipMissiles = (shipId, state) => state.shipToMissiles[shipId];
 

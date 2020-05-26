@@ -58,11 +58,11 @@ ActionCreator.setShipAfterburnerCount = makeActionCreator(
   "afterburnerCount"
 );
 
-ActionCreator.setShipArcReinforcements = makeActionCreator(
-  ActionType.SET_SHIP_ARC_REINFORCEMENTS,
+ActionCreator.setShipArcReinforced = makeActionCreator(
+  ActionType.SET_SHIP_ARC_REINFORCED,
   "shipId",
   "arcKey",
-  "reinforcements"
+  "isReinforced"
 );
 
 ActionCreator.setShipArcShieldCount = makeActionCreator(
