@@ -38,7 +38,8 @@ Selector.round = (state) => state.round;
 
 Selector.ship = (shipId, state) => state.shipInstances[shipId];
 
-Selector.shipAfterburners = (shipId, state) => state.shipToAfterburners[shipId];
+Selector.shipAfterburnerCount = (shipId, state) =>
+  state.shipToAfterburnerCount[shipId];
 
 Selector.shipArcReinforcements = (shipId, arcKey, state) => {
   const key = StateUtils.shipArcKey(shipId, arcKey);
@@ -52,7 +53,7 @@ Selector.shipArcShieldCount = (shipId, arcKey, state) => {
   return state.shipArcToShieldCount[key];
 };
 
-Selector.shipBatteries = (shipId, state) => state.shipToBatteries[shipId];
+Selector.shipBatteryCount = (shipId, state) => state.shipToBatteryCount[shipId];
 
 Selector.shipChangeInitiatives = (shipId, state) =>
   state.shipToChangeInitiatives[shipId];

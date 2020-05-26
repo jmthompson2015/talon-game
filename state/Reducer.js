@@ -116,12 +116,12 @@ Reducer.root = (state, action) => {
         anToShipKey: newANToShipKey,
         anToTokens: newANToTokens,
       };
-    case ActionType.SET_SHIP_AFTERBURNERS:
+    case ActionType.SET_SHIP_AFTERBURNER_COUNT:
       newShipMap = {
-        ...state.shipToAfterburners,
-        [action.shipId]: action.afterburners,
+        ...state.shipToAfterburnerCount,
+        [action.shipId]: action.afterburnerCount,
       };
-      return { ...state, shipToAfterburners: newShipMap };
+      return { ...state, shipToAfterburnerCount: newShipMap };
     case ActionType.SET_SHIP_ARC_REINFORCEMENTS:
       key = StateUtils.shipArcKey(action.shipId, action.arcKey);
       newShipMap = {
@@ -133,12 +133,12 @@ Reducer.root = (state, action) => {
       key = StateUtils.shipArcKey(action.shipId, action.arcKey);
       newShipMap = { ...state.shipArcToShieldCount, [key]: action.shieldCount };
       return { ...state, shipArcToShieldCount: newShipMap };
-    case ActionType.SET_SHIP_BATTERIES:
+    case ActionType.SET_SHIP_BATTERY_COUNT:
       newShipMap = {
-        ...state.shipToBatteries,
-        [action.shipId]: action.batteries,
+        ...state.shipToBatteryCount,
+        [action.shipId]: action.batteryCount,
       };
-      return { ...state, shipToBatteries: newShipMap };
+      return { ...state, shipToBatteryCount: newShipMap };
     case ActionType.SET_SHIP_CHANGE_INITIATIVES:
       newShipMap = {
         ...state.shipToChangeInitiatives,

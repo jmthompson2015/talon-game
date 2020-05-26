@@ -18,16 +18,16 @@ QUnit.test("delay()", (assert) => {
   assert.equal(result, 1000);
 });
 
-QUnit.test("shipAfterburners()", (assert) => {
+QUnit.test("shipAfterburnerCount()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
   const afterburners = 4;
-  const action = ActionCreator.setShipAfterburners(shipId, afterburners);
+  const action = ActionCreator.setShipAfterburnerCount(shipId, afterburners);
   const state = Reducer.root(state0, action);
 
   // Run.
-  const result = Selector.shipAfterburners(shipId, state);
+  const result = Selector.shipAfterburnerCount(shipId, state);
 
   // Verify.
   assert.equal(result, afterburners);
@@ -73,16 +73,16 @@ QUnit.test("shipArcShieldCount()", (assert) => {
   assert.equal(result, shieldCount);
 });
 
-QUnit.test("shipBatteries()", (assert) => {
+QUnit.test("shipBatteryCount()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
   const batteries = 4;
-  const action = ActionCreator.setShipBatteries(shipId, batteries);
+  const action = ActionCreator.setShipBatteryCount(shipId, batteries);
   const state = Reducer.root(state0, action);
 
   // Run.
-  const result = Selector.shipBatteries(shipId, state);
+  const result = Selector.shipBatteryCount(shipId, state);
 
   // Verify.
   assert.equal(result, batteries);

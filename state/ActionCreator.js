@@ -52,10 +52,10 @@ ActionCreator.setRound = makeActionCreator(ActionType.SET_ROUND, "round");
 
 ActionCreator.setShip = makeActionCreator(ActionType.SET_SHIP, "an", "shipId");
 
-ActionCreator.setShipAfterburners = makeActionCreator(
-  ActionType.SET_SHIP_AFTERBURNERS,
+ActionCreator.setShipAfterburnerCount = makeActionCreator(
+  ActionType.SET_SHIP_AFTERBURNER_COUNT,
   "shipId",
-  "afterburners"
+  "afterburnerCount"
 );
 
 ActionCreator.setShipArcReinforcements = makeActionCreator(
@@ -72,10 +72,10 @@ ActionCreator.setShipArcShieldCount = makeActionCreator(
   "shieldCount"
 );
 
-ActionCreator.setShipBatteries = makeActionCreator(
-  ActionType.SET_SHIP_BATTERIES,
+ActionCreator.setShipBatteryCount = makeActionCreator(
+  ActionType.SET_SHIP_BATTERY_COUNT,
   "shipId",
-  "batteries"
+  "batteryCount"
 );
 
 ActionCreator.setShipChangeInitiatives = makeActionCreator(

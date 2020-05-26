@@ -149,19 +149,22 @@ QUnit.test("setShip()", (assert) => {
   assert.equal(unit, shipId);
 });
 
-QUnit.test("setShipAfterburners()", (assert) => {
+QUnit.test("setShipAfterburnerCount()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const afterburners = 2;
-  const action = ActionCreator.setShipAfterburners(shipId, afterburners);
+  const afterburnerCount = 2;
+  const action = ActionCreator.setShipAfterburnerCount(
+    shipId,
+    afterburnerCount
+  );
 
   // Run.
   const result = Reducer.root(state, action);
 
   // Verify.
   assert.ok(result);
-  assert.equal(result.shipToAfterburners[shipId], afterburners);
+  assert.equal(result.shipToAfterburnerCount[shipId], afterburnerCount);
 });
 
 QUnit.test("setShipArcReinforcements()", (assert) => {
@@ -207,19 +210,19 @@ QUnit.test("setShipArcShieldCount()", (assert) => {
   assert.equal(result.shipArcToShieldCount[`${shipId}${arcKey}`], shieldCount);
 });
 
-QUnit.test("setShipBatteries()", (assert) => {
+QUnit.test("setShipBatteryCount()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const batteries = 2;
-  const action = ActionCreator.setShipBatteries(shipId, batteries);
+  const batteryCount = 2;
+  const action = ActionCreator.setShipBatteryCount(shipId, batteryCount);
 
   // Run.
   const result = Reducer.root(state, action);
 
   // Verify.
   assert.ok(result);
-  assert.equal(result.shipToBatteries[shipId], batteries);
+  assert.equal(result.shipToBatteryCount[shipId], batteryCount);
 });
 
 QUnit.test("setShipChangeInitiatives()", (assert) => {
