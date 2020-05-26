@@ -26,9 +26,9 @@ AppState.create = ({
   shipToChangeInitiativeCount = {},
   shipToDefendInitiativeCount = {},
   shipToHullIndex = {},
+  shipToIsSideSlipped = {},
   shipToMissiles = {},
   shipToPowerCurveIndex = {},
-  shipToSideSlips = {},
   shipToTurnRadiusMarkers = {},
   shipToWeaponGroups = {},
 
@@ -63,7 +63,7 @@ AppState.create = ({
     shipToHullIndex,
     shipToMissiles,
     shipToPowerCurveIndex,
-    shipToSideSlips,
+    shipToIsSideSlipped,
     shipToTurnRadiusMarkers,
     shipToWeaponGroups,
 

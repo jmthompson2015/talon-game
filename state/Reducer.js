@@ -174,12 +174,12 @@ Reducer.root = (state, action) => {
         [action.shipId]: action.powerCurveIndex,
       };
       return { ...state, shipToPowerCurveIndex: newShipMap };
-    case ActionType.SET_SHIP_SIDE_SLIPS:
+    case ActionType.SET_SHIP_SIDE_SLIPPED:
       newShipMap = {
-        ...state.shipToSideSlips,
-        [action.shipId]: action.sideSlips,
+        ...state.shipToIsSideSlipped,
+        [action.shipId]: action.isSideSlipped,
       };
-      return { ...state, shipToSideSlips: newShipMap };
+      return { ...state, shipToIsSideSlipped: newShipMap };
     case ActionType.SET_SHIP_TURN_RADIUS_MARKERS:
       newShipMap = {
         ...state.shipToTurnRadiusMarkers,

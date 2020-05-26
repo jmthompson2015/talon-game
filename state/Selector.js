@@ -24,6 +24,9 @@ Selector.isShipArcReinforced = (shipId, arcKey, state) => {
   return state.shipArcToIsReinforced[key] || false;
 };
 
+Selector.isShipSideSlipped = (shipId, state) =>
+  state.shipToIsSideSlipped[shipId];
+
 Selector.player = (playerId, state) => state.playerInstances[playerId];
 
 Selector.playerCount = (state) => Object.keys(state.playerInstances).length;
@@ -68,8 +71,6 @@ Selector.shipMissiles = (shipId, state) => state.shipToMissiles[shipId];
 
 Selector.shipPowerCurveIndex = (shipId, state) =>
   state.shipToPowerCurveIndex[shipId];
-
-Selector.shipSideSlips = (shipId, state) => state.shipToSideSlips[shipId];
 
 Selector.shipTurnRadiusMarkers = (shipId, state) =>
   state.shipToTurnRadiusMarkers[shipId];

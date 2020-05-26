@@ -38,6 +38,21 @@ QUnit.test("isShipArcReinforced()", (assert) => {
   assert.equal(result, isReinforced);
 });
 
+QUnit.test("isShipSideSlipped()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const shipId = 3;
+  const isSideSlipped = true;
+  const action = ActionCreator.setShipSideSlipped(shipId, isSideSlipped);
+  const state = Reducer.root(state0, action);
+
+  // Run.
+  const result = Selector.isShipSideSlipped(shipId, state);
+
+  // Verify.
+  assert.equal(result, isSideSlipped);
+});
+
 QUnit.test("shipAfterburnerCount()", (assert) => {
   // Setup.
   const state0 = AppState.create();
@@ -167,21 +182,6 @@ QUnit.test("shipPowerCurveIndex()", (assert) => {
 
   // Verify.
   assert.equal(result, powerCurveIndex);
-});
-
-QUnit.test("shipSideSlips()", (assert) => {
-  // Setup.
-  const state0 = AppState.create();
-  const shipId = 3;
-  const sideSlips = 4;
-  const action = ActionCreator.setShipSideSlips(shipId, sideSlips);
-  const state = Reducer.root(state0, action);
-
-  // Run.
-  const result = Selector.shipSideSlips(shipId, state);
-
-  // Verify.
-  assert.equal(result, sideSlips);
 });
 
 QUnit.test("shipTurnRadiusMarkers()", (assert) => {

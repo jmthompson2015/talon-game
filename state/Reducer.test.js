@@ -313,19 +313,19 @@ QUnit.test("setShipPowerCurveIndex()", (assert) => {
   assert.equal(result.shipToPowerCurveIndex[shipId], powerCurveIndex);
 });
 
-QUnit.test("setShipSideSlips()", (assert) => {
+QUnit.test("setShipSideSlipped()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const sideSlips = 2;
-  const action = ActionCreator.setShipSideSlips(shipId, sideSlips);
+  const isSideSlipped = true;
+  const action = ActionCreator.setShipSideSlipped(shipId, isSideSlipped);
 
   // Run.
   const result = Reducer.root(state, action);
 
   // Verify.
   assert.ok(result);
-  assert.equal(result.shipToSideSlips[shipId], sideSlips);
+  assert.equal(result.shipToIsSideSlipped[shipId], isSideSlipped);
 });
 
 QUnit.test("setShipTurnRadiusMarkers()", (assert) => {

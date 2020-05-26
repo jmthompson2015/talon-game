@@ -108,10 +108,10 @@ ActionCreator.setShipPowerCurveIndex = makeActionCreator(
   "powerCurveIndex"
 );
 
-ActionCreator.setShipSideSlips = makeActionCreator(
-  ActionType.SET_SHIP_SIDE_SLIPS,
+ActionCreator.setShipSideSlipped = makeActionCreator(
+  ActionType.SET_SHIP_SIDE_SLIPPED,
   "shipId",
-  "sideSlips"
+  "isSideSlipped"
 );
 
 ActionCreator.setShipTurnRadiusMarkers = makeActionCreator(
