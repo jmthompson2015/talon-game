@@ -186,12 +186,20 @@ Reducer.root = (state, action) => {
         [action.shipId]: action.turnRadius,
       };
       return { ...state, shipToTurnRadius: newShipMap };
-    case ActionType.SET_SHIP_WEAPON_GROUPS:
+    case ActionType.SET_SHIP_WEAPON_INDEX_RED:
+      key = StateUtils.shipWeaponIndexKey(action.shipId, action.weaponIndex);
       newShipMap = {
-        ...state.shipToWeaponGroups,
-        [action.shipId]: action.weaponGroups,
+        ...state.shipWeaponIndexToRed,
+        [key]: action.redCount,
       };
-      return { ...state, shipToWeaponGroups: newShipMap };
+      return { ...state, shipWeaponIndexToRed: newShipMap };
+    case ActionType.SET_SHIP_WEAPON_INDEX_YELLOW:
+      key = StateUtils.shipWeaponIndexKey(action.shipId, action.weaponIndex);
+      newShipMap = {
+        ...state.shipWeaponIndexToYellow,
+        [key]: action.yellowCount,
+      };
+      return { ...state, shipWeaponIndexToYellow: newShipMap };
     case ActionType.SET_USER_MESSAGE:
       log(
         `Reducer SET_USER_MESSAGE userMessage = ${action.userMessage}`,

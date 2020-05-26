@@ -343,19 +343,50 @@ QUnit.test("setShipTurnRadius()", (assert) => {
   assert.equal(result.shipToTurnRadius[shipId], turnRadius);
 });
 
-QUnit.test("setShipWeaponGroups()", (assert) => {
+QUnit.test("setShipWeaponIndexRed()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const weaponGroups = 2;
-  const action = ActionCreator.setShipWeaponGroups(shipId, weaponGroups);
+  const weaponIndex = 2;
+  const redCount = 3;
+  const action = ActionCreator.setShipWeaponIndexRed(
+    shipId,
+    weaponIndex,
+    redCount
+  );
 
   // Run.
   const result = Reducer.root(state, action);
 
   // Verify.
   assert.ok(result);
-  assert.equal(result.shipToWeaponGroups[shipId], weaponGroups);
+  assert.equal(
+    result.shipWeaponIndexToRed[`${shipId}${weaponIndex}`],
+    redCount
+  );
+});
+
+QUnit.test("setShipWeaponIndexYellow()", (assert) => {
+  // Setup.
+  const state = AppState.create();
+  const shipId = 1;
+  const weaponIndex = 2;
+  const yellowCount = 3;
+  const action = ActionCreator.setShipWeaponIndexYellow(
+    shipId,
+    weaponIndex,
+    yellowCount
+  );
+
+  // Run.
+  const result = Reducer.root(state, action);
+
+  // Verify.
+  assert.ok(result);
+  assert.equal(
+    result.shipWeaponIndexToYellow[`${shipId}${weaponIndex}`],
+    yellowCount
+  );
 });
 
 QUnit.test("setUserMessage()", (assert) => {

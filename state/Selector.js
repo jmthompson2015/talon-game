@@ -74,7 +74,17 @@ Selector.shipPowerCurveIndex = (shipId, state) =>
 
 Selector.shipTurnRadius = (shipId, state) => state.shipToTurnRadius[shipId];
 
-Selector.shipWeaponGroups = (shipId, state) => state.shipToWeaponGroups[shipId];
+Selector.shipWeaponIndexRed = (shipId, weaponIndex, state) => {
+  const key = StateUtils.shipWeaponIndexKey(shipId, weaponIndex);
+
+  return state.shipWeaponIndexToRed[key];
+};
+
+Selector.shipWeaponIndexYellow = (shipId, weaponIndex, state) => {
+  const key = StateUtils.shipWeaponIndexKey(shipId, weaponIndex);
+
+  return state.shipWeaponIndexToYellow[key];
+};
 
 Selector.tokensByTeam = (teamKey, state) => {
   const filterFunction = (token) => token.teamKey === teamKey;

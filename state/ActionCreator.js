@@ -120,10 +120,18 @@ ActionCreator.setShipTurnRadius = makeActionCreator(
   "turnRadius"
 );
 
-ActionCreator.setShipWeaponGroups = makeActionCreator(
-  ActionType.SET_SHIP_WEAPON_GROUPS,
+ActionCreator.setShipWeaponIndexRed = makeActionCreator(
+  ActionType.SET_SHIP_WEAPON_INDEX_RED,
   "shipId",
-  "weaponGroups"
+  "weaponIndex",
+  "redCount"
+);
+
+ActionCreator.setShipWeaponIndexYellow = makeActionCreator(
+  ActionType.SET_SHIP_WEAPON_INDEX_YELLOW,
+  "shipId",
+  "weaponIndex",
+  "yellowCount"
 );
 
 ActionCreator.setUserMessage = makeActionCreator(
