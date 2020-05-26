@@ -154,19 +154,19 @@ QUnit.test("shipMissiles()", (assert) => {
   assert.equal(result, missiles);
 });
 
-QUnit.test("shipPowerCurve()", (assert) => {
+QUnit.test("shipPowerCurveIndex()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
-  const powerCurve = 4;
-  const action = ActionCreator.setShipPowerCurve(shipId, powerCurve);
+  const powerCurveIndex = 4;
+  const action = ActionCreator.setShipPowerCurveIndex(shipId, powerCurveIndex);
   const state = Reducer.root(state0, action);
 
   // Run.
-  const result = Selector.shipPowerCurve(shipId, state);
+  const result = Selector.shipPowerCurveIndex(shipId, state);
 
   // Verify.
-  assert.equal(result, powerCurve);
+  assert.equal(result, powerCurveIndex);
 });
 
 QUnit.test("shipSideSlips()", (assert) => {

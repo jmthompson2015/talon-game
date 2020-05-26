@@ -65,7 +65,8 @@ Selector.shipHullIndex = (shipId, state) => state.shipToHullIndex[shipId];
 
 Selector.shipMissiles = (shipId, state) => state.shipToMissiles[shipId];
 
-Selector.shipPowerCurve = (shipId, state) => state.shipToPowerCurve[shipId];
+Selector.shipPowerCurveIndex = (shipId, state) =>
+  state.shipToPowerCurveIndex[shipId];
 
 Selector.shipSideSlips = (shipId, state) => state.shipToSideSlips[shipId];
 

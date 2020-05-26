@@ -163,17 +163,17 @@ Reducer.root = (state, action) => {
         [action.shipId]: action.missiles,
       };
       return { ...state, shipToMissiles: newShipMap };
-    case ActionType.SET_SHIP_POWER_CURVE:
+    case ActionType.SET_SHIP_POWER_CURVE_INDEX:
       log(
-        `Reducer SET_SHIP_POWER_CURVE shipId = ${action.shipId} ` +
+        `Reducer SET_SHIP_POWER_CURVE_INDEX shipId = ${action.shipId} ` +
           `powerCurveIndex = ${action.powerCurveIndex}`,
         state
       );
       newShipMap = {
-        ...state.shipToPowerCurve,
-        [action.shipId]: action.powerCurve,
+        ...state.shipToPowerCurveIndex,
+        [action.shipId]: action.powerCurveIndex,
       };
-      return { ...state, shipToPowerCurve: newShipMap };
+      return { ...state, shipToPowerCurveIndex: newShipMap };
     case ActionType.SET_SHIP_SIDE_SLIPS:
       newShipMap = {
         ...state.shipToSideSlips,

@@ -102,10 +102,10 @@ ActionCreator.setShipMissiles = makeActionCreator(
   "missiles"
 );
 
-ActionCreator.setShipPowerCurve = makeActionCreator(
-  ActionType.SET_SHIP_POWER_CURVE,
+ActionCreator.setShipPowerCurveIndex = makeActionCreator(
+  ActionType.SET_SHIP_POWER_CURVE_INDEX,
   "shipId",
-  "powerCurve"
+  "powerCurveIndex"
 );
 
 ActionCreator.setShipSideSlips = makeActionCreator(
