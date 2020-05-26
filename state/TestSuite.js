@@ -4,5 +4,6 @@ import PlayerStateTest from "./PlayerState.test.js";
 import ReducerTest from "./Reducer.test.js";
 import SelectorTest from "./Selector.test.js";
 import ShipStateTest from "./ShipState.test.js";
+import StateUtilitiesTest from "./StateUtilities.test.js";
 
 QUnit.start();

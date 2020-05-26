@@ -1,6 +1,6 @@
 import Resolver from "../artifact/Resolver.js";
 
-const shipArcKey = (shipId, arcKey) => `${shipId}${arcKey}`;
+import StateUtils from "./StateUtilities.js";
 
 const Selector = {};
 
@@ -40,11 +40,17 @@ Selector.ship = (shipId, state) => state.shipInstances[shipId];
 
 Selector.shipAfterburners = (shipId, state) => state.shipToAfterburners[shipId];
 
-Selector.shipArcReinforcements = (shipId, arcKey, state) =>
-  state.shipArcToReinforcements[shipArcKey(shipId, arcKey)];
+Selector.shipArcReinforcements = (shipId, arcKey, state) => {
+  const key = StateUtils.shipArcKey(shipId, arcKey);
 
-Selector.shipArcShields = (shipId, arcKey, state) =>
-  state.shipArcToShields[shipArcKey(shipId, arcKey)];
+  return state.shipArcToReinforcements[key];
+};
+
+Selector.shipArcShields = (shipId, arcKey, state) => {
+  const key = StateUtils.shipArcKey(shipId, arcKey);
+
+  return state.shipArcToShields[key];
+};
 
 Selector.shipBatteries = (shipId, state) => state.shipToBatteries[shipId];
 

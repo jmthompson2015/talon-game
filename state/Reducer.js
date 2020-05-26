@@ -1,11 +1,8 @@
 /* eslint no-console: ["error", { allow: ["error", "log", "warn"] }] */
 
-// import ArrayUtils from "../util/ArrayUtilities.js";
-
 import ActionType from "./ActionType.js";
 import AppState from "./AppState.js";
-
-const shipArcKey = (shipId, arcKey) => `${shipId}${arcKey}`;
+import StateUtils from "./StateUtilities.js";
 
 const Reducer = {};
 
@@ -27,6 +24,7 @@ Reducer.root = (state, action) => {
     return state;
   }
 
+  let key;
   let newANToShipKey;
   let newANToTokens;
   let newGameRecords;
@@ -125,16 +123,15 @@ Reducer.root = (state, action) => {
       };
       return { ...state, shipToAfterburners: newShipMap };
     case ActionType.SET_SHIP_ARC_REINFORCEMENTS:
+      key = StateUtils.shipArcKey(action.shipId, action.arcKey);
       newShipMap = {
         ...state.shipArcToReinforcements,
-        [shipArcKey(action.shipId, action.arcKey)]: action.reinforcements,
+        [key]: action.reinforcements,
       };
       return { ...state, shipArcToReinforcements: newShipMap };
     case ActionType.SET_SHIP_ARC_SHIELDS:
-      newShipMap = {
-        ...state.shipArcToShields,
-        [shipArcKey(action.shipId, action.arcKey)]: action.shields,
-      };
+      key = StateUtils.shipArcKey(action.shipId, action.arcKey);
+      newShipMap = { ...state.shipArcToShields, [key]: action.shields };
       return { ...state, shipArcToShields: newShipMap };
     case ActionType.SET_SHIP_BATTERIES:
       newShipMap = {
