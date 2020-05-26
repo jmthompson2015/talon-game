@@ -260,19 +260,19 @@ QUnit.test("setShipDefendInitiatives()", (assert) => {
   assert.equal(result.shipToDefendInitiatives[shipId], defendInitiatives);
 });
 
-QUnit.test("setShipHulls()", (assert) => {
+QUnit.test("setShipHullIndex()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const hulls = 2;
-  const action = ActionCreator.setShipHulls(shipId, hulls);
+  const hullIndex = 2;
+  const action = ActionCreator.setShipHullIndex(shipId, hullIndex);
 
   // Run.
   const result = Reducer.root(state, action);
 
   // Verify.
   assert.ok(result);
-  assert.equal(result.shipToHulls[shipId], hulls);
+  assert.equal(result.shipToHullIndex[shipId], hullIndex);
 });
 
 QUnit.test("setShipMissiles()", (assert) => {

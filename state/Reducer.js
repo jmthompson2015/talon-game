@@ -151,9 +151,12 @@ Reducer.root = (state, action) => {
         [action.shipId]: action.defendInitiatives,
       };
       return { ...state, shipToDefendInitiatives: newShipMap };
-    case ActionType.SET_SHIP_HULLS:
-      newShipMap = { ...state.shipToHulls, [action.shipId]: action.hulls };
-      return { ...state, shipToHulls: newShipMap };
+    case ActionType.SET_SHIP_HULL_INDEX:
+      newShipMap = {
+        ...state.shipToHullIndex,
+        [action.shipId]: action.hullIndex,
+      };
+      return { ...state, shipToHullIndex: newShipMap };
     case ActionType.SET_SHIP_MISSILES:
       newShipMap = {
         ...state.shipToMissiles,

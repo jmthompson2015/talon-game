@@ -90,10 +90,10 @@ ActionCreator.setShipDefendInitiatives = makeActionCreator(
   "defendInitiatives"
 );
 
-ActionCreator.setShipHulls = makeActionCreator(
-  ActionType.SET_SHIP_HULLS,
+ActionCreator.setShipHullIndex = makeActionCreator(
+  ActionType.SET_SHIP_HULL_INDEX,
   "shipId",
-  "hulls"
+  "hullIndex"
 );
 
 ActionCreator.setShipMissiles = makeActionCreator(

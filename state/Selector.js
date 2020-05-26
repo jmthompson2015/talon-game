@@ -60,7 +60,7 @@ Selector.shipChangeInitiatives = (shipId, state) =>
 Selector.shipDefendInitiatives = (shipId, state) =>
   state.shipToDefendInitiatives[shipId];
 
-Selector.shipHulls = (shipId, state) => state.shipToHulls[shipId];
+Selector.shipHullIndex = (shipId, state) => state.shipToHullIndex[shipId];
 
 Selector.shipMissiles = (shipId, state) => state.shipToMissiles[shipId];
 
