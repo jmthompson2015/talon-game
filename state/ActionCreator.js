@@ -78,16 +78,16 @@ ActionCreator.setShipBatteryCount = makeActionCreator(
   "batteryCount"
 );
 
-ActionCreator.setShipChangeInitiatives = makeActionCreator(
-  ActionType.SET_SHIP_CHANGE_INITIATIVES,
+ActionCreator.setShipChangeInitiativeCount = makeActionCreator(
+  ActionType.SET_SHIP_CHANGE_INITIATIVE_COUNT,
   "shipId",
-  "changeInitiatives"
+  "changeInitiativeCount"
 );
 
-ActionCreator.setShipDefendInitiatives = makeActionCreator(
-  ActionType.SET_SHIP_DEFEND_INITIATIVES,
+ActionCreator.setShipDefendInitiativeCount = makeActionCreator(
+  ActionType.SET_SHIP_DEFEND_INITIATIVE_COUNT,
   "shipId",
-  "defendInitiatives"
+  "defendInitiativeCount"
 );
 
 ActionCreator.setShipHullIndex = makeActionCreator(

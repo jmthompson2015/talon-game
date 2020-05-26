@@ -88,40 +88,40 @@ QUnit.test("shipBatteryCount()", (assert) => {
   assert.equal(result, batteries);
 });
 
-QUnit.test("shipChangeInitiatives()", (assert) => {
+QUnit.test("shipChangeInitiativeCount()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
-  const changeInitiatives = 4;
-  const action = ActionCreator.setShipChangeInitiatives(
+  const changeInitiativeCount = 4;
+  const action = ActionCreator.setShipChangeInitiativeCount(
     shipId,
-    changeInitiatives
+    changeInitiativeCount
   );
   const state = Reducer.root(state0, action);
 
   // Run.
-  const result = Selector.shipChangeInitiatives(shipId, state);
+  const result = Selector.shipChangeInitiativeCount(shipId, state);
 
   // Verify.
-  assert.equal(result, changeInitiatives);
+  assert.equal(result, changeInitiativeCount);
 });
 
-QUnit.test("shipDefendInitiatives()", (assert) => {
+QUnit.test("shipDefendInitiativeCount()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
-  const defendInitiatives = 4;
-  const action = ActionCreator.setShipDefendInitiatives(
+  const defendInitiativeCount = 4;
+  const action = ActionCreator.setShipDefendInitiativeCount(
     shipId,
-    defendInitiatives
+    defendInitiativeCount
   );
   const state = Reducer.root(state0, action);
 
   // Run.
-  const result = Selector.shipDefendInitiatives(shipId, state);
+  const result = Selector.shipDefendInitiativeCount(shipId, state);
 
   // Verify.
-  assert.equal(result, defendInitiatives);
+  assert.equal(result, defendInitiativeCount);
 });
 
 QUnit.test("shipHullIndex()", (assert) => {

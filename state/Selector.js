@@ -56,11 +56,11 @@ Selector.shipArcShieldCount = (shipId, arcKey, state) => {
 Selector.shipBatteryCount = (shipId, state) =>
   state.shipToBatteryCount[shipId] || 0;
 
-Selector.shipChangeInitiatives = (shipId, state) =>
-  state.shipToChangeInitiatives[shipId];
+Selector.shipChangeInitiativeCount = (shipId, state) =>
+  state.shipToChangeInitiativeCount[shipId];
 
-Selector.shipDefendInitiatives = (shipId, state) =>
-  state.shipToDefendInitiatives[shipId];
+Selector.shipDefendInitiativeCount = (shipId, state) =>
+  state.shipToDefendInitiativeCount[shipId];
 
 Selector.shipHullIndex = (shipId, state) => state.shipToHullIndex[shipId] || 0;
 

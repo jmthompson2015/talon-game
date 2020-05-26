@@ -139,18 +139,18 @@ Reducer.root = (state, action) => {
         [action.shipId]: action.batteryCount,
       };
       return { ...state, shipToBatteryCount: newShipMap };
-    case ActionType.SET_SHIP_CHANGE_INITIATIVES:
+    case ActionType.SET_SHIP_CHANGE_INITIATIVE_COUNT:
       newShipMap = {
-        ...state.shipToChangeInitiatives,
-        [action.shipId]: action.changeInitiatives,
+        ...state.shipToChangeInitiativeCount,
+        [action.shipId]: action.changeInitiativeCount,
       };
-      return { ...state, shipToChangeInitiatives: newShipMap };
-    case ActionType.SET_SHIP_DEFEND_INITIATIVES:
+      return { ...state, shipToChangeInitiativeCount: newShipMap };
+    case ActionType.SET_SHIP_DEFEND_INITIATIVE_COUNT:
       newShipMap = {
-        ...state.shipToDefendInitiatives,
-        [action.shipId]: action.defendInitiatives,
+        ...state.shipToDefendInitiativeCount,
+        [action.shipId]: action.defendInitiativeCount,
       };
-      return { ...state, shipToDefendInitiatives: newShipMap };
+      return { ...state, shipToDefendInitiativeCount: newShipMap };
     case ActionType.SET_SHIP_HULL_INDEX:
       newShipMap = {
         ...state.shipToHullIndex,

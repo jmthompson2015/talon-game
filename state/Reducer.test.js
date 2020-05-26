@@ -225,14 +225,14 @@ QUnit.test("setShipBatteryCount()", (assert) => {
   assert.equal(result.shipToBatteryCount[shipId], batteryCount);
 });
 
-QUnit.test("setShipChangeInitiatives()", (assert) => {
+QUnit.test("setShipChangeInitiativeCount()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const changeInitiatives = 2;
-  const action = ActionCreator.setShipChangeInitiatives(
+  const changeInitiativeCount = 2;
+  const action = ActionCreator.setShipChangeInitiativeCount(
     shipId,
-    changeInitiatives
+    changeInitiativeCount
   );
 
   // Run.
@@ -240,18 +240,20 @@ QUnit.test("setShipChangeInitiatives()", (assert) => {
 
   // Verify.
   assert.ok(result);
-  assert.ok(result.shipToChangeInitiatives);
-  assert.equal(result.shipToChangeInitiatives[shipId], changeInitiatives);
+  assert.equal(
+    result.shipToChangeInitiativeCount[shipId],
+    changeInitiativeCount
+  );
 });
 
-QUnit.test("setShipDefendInitiatives()", (assert) => {
+QUnit.test("setShipDefendInitiativeCount()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const defendInitiatives = 2;
-  const action = ActionCreator.setShipDefendInitiatives(
+  const defendInitiativeCount = 2;
+  const action = ActionCreator.setShipDefendInitiativeCount(
     shipId,
-    defendInitiatives
+    defendInitiativeCount
   );
 
   // Run.
@@ -259,8 +261,11 @@ QUnit.test("setShipDefendInitiatives()", (assert) => {
 
   // Verify.
   assert.ok(result);
-  assert.ok(result.shipToDefendInitiatives);
-  assert.equal(result.shipToDefendInitiatives[shipId], defendInitiatives);
+  assert.ok(result.shipToDefendInitiativeCount);
+  assert.equal(
+    result.shipToDefendInitiativeCount[shipId],
+    defendInitiativeCount
+  );
 });
 
 QUnit.test("setShipHullIndex()", (assert) => {
