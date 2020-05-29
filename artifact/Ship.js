@@ -48,7 +48,7 @@ const Ship = {
 
   properties: {
     talonBase: {
-      hull: Hull.BASE,
+      hullKey: Hull.BASE,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -79,7 +79,7 @@ const Ship = {
     },
     talonBB: {
       afterburners: 2,
-      hull: Hull.BATTLESHIP,
+      hullKey: Hull.BATTLESHIP,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -110,7 +110,7 @@ const Ship = {
     },
     talonBC: {
       afterburners: 2,
-      hull: Hull.BATTLE_CRUISER,
+      hullKey: Hull.BATTLE_CRUISER,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -140,7 +140,7 @@ const Ship = {
     },
     talonCA: {
       afterburners: 2,
-      hull: Hull.HEAVY_CRUISER,
+      hullKey: Hull.HEAVY_CRUISER,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -169,7 +169,7 @@ const Ship = {
     },
     talonCL: {
       afterburners: 2,
-      hull: Hull.LIGHT_CRUISER,
+      hullKey: Hull.LIGHT_CRUISER,
       hullBoxes: [
         createHullBox(),
         createHullBox(0, "critical"),
@@ -196,7 +196,7 @@ const Ship = {
     },
     talonDD: {
       afterburners: 2,
-      hull: Hull.DESTROYER,
+      hullKey: Hull.DESTROYER,
       hullBoxes: [
         createHullBox(0, "critical"),
         createHullBox(),
@@ -222,7 +222,7 @@ const Ship = {
     },
     talonDN: {
       afterburners: 2,
-      hull: Hull.DREADNOUGHT,
+      hullKey: Hull.DREADNOUGHT,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -253,7 +253,7 @@ const Ship = {
       key: "talonDN",
     },
     talonFF: {
-      hull: Hull.FRIGATE,
+      hullKey: Hull.FRIGATE,
       hullBoxes: [
         createHullBox(),
         createHullBox(0, "critical"),
@@ -277,7 +277,7 @@ const Ship = {
       key: "talonFF",
     },
     talonTran: {
-      hull: Hull.TRANSPORT,
+      hullKey: Hull.TRANSPORT,
       hullBoxes: [
         createHullBox(),
         createHullBox(0, "critical"),
@@ -298,7 +298,7 @@ const Ship = {
     },
     // /////////////////////////////////////////////////////////////////////////
     terranBase: {
-      hull: Hull.BASE,
+      hullKey: Hull.BASE,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -328,7 +328,7 @@ const Ship = {
     },
     terranBB: {
       batteries: 1,
-      hull: Hull.BATTLESHIP,
+      hullKey: Hull.BATTLESHIP,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -360,7 +360,7 @@ const Ship = {
     },
     terranBC: {
       batteries: 1,
-      hull: Hull.BATTLE_CRUISER,
+      hullKey: Hull.BATTLE_CRUISER,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -389,7 +389,7 @@ const Ship = {
     },
     terranCA: {
       batteries: 1,
-      hull: Hull.HEAVY_CRUISER,
+      hullKey: Hull.HEAVY_CRUISER,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -418,7 +418,7 @@ const Ship = {
     },
     terranCL: {
       batteries: 1,
-      hull: Hull.LIGHT_CRUISER,
+      hullKey: Hull.LIGHT_CRUISER,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -450,7 +450,7 @@ const Ship = {
       key: "terranCL",
     },
     terranCV: {
-      hull: Hull.CARRIER,
+      hullKey: Hull.CARRIER,
       hullBoxes: [
         createHullBox(),
         createHullBox(),
@@ -476,7 +476,7 @@ const Ship = {
     },
     terranDD: {
       batteries: 1,
-      hull: Hull.DESTROYER,
+      hullKey: Hull.DESTROYER,
       hullBoxes: [
         createHullBox(),
         createHullBox(0, "critical"),
@@ -506,7 +506,7 @@ const Ship = {
       key: "terranDD",
     },
     terranFTR: {
-      hull: Hull.FIGHTER,
+      hullKey: Hull.FIGHTER,
       hullBoxes: [createHullBox(), createHullBox()],
       names: [
         "Ace of Spades Squadron",
@@ -530,7 +530,7 @@ const Ship = {
       key: "terranFTR",
     },
     terranSC: {
-      hull: Hull.SCOUT,
+      hullKey: Hull.SCOUT,
       hullBoxes: [createHullBox(), createHullBox(-1)],
       names: ["Explorer", "Voyager"],
       points: 37,
@@ -549,7 +549,7 @@ const Ship = {
       key: "terranSC",
     },
     terranTran: {
-      hull: Hull.TRANSPORT,
+      hullKey: Hull.TRANSPORT,
       hullBoxes: [
         createHullBox(),
         createHullBox(0, "critical"),
@@ -581,6 +581,13 @@ Ship.defaultPowerCurveIndex = (ship) => {
     powerCurve.isDefault ? i : accum;
 
   return reduceIndexed(reduceFunction, -1, ship.powerCurves);
+};
+
+Ship.name = (ship, nameIndex) => {
+  const hull = Hull.properties[ship.hullKey];
+  const name = ship.names[nameIndex];
+
+  return `${hull.abbreviation} ${name}`;
 };
 
 Object.freeze(Ship);

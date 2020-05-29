@@ -31,6 +31,12 @@ Selector.player = (playerId, state) => state.playerInstances[playerId];
 
 Selector.playerCount = (state) => Object.keys(state.playerInstances).length;
 
+Selector.playersByTeam = (teamKey, state) => {
+  const filterFunction = (player) => player.teamKey === teamKey;
+
+  return R.filter(filterFunction, Object.values(state.playerInstances));
+};
+
 Selector.playersInOrder = (state) => {
   const count = Selector.playerCount(state);
   const players0 = Object.values(state.playerInstances);
@@ -72,6 +78,28 @@ Selector.shipMissiles = (shipId, state) => state.shipToMissiles[shipId];
 Selector.shipPowerCurveIndex = (shipId, state) =>
   state.shipToPowerCurveIndex[shipId];
 
+Selector.shipsByPlayer = (playerId, state) => {
+  const filterFunction = (shipId) => {
+    const ship = Selector.ship(shipId, state);
+
+    return ship.playerId === playerId;
+  };
+  const shipIds = Object.values(state.anToTokens);
+
+  return R.filter(filterFunction, shipIds);
+};
+
+Selector.shipsByTeam = (teamKey, state) => {
+  const filterFunction = (shipId) => {
+    const ship = Selector.ship(shipId, state);
+
+    return ship.shipType.teamKey === teamKey;
+  };
+  const shipIds = Object.values(state.anToTokens);
+
+  return R.filter(filterFunction, shipIds);
+};
+
 Selector.shipTurnRadius = (shipId, state) => state.shipToTurnRadius[shipId];
 
 Selector.shipWeaponIndexRed = (shipId, weaponIndex, state) => {
@@ -86,12 +114,8 @@ Selector.shipWeaponIndexYellow = (shipId, weaponIndex, state) => {
   return state.shipWeaponIndexToYellow[key];
 };
 
-Selector.tokensByTeam = (teamKey, state) => {
-  const filterFunction = (token) => token.teamKey === teamKey;
-  const tokens = Object.values(state.anToTokens);
-
-  return R.filter(filterFunction, tokens);
-};
+Selector.winner = (state) =>
+  state.winnerTeamKey ? Resolver.team(state.winnerTeamKey) : undefined;
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 const nextId = (instanceMap) => {

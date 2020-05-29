@@ -18,6 +18,8 @@ ActionCreator.addGameRecord = makeActionCreator(
 
 ActionCreator.addShip = makeActionCreator(ActionType.ADD_SHIP, "shipState");
 
+ActionCreator.clearShip = makeActionCreator(ActionType.CLEAR_SHIP, "an");
+
 ActionCreator.setCurrentPhase = makeActionCreator(
   ActionType.SET_CURRENT_PHASE,
   "phaseKey"

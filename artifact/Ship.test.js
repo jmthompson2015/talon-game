@@ -8,7 +8,7 @@ QUnit.module("Ship");
 QUnit.test("Ship properties Terran CA", (assert) => {
   const shipKey = Ship.TERRAN_CA;
   const properties = Ship.properties[shipKey];
-  assert.equal(properties.hull, Hull.HEAVY_CRUISER);
+  assert.equal(properties.hullKey, Hull.HEAVY_CRUISER);
   assert.equal(properties.names.length, 4);
   assert.equal(properties.points, 115);
   assert.equal(properties.teamKey, Team.TERRAN);
@@ -29,10 +29,10 @@ QUnit.test("Ship properties Terran CA", (assert) => {
 
 QUnit.test("defaultPowerCurveIndex() Talon DN", (assert) => {
   // Setup.
-  const shipKey = Ship.TALON_DN;
+  const ship = Ship.properties[Ship.TALON_DN];
 
   // Run.
-  const result = Ship.defaultPowerCurveIndex(shipKey);
+  const result = Ship.defaultPowerCurveIndex(ship);
 
   // Verify.
   assert.equal(result, 1);
@@ -40,10 +40,10 @@ QUnit.test("defaultPowerCurveIndex() Talon DN", (assert) => {
 
 QUnit.test("defaultPowerCurveIndex() Terran CA", (assert) => {
   // Setup.
-  const shipKey = Ship.TERRAN_CA;
+  const ship = Ship.properties[Ship.TERRAN_CA];
 
   // Run.
-  const result = Ship.defaultPowerCurveIndex(shipKey);
+  const result = Ship.defaultPowerCurveIndex(ship);
 
   // Verify.
   assert.equal(result, 2);
@@ -55,13 +55,13 @@ QUnit.test("required properties", (assert) => {
 
   // Run / Verify.
   const forEachFunction = (ship) => {
-    assert.ok(ship.hull, `ship.hull = ${ship.hull}`);
+    assert.ok(ship.hullKey, `ship.hullKey = ${ship.hullKey}`);
     assert.ok(ship.names, `ship.names = ${ship.names}`);
     assert.ok(ship.points, `ship.points = ${ship.points}`);
     assert.ok(ship.powerCurves, `ship.powerCurves = ${ship.powerCurves}`);
     assert.ok(ship.shields, `ship.shields = ${ship.shields}`);
     assert.ok(ship.teamKey, `ship.teamKey = ${ship.teamKey}`);
-    if (ship.hull !== Hull.TRANSPORT) {
+    if (ship.hullKey !== Hull.TRANSPORT) {
       assert.ok(ship.weaponGroups, `ship.weaponGroups = ${ship.weaponGroups}`);
     }
     assert.ok(ship.key, `ship.key = ${ship.key}`);
@@ -99,6 +99,17 @@ QUnit.test("Ship.keys()", (assert) => {
   assert.equal(result.length, length);
   assert.equal(R.head(result), Ship.TALON_BASE);
   assert.equal(R.last(result), Ship.TERRAN_TRAN);
+});
+
+QUnit.test("Ship.name() Terran CA", (assert) => {
+  // Setup.
+  const ship = Ship.properties[Ship.TERRAN_CA];
+
+  // Run / Verify.
+  assert.equal(Ship.name(ship, 0), "CA Guderian");
+  assert.equal(Ship.name(ship, 1), "CA Napoleon");
+  assert.equal(Ship.name(ship, 2), "CA Patton");
+  assert.equal(Ship.name(ship, 3), "CA Zhukov");
 });
 
 const ShipTest = {};

@@ -1,9 +1,13 @@
 import Arc from "../artifact/Arc.js";
+import Ship from "../artifact/Ship.js";
+import Team from "../artifact/Team.js";
 
 import AppState from "./AppState.js";
 import ActionCreator from "./ActionCreator.js";
+import PlayerState from "./PlayerState.js";
 import Reducer from "./Reducer.js";
 import Selector from "./Selector.js";
+import ShipState from "./ShipState.js";
 
 QUnit.module("Selector");
 
@@ -51,6 +55,32 @@ QUnit.test("isShipSideSlipped()", (assert) => {
 
   // Verify.
   assert.equal(result, isSideSlipped);
+});
+
+QUnit.test("playersByTeam()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const player1 = PlayerState.create({
+    id: 1,
+    name: "Alfred",
+    teamKey: Team.TALON,
+  });
+  const player2 = PlayerState.create({
+    id: 2,
+    name: "Bruce",
+    teamKey: Team.TERRAN,
+  });
+  const action1 = ActionCreator.setPlayers([player1, player2]);
+  const state = Reducer.root(state0, action1);
+
+  // Run / Verify.
+  const talonPlayers = Selector.playersByTeam(Team.TALON, state);
+  assert.equal(talonPlayers.length, 1);
+  assert.equal(talonPlayers[0].teamKey, Team.TALON);
+
+  const terranPlayers = Selector.playersByTeam(Team.TERRAN, state);
+  assert.equal(terranPlayers.length, 1);
+  assert.equal(terranPlayers[0].teamKey, Team.TERRAN);
 });
 
 QUnit.test("shipAfterburnerCount()", (assert) => {
@@ -182,6 +212,65 @@ QUnit.test("shipPowerCurveIndex()", (assert) => {
 
   // Verify.
   assert.equal(result, powerCurveIndex);
+});
+
+QUnit.test("shipsByPlayer()", (assert) => {
+  // Setup.
+  const playerId = 2;
+  const state0 = AppState.create();
+  const ship1 = ShipState.create({
+    id: 1,
+    nameIndex: 1,
+    playerId,
+    shipKey: Ship.TERRAN_CA,
+  });
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+  const action2 = ActionCreator.setShip("a1", 1);
+  const state2 = Reducer.root(state1, action2);
+
+  const ship2 = ShipState.create({
+    id: 2,
+    nameIndex: 3,
+    playerId,
+    shipKey: Ship.TERRAN_CA,
+  });
+  const action3 = ActionCreator.addShip(ship2);
+  const state3 = Reducer.root(state2, action3);
+  const action4 = ActionCreator.setShip("b1", 2);
+  const state4 = Reducer.root(state3, action4);
+
+  // Run / Verify.
+  assert.equal(Selector.shipsByPlayer(1, state4).length, 0);
+  assert.equal(Selector.shipsByPlayer(2, state4).length, 2);
+});
+
+QUnit.test("shipsByTeam()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const ship1 = ShipState.create({
+    id: 1,
+    shipKey: Ship.TERRAN_CA,
+    nameIndex: 1,
+  });
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+  const action2 = ActionCreator.setShip("a1", 1);
+  const state2 = Reducer.root(state1, action2);
+
+  const ship2 = ShipState.create({
+    id: 2,
+    shipKey: Ship.TERRAN_CA,
+    nameIndex: 3,
+  });
+  const action3 = ActionCreator.addShip(ship2);
+  const state3 = Reducer.root(state2, action3);
+  const action4 = ActionCreator.setShip("b1", 2);
+  const state4 = Reducer.root(state3, action4);
+
+  // Run / Verify.
+  assert.equal(Selector.shipsByTeam(Team.TALON, state4).length, 0);
+  assert.equal(Selector.shipsByTeam(Team.TERRAN, state4).length, 2);
 });
 
 QUnit.test("shipTurnRadius()", (assert) => {

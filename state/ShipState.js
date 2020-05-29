@@ -5,7 +5,7 @@ import Selector from "./Selector.js";
 
 const ShipState = {};
 
-ShipState.create = ({ id, shipKey, nameIndex, store }) => {
+ShipState.create = ({ id, shipKey, nameIndex, playerId, store }) => {
   const myId =
     R.isNil(id) && store ? Selector.nextShipId(store.getState()) : id;
 
@@ -14,6 +14,7 @@ ShipState.create = ({ id, shipKey, nameIndex, store }) => {
     id: myId,
     shipKey,
     nameIndex,
+    playerId,
     // Managed.
     shipType: Resolver.ship(shipKey),
   });
@@ -26,7 +27,7 @@ ShipState.create = ({ id, shipKey, nameIndex, store }) => {
 };
 
 ShipState.toString = (shipState) =>
-  JSON.stringify(R.pick(["id", "shipKey", "nameIndex"], shipState));
+  JSON.stringify(R.pick(["id", "nameIndex", "playerId", "shipKey"], shipState));
 
 Object.freeze(ShipState);
 

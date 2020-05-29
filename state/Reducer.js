@@ -30,11 +30,9 @@ Reducer.root = (state, action) => {
   let newGameRecords;
   let newPlayers;
   let newPlayerToStrategy;
-  let newShip;
   let newShipKey;
   let newShipMap;
   let newShips;
-  let oldShip;
 
   switch (action.type) {
     case ActionType.ADD_GAME_RECORD:
@@ -50,6 +48,10 @@ Reducer.root = (state, action) => {
         [action.shipState.id]: action.shipState,
       };
       return { ...state, shipInstances: newShips };
+    case ActionType.CLEAR_SHIP:
+      log(`Reducer CLEAR_SHIP an = ${action.an}`, state);
+      newANToTokens = R.dissoc(action.an, state.anToTokens);
+      return { ...state, anToTokens: newANToTokens };
     case ActionType.SET_CURRENT_PHASE:
       log(`Reducer SET_CURRENT_PHASE phaseKey = ${action.phaseKey}`, state);
       return { ...state, currentPhaseKey: action.phaseKey };
@@ -106,9 +108,7 @@ Reducer.root = (state, action) => {
         `Reducer SET_SHIP an = ${action.an} shipId = ${action.shipId}`,
         state
       );
-      oldShip = state.anToTokens[action.an] || [];
-      newShip = [...oldShip, action.shipId];
-      newANToTokens = { ...state.anToTokens, [action.an]: newShip };
+      newANToTokens = { ...state.anToTokens, [action.an]: action.shipId };
       newShipKey = state.shipInstances[action.shipId].shipKey;
       newANToShipKey = { ...state.anToShipKey, [action.an]: newShipKey };
       return {
@@ -187,6 +187,11 @@ Reducer.root = (state, action) => {
       };
       return { ...state, shipToTurnRadius: newShipMap };
     case ActionType.SET_SHIP_WEAPON_INDEX_RED:
+      log(
+        `Reducer SET_SHIP_WEAPON_INDEX_RED shipId = ${action.shipId} ` +
+          `weaponIndex = ${action.weaponIndex} redCount = ${action.redCount}`,
+        state
+      );
       key = StateUtils.shipWeaponIndexKey(action.shipId, action.weaponIndex);
       newShipMap = {
         ...state.shipWeaponIndexToRed,
@@ -194,6 +199,11 @@ Reducer.root = (state, action) => {
       };
       return { ...state, shipWeaponIndexToRed: newShipMap };
     case ActionType.SET_SHIP_WEAPON_INDEX_YELLOW:
+      log(
+        `Reducer SET_SHIP_WEAPON_INDEX_YELLOW shipId = ${action.shipId} ` +
+          `weaponIndex = ${action.weaponIndex} yellowCount = ${action.yellowCount}`,
+        state
+      );
       key = StateUtils.shipWeaponIndexKey(action.shipId, action.weaponIndex);
       newShipMap = {
         ...state.shipWeaponIndexToYellow,

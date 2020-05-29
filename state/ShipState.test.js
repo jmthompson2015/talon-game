@@ -2,10 +2,10 @@ import ShipState from "./ShipState.js";
 
 QUnit.module("ShipState");
 
-const PROPS = ["id", "shipKey", "nameIndex"];
+const PROPS = ["id", "nameIndex", "playerId", "shipKey"];
 
 const createTestData = () =>
-  ShipState.create({ id: 1, shipKey: 2, nameIndex: 3 });
+  ShipState.create({ id: 1, nameIndex: 2, playerId: 3, shipKey: 4 });
 
 QUnit.test("create()", (assert) => {
   // Run.
@@ -13,7 +13,7 @@ QUnit.test("create()", (assert) => {
 
   // Verify.
   PROPS.forEach((prop, i) => {
-    assert.equal(ship[prop], i + 1);
+    assert.equal(ship[prop], i + 1, `ship[${prop}] = ${ship[prop]}`);
   });
 });
 
@@ -39,7 +39,7 @@ QUnit.test("toString()", (assert) => {
 
   // Verify.
   assert.ok(result);
-  assert.equal(result, '{"id":1,"shipKey":2,"nameIndex":3}');
+  assert.equal(result, '{"id":1,"nameIndex":2,"playerId":3,"shipKey":4}');
 });
 
 const ShipStateTest = {};

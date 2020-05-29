@@ -2,6 +2,7 @@ const ActionType = {};
 
 ActionType.ADD_GAME_RECORD = "addGameRecord";
 ActionType.ADD_SHIP = "addShip";
+ActionType.CLEAR_SHIP = "clearShip";
 ActionType.SET_CURRENT_PHASE = "setCurrentPhase";
 ActionType.SET_CURRENT_PLAYER = "setCurrentPlayer";
 ActionType.SET_CURRENT_PLAYER_ORDER = "setCurrentPlayerOrder";
