@@ -1,5 +1,6 @@
 import Arc from "../artifact/Arc.js";
 import Ship from "../artifact/Ship.js";
+import Step from "../artifact/Step.js";
 import Team from "../artifact/Team.js";
 
 import AppState from "./AppState.js";
@@ -10,6 +11,27 @@ import Selector from "./Selector.js";
 import ShipState from "./ShipState.js";
 
 QUnit.module("Selector");
+
+QUnit.test("currentStep()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+
+  // Run.
+  const result1 = Selector.currentStep(state0);
+
+  // Verify.
+  assert.equal(result1, undefined);
+
+  // Run.
+  const stepKey = Step.REMOVE_SHIELD_REINFORCEMENT;
+  const action = ActionCreator.setCurrentStep(stepKey);
+  const state = Reducer.root(state0, action);
+  const result2 = Selector.currentStep(state);
+
+  // Verify.
+  assert.ok(result2);
+  assert.equal(result2.key, stepKey);
+});
 
 QUnit.test("delay()", (assert) => {
   // Setup.

@@ -3,6 +3,7 @@ import Hull from "./Hull.js";
 import Phase from "./Phase.js";
 import Resolver from "./Resolver.js";
 import Ship from "./Ship.js";
+import Step from "./Step.js";
 import Team from "./Team.js";
 import Weapon from "./Weapon.js";
 
@@ -103,6 +104,14 @@ QUnit.test("shipWeaponGroup() Talon CA", (assert) => {
   assert.equal(weaponGroup1.red, 1);
   assert.equal(weaponGroup1.yellow, 4);
   assert.equal(weaponGroup1.count, 2);
+});
+
+QUnit.test("step()", (assert) => {
+  // Run / Verify.
+  const forEachFunction = (key) => {
+    assert.equal(Resolver.step(key), Step.properties[key]);
+  };
+  R.forEach(forEachFunction, Step.keys());
 });
 
 QUnit.test("team()", (assert) => {

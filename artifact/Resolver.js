@@ -3,6 +3,7 @@ import Hull from "./Hull.js";
 import Phase from "./Phase.js";
 import PowerOption from "./PowerOption.js";
 import Ship from "./Ship.js";
+import Step from "./Step.js";
 import Team from "./Team.js";
 import Weapon from "./Weapon.js";
 
@@ -47,6 +48,8 @@ Resolver.shipWeaponGroup = (shipKey, weaponIndex) => {
 
   return ship ? ship.weaponGroups[weaponIndex] : null;
 };
+
+Resolver.step = (stepKey) => Step.properties[stepKey];
 
 Resolver.team = (teamKey) => Team.properties[teamKey];
 

@@ -86,6 +86,20 @@ QUnit.test("setCurrentPlayerOrder()", (assert) => {
   assert.equal(result.currentPlayerOrder.join(), playerIds.join());
 });
 
+QUnit.test("setCurrentStep()", (assert) => {
+  // Setup.
+  const state = AppState.create();
+  const stepKey = 12;
+  const action = ActionCreator.setCurrentStep(stepKey);
+
+  // Run.
+  const result = Reducer.root(state, action);
+
+  // Verify.
+  assert.ok(result);
+  assert.equal(result.currentStepKey, stepKey);
+});
+
 QUnit.test("setDelay()", (assert) => {
   // Setup.
   const state = AppState.create();

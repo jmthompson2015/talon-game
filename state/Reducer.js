@@ -69,6 +69,9 @@ Reducer.root = (state, action) => {
         state
       );
       return { ...state, currentPlayerOrder: action.playerIds };
+    case ActionType.SET_CURRENT_STEP:
+      log(`Reducer SET_CURRENT_STEP stepKey = ${action.stepKey}`, state);
+      return { ...state, currentStepKey: action.stepKey };
     case ActionType.SET_DELAY:
       log(`Reducer SET_DELAY delay = ${action.delay}`, state);
       return { ...state, delay: action.delay };

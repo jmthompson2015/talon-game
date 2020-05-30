@@ -136,6 +136,11 @@ ActionCreator.setShipWeaponIndexYellow = makeActionCreator(
   "yellowCount"
 );
 
+ActionCreator.setCurrentStep = makeActionCreator(
+  ActionType.SET_CURRENT_STEP,
+  "stepKey"
+);
+
 ActionCreator.setUserMessage = makeActionCreator(
   ActionType.SET_USER_MESSAGE,
   "userMessage"

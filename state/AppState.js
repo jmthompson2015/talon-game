@@ -16,6 +16,7 @@ AppState.create = ({
   currentPlayerOrder = null,
   currentPhaseKey = null,
   currentPlayerId = null,
+  currentStepKey = null,
 
   playerToMorgue = {},
   playerToStrategy = {},
@@ -52,6 +53,7 @@ AppState.create = ({
     currentPlayerOrder,
     currentPhaseKey,
     currentPlayerId,
+    currentStepKey,
 
     playerToMorgue,
     playerToStrategy,

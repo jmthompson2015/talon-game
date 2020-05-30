@@ -11,6 +11,8 @@ Selector.currentPlayer = (state) =>
 
 Selector.currentPlayerOrder = (state) => state.currentPlayerOrder;
 
+Selector.currentStep = (state) => Resolver.step(state.currentStepKey);
+
 Selector.delay = (state) => state.delay;
 
 Selector.initiativePlayer = (state) => {

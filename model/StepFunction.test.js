@@ -1,16 +1,20 @@
+import Phase from "../artifact/Phase.js";
+
 import ActionCreator from "../state/ActionCreator.js";
 import Selector from "../state/Selector.js";
 
-import PhaseFunction from "./PhaseFunction.js";
+import StepFunction from "./StepFunction.js";
 import TestData from "./TestData.js";
 
-QUnit.module("PhaseFunction");
+QUnit.module("StepFunction");
 
 QUnit.test("execute()", (assert) => {
   // Setup.
   const store = TestData.createStore();
   store.dispatch(ActionCreator.setRound(1));
+  store.dispatch(ActionCreator.setCurrentPhase(Phase.IMPULSE_A));
   store.dispatch(ActionCreator.setCurrentPlayerOrder([1, 2]));
+  store.dispatch(ActionCreator.setCurrentPlayer(1));
 
   // Run.
   const done = assert.async();
@@ -18,14 +22,14 @@ QUnit.test("execute()", (assert) => {
     assert.ok(true, "test resumed from async operation");
     const state = store.getState();
     assert.equal(Selector.round(state), 1);
-    assert.equal(Selector.currentPhase(state), undefined);
-    assert.equal(Selector.currentPlayer(state), undefined);
+    assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
+    assert.equal(Selector.currentPlayer(state).id, 1);
     // Verify.
     done();
   };
 
-  PhaseFunction.execute(store).then(callback);
+  StepFunction.execute(store).then(callback);
 });
 
-const PhaseFunctionTest = {};
-export default PhaseFunctionTest;
+const StepFunctionTest = {};
+export default StepFunctionTest;
