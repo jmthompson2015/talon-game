@@ -156,24 +156,19 @@ const executeRetreatPhase = (store) =>
 // /////////////////////////////////////////////////////////////////////////////
 StepFunction.execute = (store) => {
   const phaseKey = store.getState().currentPhaseKey;
+  let answer;
 
   if (phaseKey && phaseKey.startsWith("impulse")) {
-    return executeImpulse(store);
+    answer = executeImpulse(store);
+  } else if (phaseKey === Phase.POWER_PHASE) {
+    answer = executePowerPhase(store);
+  } else if (phaseKey === Phase.REINFORCEMENT_PHASE) {
+    answer = executeReinforcementPhase(store);
+  } else if (phaseKey === Phase.RETREAT_PHASE) {
+    answer = executeRetreatPhase(store);
   }
 
-  if (phaseKey === Phase.POWER_PHASE) {
-    return executePowerPhase(store);
-  }
-
-  if (phaseKey === Phase.REINFORCEMENT_PHASE) {
-    return executeReinforcementPhase(store);
-  }
-
-  if (phaseKey === Phase.RETREAT_PHASE) {
-    return executeRetreatPhase(store);
-  }
-
-  return null;
+  return answer;
 };
 
 Object.freeze(StepFunction);
