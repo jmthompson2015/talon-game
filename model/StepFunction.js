@@ -85,6 +85,9 @@ const executeImpulse = (store) =>
       if (!GameOver.isGameOver(store)) {
         checkInitiative(store);
       }
+    })
+    .then(() => {
+      store.dispatch(ActionCreator.setCurrentStep(undefined));
     });
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -106,11 +109,15 @@ const executePowerPhase = (store) =>
       chargeWeapon(store);
     }
     resolve();
-  }).then(() => {
-    if (!GameOver.isGameOver(store)) {
-      adjustPowerCurve(store);
-    }
-  });
+  })
+    .then(() => {
+      if (!GameOver.isGameOver(store)) {
+        adjustPowerCurve(store);
+      }
+    })
+    .then(() => {
+      store.dispatch(ActionCreator.setCurrentStep(undefined));
+    });
 
 // /////////////////////////////////////////////////////////////////////////////
 const reinforcement = (store) => {
@@ -125,6 +132,8 @@ const executeReinforcementPhase = (store) =>
       reinforcement(store);
     }
     resolve();
+  }).then(() => {
+    store.dispatch(ActionCreator.setCurrentStep(undefined));
   });
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -140,6 +149,8 @@ const executeRetreatPhase = (store) =>
       retreat(store);
     }
     resolve();
+  }).then(() => {
+    store.dispatch(ActionCreator.setCurrentStep(undefined));
   });
 
 // /////////////////////////////////////////////////////////////////////////////

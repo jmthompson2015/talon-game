@@ -28,7 +28,7 @@ const advancePlayer = (store) => {
   store.dispatch(ActionCreator.setCurrentPlayer(newPlayerId));
 };
 
-PlayerTurn.executeSteps = (resolve, store) => {
+PlayerTurn.executePlayerTurns = (resolve, store) => {
   advancePlayer(store);
   const playerId = Selector.currentPlayer(store.getState());
 
@@ -36,7 +36,7 @@ PlayerTurn.executeSteps = (resolve, store) => {
     resolve();
   } else {
     StepFunction.execute(store).then(() => {
-      PlayerTurn.executeSteps(resolve, store);
+      PlayerTurn.executePlayerTurns(resolve, store);
     });
   }
 };
@@ -46,7 +46,7 @@ PlayerTurn.execute = (store) =>
     if (GameOver.isGameOver(store)) {
       resolve();
     } else {
-      PlayerTurn.executeSteps(resolve, store);
+      PlayerTurn.executePlayerTurns(resolve, store);
     }
   });
 

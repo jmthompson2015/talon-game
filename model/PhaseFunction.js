@@ -32,7 +32,7 @@ const advancePhase = (store) => {
   store.dispatch(ActionCreator.setCurrentPhase(newPhaseKey));
 };
 
-PhaseFunction.executePlayerTurns = (resolve, store) => {
+PhaseFunction.executePhases = (resolve, store) => {
   advancePhase(store);
   const phase = Selector.currentPhase(store.getState());
   const phaseKey = phase ? phase.key : undefined;
@@ -41,7 +41,7 @@ PhaseFunction.executePlayerTurns = (resolve, store) => {
     resolve();
   } else {
     PlayerTurn.execute(store).then(() => {
-      PhaseFunction.executePlayerTurns(resolve, store);
+      PhaseFunction.executePhases(resolve, store);
     });
   }
 };
@@ -51,7 +51,7 @@ PhaseFunction.execute = (store) =>
     if (GameOver.isGameOver(store)) {
       resolve();
     } else {
-      PhaseFunction.executePlayerTurns(resolve, store);
+      PhaseFunction.executePhases(resolve, store);
     }
   });
 

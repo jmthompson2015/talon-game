@@ -24,6 +24,7 @@ QUnit.test("execute()", (assert) => {
     assert.equal(Selector.round(state), 1);
     assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
     assert.equal(Selector.currentPlayer(state).id, 1);
+    assert.equal(Selector.currentStep(state), undefined);
     // Verify.
     done();
   };

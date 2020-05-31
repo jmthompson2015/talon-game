@@ -23,6 +23,7 @@ QUnit.test("execute()", (assert) => {
     assert.equal(Selector.round(state), 1);
     assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
     assert.equal(Selector.currentPlayer(state), undefined);
+    assert.equal(Selector.currentStep(state), undefined);
     // Verify.
     done();
   };

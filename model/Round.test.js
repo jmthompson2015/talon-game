@@ -20,6 +20,7 @@ QUnit.test("execute() ", (assert) => {
     assert.equal(Selector.round(state), 3);
     assert.equal(Selector.currentPhase(state), undefined);
     assert.equal(Selector.currentPlayer(state), undefined);
+    assert.equal(Selector.currentStep(state), undefined);
     done();
   };
 
