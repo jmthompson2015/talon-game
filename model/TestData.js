@@ -12,40 +12,65 @@ import StrategyResolver from "./StrategyResolver.js";
 
 const TestData = {};
 
-const createPlayers = (isTwoPlayer) => {
+const createPlayers = (playerCount) => {
   const player1 = PlayerState.create({
     id: 1,
-    name: "Alfred",
+    name: "Alfred", // Pennyworth
     teamKey: Team.TALON,
   });
   const player2 = PlayerState.create({
     id: 2,
-    name: "Bruce",
+    name: "Bruce", // Wayne
     teamKey: Team.TERRAN,
   });
 
   const answer = [player1, player2];
 
-  if (!isTwoPlayer) {
+  if (playerCount > 2) {
     const player3 = PlayerState.create({
       id: 3,
-      name: "Clark",
+      name: "Clark", // Kent
       teamKey: Team.TALON,
     });
+
+    answer.push(player3);
+  }
+
+  if (playerCount > 3) {
     const player4 = PlayerState.create({
       id: 4,
-      name: "Diana",
+      name: "Diana", // Prince
       teamKey: Team.TERRAN,
     });
 
-    answer.push(player3, player4);
+    answer.push(player4);
+  }
+
+  if (playerCount > 4) {
+    const player5 = PlayerState.create({
+      id: 5,
+      name: "Edward", // Nygma
+      teamKey: Team.TALON,
+    });
+
+    answer.push(player5);
+  }
+
+  if (playerCount > 5) {
+    const player6 = PlayerState.create({
+      id: 6,
+      name: "Fred", // Danvers
+      teamKey: Team.TERRAN,
+    });
+
+    answer.push(player6);
   }
 
   return answer;
 };
 
-const createShip = (shipId, shipKey, nameIndex, an, store) => {
-  ShipState.create({ id: shipId, shipKey, nameIndex, store });
+const createShip = (shipId, shipKey, nameIndex, playerId, an, store) => {
+  ShipState.create({ id: shipId, shipKey, nameIndex, playerId, store });
   const ship = Selector.ship(shipId, store.getState());
   store.dispatch(ActionCreator.setShip(an, shipId));
   const powerCurveIndex = Ship.defaultPowerCurveIndex(ship.shipType);
@@ -73,9 +98,9 @@ const createShip = (shipId, shipKey, nameIndex, an, store) => {
   forEachIndexed(forEachFunction2, ship.shipType.weaponGroups);
 };
 
-TestData.createStore = (isTwoPlayer = true) => {
+TestData.createStore = (playerCount = 2) => {
   const store = Redux.createStore(Reducer.root);
-  const players = createPlayers(isTwoPlayer);
+  const players = createPlayers(playerCount);
   store.dispatch(ActionCreator.setPlayers(players));
   R.forEach((player) => {
     const strategy = StrategyResolver.resolve(player.strategy);
@@ -86,10 +111,10 @@ TestData.createStore = (isTwoPlayer = true) => {
   store.dispatch(ActionCreator.setInitiativePlayer(players[0].id));
 
   // Create ships.
-  createShip(1, Ship.TERRAN_CA, 1, "a1", store);
-  createShip(2, Ship.TERRAN_CA, 3, "b1", store);
-  createShip(3, Ship.TALON_CA, 0, "a10", store);
-  createShip(4, Ship.TALON_CA, 3, "b10", store);
+  createShip(1, Ship.TERRAN_CA, 1, 1, "a1", store);
+  createShip(2, Ship.TERRAN_CA, 3, 1, "b1", store);
+  createShip(3, Ship.TALON_CA, 0, 2, "a10", store);
+  createShip(4, Ship.TALON_CA, 3, 2, "b10", store);
 
   return store;
 };

@@ -6,39 +6,32 @@ import StepFunction from "./StepFunction.js";
 
 const PlayerTurn = {};
 
-const advancePlayer = (store) => {
-  const oldPlayer = Selector.currentPlayer(store.getState());
-  const oldPlayerId = oldPlayer ? oldPlayer.id : undefined;
-  const playerIds = Selector.currentPlayerOrder(store.getState());
-  let newPlayerId;
+const executeSteps = (playerIds, index, store) => {
+  let answer;
 
-  if (R.isNil(oldPlayerId)) {
-    [newPlayerId] = playerIds; // first element
-  } else {
-    const index = playerIds.indexOf(oldPlayerId);
-
-    if (index === playerIds.length - 1) {
-      // last player.
-      newPlayerId = undefined;
-    } else {
-      newPlayerId = playerIds[index + 1];
-    }
+  if (playerIds.length > index) {
+    store.dispatch(ActionCreator.setCurrentPlayer(playerIds[index]));
+    answer = StepFunction.execute(store);
   }
 
-  store.dispatch(ActionCreator.setCurrentPlayer(newPlayerId));
+  return answer;
 };
 
-PlayerTurn.executePlayerTurns = (resolve, store) => {
-  advancePlayer(store);
-  const playerId = Selector.currentPlayer(store.getState());
+const executePlayerTurns = (store) => {
+  const playerIds = Selector.currentPlayerOrder(store.getState());
 
-  if (R.isNil(playerId)) {
-    resolve();
-  } else {
-    StepFunction.execute(store).then(() => {
-      PlayerTurn.executePlayerTurns(resolve, store);
+  return new Promise((resolve) => {
+    store.dispatch(ActionCreator.setCurrentPlayer(playerIds[0]));
+    StepFunction.execute(store).then(resolve);
+  })
+    .then(() => executeSteps(playerIds, 1, store))
+    .then(() => executeSteps(playerIds, 2, store))
+    .then(() => executeSteps(playerIds, 3, store))
+    .then(() => executeSteps(playerIds, 4, store))
+    .then(() => executeSteps(playerIds, 5, store))
+    .then(() => {
+      store.dispatch(ActionCreator.setCurrentPlayer(undefined));
     });
-  }
 };
 
 PlayerTurn.execute = (store) =>
@@ -46,7 +39,9 @@ PlayerTurn.execute = (store) =>
     if (GameOver.isGameOver(store)) {
       resolve();
     } else {
-      PlayerTurn.executePlayerTurns(resolve, store);
+      executePlayerTurns(store).then(() => {
+        resolve();
+      });
     }
   });
 
