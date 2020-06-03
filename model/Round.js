@@ -7,8 +7,8 @@ import PhaseFunction from "./PhaseFunction.js";
 const Round = {};
 
 const advanceRound = (store) => {
-  const newRound = Selector.round(store.getState()) + 1;
-  store.dispatch(ActionCreator.setRound(newRound));
+  const newRound = Selector.currentRound(store.getState()) + 1;
+  store.dispatch(ActionCreator.setCurrentRound(newRound));
   store.dispatch(ActionCreator.setCurrentPhase(null));
 
   const players = Selector.playersInOrder(store.getState());
@@ -19,7 +19,7 @@ const advanceRound = (store) => {
 
 Round.executeRounds = (resolve, store, roundLimit) => {
   advanceRound(store);
-  const round = Selector.round(store.getState());
+  const round = Selector.currentRound(store.getState());
 
   if (round > roundLimit) {
     resolve();

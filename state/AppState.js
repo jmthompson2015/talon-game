@@ -12,9 +12,9 @@ AppState.create = ({
   userMessage = null,
   winnerTeamKey = null,
 
-  round = 0,
-  currentPlayerOrder = null,
+  currentRound = 0,
   currentPhaseKey = null,
+  currentPlayerOrder = null,
   currentPlayerId = null,
   currentStepKey = null,
 
@@ -49,9 +49,9 @@ AppState.create = ({
     userMessage,
     winnerTeamKey,
 
-    round,
-    currentPlayerOrder,
+    currentRound,
     currentPhaseKey,
+    currentPlayerOrder,
     currentPlayerId,
     currentStepKey,
 

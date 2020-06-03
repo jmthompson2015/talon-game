@@ -11,6 +11,8 @@ Selector.currentPlayer = (state) =>
 
 Selector.currentPlayerOrder = (state) => state.currentPlayerOrder;
 
+Selector.currentRound = (state) => state.currentRound;
+
 Selector.currentStep = (state) => Resolver.step(state.currentStepKey);
 
 Selector.delay = (state) => state.delay;
@@ -56,8 +58,6 @@ Selector.playersInOrder = (state) => {
 
   return [...first, ...second];
 };
-
-Selector.round = (state) => state.round;
 
 Selector.ship = (shipId, state) => state.shipInstances[shipId];
 

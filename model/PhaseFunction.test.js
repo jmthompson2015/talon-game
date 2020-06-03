@@ -9,7 +9,7 @@ QUnit.module("PhaseFunction");
 QUnit.test("execute()", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.setRound(1));
+  store.dispatch(ActionCreator.setCurrentRound(1));
   store.dispatch(ActionCreator.setCurrentPlayerOrder([1, 2]));
 
   // Run.
@@ -17,7 +17,7 @@ QUnit.test("execute()", (assert) => {
   const callback = () => {
     assert.ok(true, "test resumed from async operation");
     const state = store.getState();
-    assert.equal(Selector.round(state), 1);
+    assert.equal(Selector.currentRound(state), 1);
     assert.equal(Selector.currentPhase(state), undefined);
     assert.equal(Selector.currentPlayer(state), undefined);
     assert.equal(Selector.currentStep(state), undefined);

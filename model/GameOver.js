@@ -30,7 +30,7 @@ GameOver.isGameOver = (store, roundLimit = 100) => {
   }
 
   return (
-    !R.isNil(winnerTeamKey) || Selector.round(store.getState()) >= roundLimit
+    !R.isNil(winnerTeamKey) || Selector.currentRound(store.getState()) >= roundLimit
   );
 };
 

@@ -39,7 +39,7 @@ Reducer.root = (state, action) => {
       log(`Reducer ADD_GAME_RECORD message = ${action.message}`, state);
       newGameRecords = [
         ...state.gameRecords,
-        { round: state.round, message: action.message },
+        { currentRound: state.currentRound, message: action.message },
       ];
       return { ...state, gameRecords: newGameRecords };
     case ActionType.ADD_SHIP:
@@ -69,6 +69,9 @@ Reducer.root = (state, action) => {
         state
       );
       return { ...state, currentPlayerOrder: action.playerIds };
+    case ActionType.SET_CURRENT_ROUND:
+      log(`Reducer SET_CURRENT_ROUND round = ${action.round}`, state);
+      return { ...state, currentRound: action.round };
     case ActionType.SET_CURRENT_STEP:
       log(`Reducer SET_CURRENT_STEP stepKey = ${action.stepKey}`, state);
       return { ...state, currentStepKey: action.stepKey };
@@ -103,9 +106,6 @@ Reducer.root = (state, action) => {
         [action.playerId]: action.strategy,
       };
       return { ...state, playerToStrategy: newPlayerToStrategy };
-    case ActionType.SET_ROUND:
-      log(`Reducer SET_ROUND round = ${action.round}`, state);
-      return { ...state, round: action.round };
     case ActionType.SET_SHIP:
       log(
         `Reducer SET_SHIP an = ${action.an} shipId = ${action.shipId}`,

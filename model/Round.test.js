@@ -17,7 +17,7 @@ QUnit.test("execute() ", (assert) => {
     assert.ok(true, "test resumed from async operation");
     // Verify.
     const state = store.getState();
-    assert.equal(Selector.round(state), 3);
+    assert.equal(Selector.currentRound(state), 3);
     assert.equal(Selector.currentPhase(state), undefined);
     assert.equal(Selector.currentPlayer(state), undefined);
     assert.equal(Selector.currentStep(state), undefined);

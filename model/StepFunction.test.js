@@ -11,7 +11,7 @@ QUnit.module("StepFunction");
 QUnit.test("execute()", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.setRound(1));
+  store.dispatch(ActionCreator.setCurrentRound(1));
   store.dispatch(ActionCreator.setCurrentPhase(Phase.IMPULSE_A));
   store.dispatch(ActionCreator.setCurrentPlayerOrder([1, 2]));
   store.dispatch(ActionCreator.setCurrentPlayer(1));
@@ -21,7 +21,7 @@ QUnit.test("execute()", (assert) => {
   const callback = () => {
     assert.ok(true, "test resumed from async operation");
     const state = store.getState();
-    assert.equal(Selector.round(state), 1);
+    assert.equal(Selector.currentRound(state), 1);
     assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
     assert.equal(Selector.currentPlayer(state).id, 1);
     assert.equal(Selector.currentStep(state), undefined);

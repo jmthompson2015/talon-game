@@ -10,7 +10,7 @@ QUnit.module("Reducer");
 QUnit.test("addGameRecord()", (assert) => {
   // Setup.
   const state01 = AppState.create();
-  const action01 = ActionCreator.setRound(1);
+  const action01 = ActionCreator.setCurrentRound(1);
   const state0 = Reducer.root(state01, action01);
   const action0 = ActionCreator.addGameRecord("first game record");
 
@@ -22,11 +22,11 @@ QUnit.test("addGameRecord()", (assert) => {
   const { gameRecords: gameRecords0 } = result0;
   assert.ok(gameRecords0);
   assert.equal(gameRecords0.length, 1);
-  assert.equal(gameRecords0[0].round, 1);
+  assert.equal(gameRecords0[0].currentRound, 1);
   assert.equal(gameRecords0[0].message, "first game record");
 
   // Setup.
-  const action02 = ActionCreator.setRound(2);
+  const action02 = ActionCreator.setCurrentRound(2);
   const state02 = Reducer.root(result0, action02);
   const action1 = ActionCreator.addGameRecord("second game record");
 
@@ -38,9 +38,9 @@ QUnit.test("addGameRecord()", (assert) => {
   const { gameRecords: gameRecords1 } = result1;
   assert.ok(gameRecords1);
   assert.equal(gameRecords1.length, 2);
-  assert.equal(gameRecords0[0].round, 1);
+  assert.equal(gameRecords0[0].currentRound, 1);
   assert.equal(gameRecords0[0].message, "first game record");
-  assert.equal(gameRecords1[1].round, 2);
+  assert.equal(gameRecords1[1].currentRound, 2);
   assert.equal(gameRecords1[1].message, "second game record");
 });
 
@@ -86,6 +86,20 @@ QUnit.test("setCurrentPlayerOrder()", (assert) => {
   assert.equal(result.currentPlayerOrder.join(), playerIds.join());
 });
 
+QUnit.test("setCurrentRound()", (assert) => {
+  // Setup.
+  const state = AppState.create();
+  const round = 123;
+  const action = ActionCreator.setCurrentRound(round);
+
+  // Run.
+  const result = Reducer.root(state, action);
+
+  // Verify.
+  assert.ok(result);
+  assert.equal(result.currentRound, round);
+});
+
 QUnit.test("setCurrentStep()", (assert) => {
   // Setup.
   const state = AppState.create();
@@ -126,20 +140,6 @@ QUnit.test("setInitiativePlayer()", (assert) => {
   // Verify.
   assert.ok(result);
   assert.equal(result.initiativePlayerId, playerId);
-});
-
-QUnit.test("setRound()", (assert) => {
-  // Setup.
-  const state = AppState.create();
-  const round = 123;
-  const action = ActionCreator.setRound(round);
-
-  // Run.
-  const result = Reducer.root(state, action);
-
-  // Verify.
-  assert.ok(result);
-  assert.equal(result.round, round);
 });
 
 QUnit.test("setShip()", (assert) => {

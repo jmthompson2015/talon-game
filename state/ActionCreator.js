@@ -35,6 +35,16 @@ ActionCreator.setCurrentPlayerOrder = makeActionCreator(
   "playerIds"
 );
 
+ActionCreator.setCurrentRound = makeActionCreator(
+  ActionType.SET_CURRENT_ROUND,
+  "round"
+);
+
+ActionCreator.setCurrentStep = makeActionCreator(
+  ActionType.SET_CURRENT_STEP,
+  "stepKey"
+);
+
 ActionCreator.setDelay = makeActionCreator(ActionType.SET_DELAY, "delay");
 
 ActionCreator.setInitiativePlayer = makeActionCreator(
@@ -49,8 +59,6 @@ ActionCreator.setPlayerStrategy = makeActionCreator(
   "playerId",
   "strategy"
 );
-
-ActionCreator.setRound = makeActionCreator(ActionType.SET_ROUND, "round");
 
 ActionCreator.setShip = makeActionCreator(ActionType.SET_SHIP, "an", "shipId");
 
@@ -134,11 +142,6 @@ ActionCreator.setShipWeaponIndexYellow = makeActionCreator(
   "shipId",
   "weaponIndex",
   "yellowCount"
-);
-
-ActionCreator.setCurrentStep = makeActionCreator(
-  ActionType.SET_CURRENT_STEP,
-  "stepKey"
 );
 
 ActionCreator.setUserMessage = makeActionCreator(
