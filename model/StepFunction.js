@@ -1,6 +1,5 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
-import Phase from "../artifact/Phase.js";
 import Step from "../artifact/Step.js";
 
 import ActionCreator from "../state/ActionCreator.js";
@@ -10,166 +9,133 @@ import GameOver from "./GameOver.js";
 
 const StepFunction = {};
 
-const checkInitiative = (store) => {
-  // 4.2 Check for initiative change.
-  store.dispatch(ActionCreator.setCurrentStep(Step.CHECK_INITIATIVE));
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.checkInitiative() ${currentPlayer.name}`);
-};
-
-const fireWeapons = (store) => {
-  // 8 Firing: Any/all ships May Fire, if able.
-  store.dispatch(ActionCreator.setCurrentStep(Step.FIRE_WEAPONS));
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.fireWeapons() ${currentPlayer.name}`);
-};
-
-const moveShips = (store) => {
-  // 7.1 Moving: Move Ships if required or use Afterburner if available.
-  store.dispatch(ActionCreator.setCurrentStep(Step.MOVE_SHIPS));
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.moveShips() ${currentPlayer.name}`);
-};
-
-const removeShieldReinforcement = (store) => {
-  // 6.2.3 Remove all expired Shield Reinforcement.
-  store.dispatch(
-    ActionCreator.setCurrentStep(Step.REMOVE_SHIELD_REINFORCEMENT)
-  );
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.removeShieldReinforcement() ${currentPlayer.name}`);
-};
-
-const repairCriticalDamage = (store) => {
-  // 8.7 Repair of Critical Damage: Attempt to Repair all Repairable Damage.
-  store.dispatch(ActionCreator.setCurrentStep(Step.REPAIR_CRITICAL_DAMAGE));
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.repairCriticalDamage() ${currentPlayer.name}`);
-};
-
-const spendAvailablePower = (store) => {
-  // 6.1 Spend Available Power: Spend AP, if able or use Battery if available.
-  store.dispatch(ActionCreator.setCurrentStep(Step.SPEND_AVAILABLE_POWER));
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.spendAvailablePower() ${currentPlayer.name}`);
-};
-
-const executeImpulse = (store) =>
-  new Promise((resolve) => {
-    if (!GameOver.isGameOver(store)) {
-      removeShieldReinforcement(store);
-    }
-    resolve();
-  })
-    .then(() => {
-      if (!GameOver.isGameOver(store)) {
-        spendAvailablePower(store);
-      }
-    })
-    .then(() => {
-      if (!GameOver.isGameOver(store)) {
-        moveShips(store);
-      }
-    })
-    .then(() => {
-      if (!GameOver.isGameOver(store)) {
-        fireWeapons(store);
-      }
-    })
-    .then(() => {
-      if (!GameOver.isGameOver(store)) {
-        repairCriticalDamage(store);
-      }
-    })
-    .then(() => {
-      if (!GameOver.isGameOver(store)) {
-        checkInitiative(store);
-      }
-    })
-    .then(() => {
-      store.dispatch(ActionCreator.setCurrentStep(undefined));
-    });
-
-// /////////////////////////////////////////////////////////////////////////////
-const adjustPowerCurve = (store) => {
-  store.dispatch(ActionCreator.setCurrentStep(Step.ADJUST_POWER_CURVE));
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.adjustPowerCurve() ${currentPlayer.name}`);
-};
-
-const chargeWeapon = (store) => {
-  store.dispatch(ActionCreator.setCurrentStep(Step.CHARGE_WEAPON));
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.chargeWeapon() ${currentPlayer.name}`);
-};
-
-const executePowerPhase = (store) =>
-  new Promise((resolve) => {
-    if (!GameOver.isGameOver(store)) {
-      chargeWeapon(store);
-    }
-    resolve();
-  })
-    .then(() => {
-      if (!GameOver.isGameOver(store)) {
-        adjustPowerCurve(store);
-      }
-    })
-    .then(() => {
-      store.dispatch(ActionCreator.setCurrentStep(undefined));
-    });
-
-// /////////////////////////////////////////////////////////////////////////////
-const reinforcement = (store) => {
-  store.dispatch(ActionCreator.setCurrentStep(Step.REINFORCEMENT));
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.reinforcement() ${currentPlayer.name}`);
-};
-
-const executeReinforcementPhase = (store) =>
-  new Promise((resolve) => {
-    if (!GameOver.isGameOver(store)) {
-      reinforcement(store);
-    }
-    resolve();
-  }).then(() => {
-    store.dispatch(ActionCreator.setCurrentStep(undefined));
-  });
-
-// /////////////////////////////////////////////////////////////////////////////
-const retreat = (store) => {
-  store.dispatch(ActionCreator.setCurrentStep(Step.RETREAT));
-  const currentPlayer = Selector.currentPlayer(store.getState());
-  console.log(`StepFunction.retreat() ${currentPlayer.name}`);
-};
-
-const executeRetreatPhase = (store) =>
-  new Promise((resolve) => {
-    if (!GameOver.isGameOver(store)) {
-      retreat(store);
-    }
-    resolve();
-  }).then(() => {
-    store.dispatch(ActionCreator.setCurrentStep(undefined));
-  });
-
-// /////////////////////////////////////////////////////////////////////////////
-StepFunction.execute = (store) => {
-  const phaseKey = store.getState().currentPhaseKey;
-  let answer;
-
-  if (phaseKey && phaseKey.startsWith("impulse")) {
-    answer = executeImpulse(store);
-  } else if (phaseKey === Phase.POWER_PHASE) {
-    answer = executePowerPhase(store);
-  } else if (phaseKey === Phase.REINFORCEMENT_PHASE) {
-    answer = executeReinforcementPhase(store);
-  } else if (phaseKey === Phase.RETREAT_PHASE) {
-    answer = executeRetreatPhase(store);
+StepFunction[Step.CHECK_INITIATIVE] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    // 4.2 Check for initiative change.
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(`StepFunction.checkInitiative() ${currentPlayer.name}`);
   }
 
-  return answer;
+  return Promise.resolve();
 };
+
+StepFunction[Step.FIRE_WEAPONS] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    // 8 Firing: Any/all ships May Fire, if able.
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(`StepFunction.fireWeapons() ${currentPlayer.name}`);
+  }
+
+  return Promise.resolve();
+};
+
+StepFunction[Step.MOVE_SHIPS] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    // 7.1 Moving: Move Ships if required or use Afterburner if available.
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(`StepFunction.moveShips() ${currentPlayer.name}`);
+  }
+
+  return Promise.resolve();
+};
+
+StepFunction[Step.REMOVE_SHIELD_REINFORCEMENT] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    // 6.2.3 Remove all expired Shield Reinforcement.
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(
+      `StepFunction.removeShieldReinforcement() ${currentPlayer.name}`
+    );
+  }
+
+  return Promise.resolve();
+};
+
+StepFunction[Step.REPAIR_CRITICAL_DAMAGE] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    // 8.7 Repair of Critical Damage: Attempt to Repair all Repairable Damage.
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(`StepFunction.repairCriticalDamage() ${currentPlayer.name}`);
+  }
+
+  return Promise.resolve();
+};
+
+StepFunction[Step.SPEND_AVAILABLE_POWER] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    // 6.1 Spend Available Power: Spend AP, if able or use Battery if available.
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(`StepFunction.spendAvailablePower() ${currentPlayer.name}`);
+  }
+
+  return Promise.resolve();
+};
+
+// /////////////////////////////////////////////////////////////////////////////
+StepFunction[Step.ADJUST_POWER_CURVE] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(`StepFunction.adjustPowerCurve() ${currentPlayer.name}`);
+  }
+
+  return Promise.resolve();
+};
+
+StepFunction[Step.CHARGE_WEAPON] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(`StepFunction.chargeWeapon() ${currentPlayer.name}`);
+  }
+
+  return Promise.resolve();
+};
+
+// /////////////////////////////////////////////////////////////////////////////
+StepFunction[Step.REINFORCEMENT] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    store.dispatch(ActionCreator.setCurrentStep(Step.REINFORCEMENT));
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(`StepFunction.reinforcement() ${currentPlayer.name}`);
+  }
+
+  return Promise.resolve();
+};
+
+// /////////////////////////////////////////////////////////////////////////////
+StepFunction[Step.RETREAT] = (store) => {
+  if (!GameOver.isGameOver(store)) {
+    store.dispatch(ActionCreator.setCurrentStep(Step.RETREAT));
+    const currentPlayer = Selector.currentPlayer(store.getState());
+    console.log(`StepFunction.retreat() ${currentPlayer.name}`);
+  }
+
+  return Promise.resolve();
+};
+
+// /////////////////////////////////////////////////////////////////////////////
+StepFunction.execute = (store) =>
+  new Promise((resolve) => {
+    if (GameOver.isGameOver(store)) {
+      resolve();
+    } else {
+      const phaseKey0 = store.getState().currentPhaseKey;
+      // const phaseKey =
+      //   phaseKey0 && phaseKey0.startsWith("impulse") ? "impulse" : phaseKey0;
+      const phaseKey = Selector.isImpulsePhase(store.getState())
+        ? "impulse"
+        : phaseKey0;
+      const stepKeys = Step.keysByPhase(phaseKey);
+      const reduceFunction = (promise, stepKey) =>
+        promise.then(() => {
+          store.dispatch(ActionCreator.setCurrentStep(stepKey));
+          return StepFunction[stepKey](store);
+        });
+      R.reduce(reduceFunction, Promise.resolve(), stepKeys).then(() => {
+        store.dispatch(ActionCreator.setCurrentStep(undefined));
+        resolve();
+      });
+    }
+  });
 
 Object.freeze(StepFunction);
 

@@ -1,4 +1,5 @@
 import Arc from "../artifact/Arc.js";
+import Phase from "../artifact/Phase.js";
 import Ship from "../artifact/Ship.js";
 import Step from "../artifact/Step.js";
 import Team from "../artifact/Team.js";
@@ -42,6 +43,32 @@ QUnit.test("delay()", (assert) => {
 
   // Verify.
   assert.equal(result, 1000);
+});
+
+QUnit.test("isImpulsePhase() true", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const action = ActionCreator.setCurrentPhase(Phase.IMPULSE_A);
+  const state = Reducer.root(state0, action);
+
+  // Run.
+  const result = Selector.isImpulsePhase(state);
+
+  // Verify.
+  assert.equal(result, true);
+});
+
+QUnit.test("isImpulsePhase() false", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const action = ActionCreator.setCurrentPhase(Phase.POWER_PHASE);
+  const state = Reducer.root(state0, action);
+
+  // Run.
+  const result = Selector.isImpulsePhase(state);
+
+  // Verify.
+  assert.equal(result, false);
 });
 
 QUnit.test("isShipArcReinforced()", (assert) => {

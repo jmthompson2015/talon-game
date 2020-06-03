@@ -20,6 +20,12 @@ Selector.initiativePlayer = (state) => {
   return state.playerInstances[id];
 };
 
+Selector.isImpulsePhase = (state) => {
+  const phaseKey = state.currentPhaseKey;
+
+  return phaseKey && phaseKey.startsWith("impulse");
+};
+
 Selector.isShipArcReinforced = (shipId, arcKey, state) => {
   const key = StateUtils.shipArcKey(shipId, arcKey);
 
