@@ -1,5 +1,6 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
+import Arc from "../artifact/Arc.js";
 import Step from "../artifact/Step.js";
 
 import ActionCreator from "../state/ActionCreator.js";
@@ -33,9 +34,19 @@ StepFunction[Step.REMOVE_SHIELD_REINFORCEMENT] = (store) => {
   if (!GameOver.isGameOver(store)) {
     // 6.2.3 Remove all expired Shield Reinforcement.
     const currentPlayer = Selector.currentPlayer(store.getState());
-    console.log(
-      `StepFunction.removeShieldReinforcement() ${currentPlayer.name}`
-    );
+    const shipIds = Selector.shipsByPlayer(currentPlayer.id, store.getState());
+    const arcKeys = Arc.keys();
+    const forEachFunction1 = (shipId) => (arcKey) => {
+      if (Selector.isShipArcReinforced(shipId, arcKey, store.getState())) {
+        store.dispatch(
+          ActionCreator.setShipArcReinforced(shipId, arcKey, false)
+        );
+      }
+    };
+    const forEachFunction2 = (shipId) => {
+      R.forEach(forEachFunction1(shipId), arcKeys);
+    };
+    R.forEach(forEachFunction2, shipIds);
   }
 
   return Promise.resolve();

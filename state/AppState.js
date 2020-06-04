@@ -7,7 +7,7 @@ AppState.create = ({
   gameRecords = [],
   initiativePlayerId,
   isGameOver = false,
-  isVerbose = true,
+  isVerbose = false,
   mctsRoot = null,
   userMessage = null,
   winnerTeamKey = null,

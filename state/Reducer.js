@@ -126,6 +126,11 @@ Reducer.root = (state, action) => {
       };
       return { ...state, shipToAfterburnerCount: newShipMap };
     case ActionType.SET_SHIP_ARC_REINFORCED:
+      log(
+        `Reducer SET_SHIP_ARC_REINFORCED shipId = ${action.shipId} arcKey = ${action.arcKey} ` +
+          `isReinforced ? ${action.isReinforced}`,
+        state
+      );
       key = StateUtils.shipArcKey(action.shipId, action.arcKey);
       newShipMap = {
         ...state.shipArcToIsReinforced,
@@ -220,7 +225,7 @@ Reducer.root = (state, action) => {
       );
       return { ...state, userMessage: action.userMessage };
     case ActionType.SET_VERBOSE:
-      log(`Reducer SET_VERBOSE isVerbose = ${action.isVerbose}`, state);
+      log(`Reducer SET_VERBOSE isVerbose ? ${action.isVerbose}`, state);
       return { ...state, isVerbose: action.isVerbose };
     case ActionType.SET_WINNER:
       log(`Reducer SET_WINNER winnerTeamKey = ${action.winnerTeamKey}`, state);
