@@ -40,9 +40,9 @@ QUnit.test("removeShieldReinforcement()", (assert) => {
   store.dispatch(ActionCreator.setCurrentPhase(Phase.IMPULSE_A));
   store.dispatch(ActionCreator.setCurrentPlayerOrder([1, 2]));
   store.dispatch(ActionCreator.setCurrentPlayer(1));
-  store.dispatch(ActionCreator.setShipArcReinforced(3, Arc.FORWARD, true));
-  store.dispatch(ActionCreator.setShipArcReinforced(4, Arc.RIGHT, true));
-  store.dispatch(ActionCreator.setVerbose(true));
+  store.dispatch(ActionCreator.setShipArcReinforceImpulse(3, Arc.FORWARD, "A"));
+  store.dispatch(ActionCreator.setShipArcReinforceImpulse(4, Arc.RIGHT, "A"));
+  store.dispatch(ActionCreator.setShipArcReinforceImpulse(4, Arc.REAR, "B"));
 
   // Run.
   const done = assert.async();
@@ -53,8 +53,15 @@ QUnit.test("removeShieldReinforcement()", (assert) => {
     assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
     assert.equal(Selector.currentPlayer(state).id, 1);
     assert.equal(Selector.currentStep(state), undefined);
-    assert.equal(Selector.isShipArcReinforced(3, Arc.FORWARD, state), false);
-    assert.equal(Selector.isShipArcReinforced(4, Arc.RIGHT, state), false);
+    assert.equal(
+      Selector.shipArcReinforceImpulse(3, Arc.FORWARD, state),
+      undefined
+    );
+    assert.equal(
+      Selector.shipArcReinforceImpulse(4, Arc.RIGHT, state),
+      undefined
+    );
+    assert.equal(Selector.shipArcReinforceImpulse(4, Arc.REAR, state), "B");
     // Verify.
     done();
   };

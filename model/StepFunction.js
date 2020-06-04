@@ -33,13 +33,21 @@ StepFunction[Step.MOVE_SHIPS] = (store) => {
 StepFunction[Step.REMOVE_SHIELD_REINFORCEMENT] = (store) => {
   if (!GameOver.isGameOver(store)) {
     // 6.2.3 Remove all expired Shield Reinforcement.
+    const currentPhase = Selector.currentPhase(store.getState());
+    const currentImpulse = R.last(currentPhase.key);
     const currentPlayer = Selector.currentPlayer(store.getState());
     const shipIds = Selector.shipsByPlayer(currentPlayer.id, store.getState());
     const arcKeys = Arc.keys();
     const forEachFunction1 = (shipId) => (arcKey) => {
-      if (Selector.isShipArcReinforced(shipId, arcKey, store.getState())) {
+      const reinforceImpulse = Selector.shipArcReinforceImpulse(
+        shipId,
+        arcKey,
+        store.getState()
+      );
+
+      if (reinforceImpulse === currentImpulse) {
         store.dispatch(
-          ActionCreator.setShipArcReinforced(shipId, arcKey, false)
+          ActionCreator.setShipArcReinforceImpulse(shipId, arcKey, undefined)
         );
       }
     };

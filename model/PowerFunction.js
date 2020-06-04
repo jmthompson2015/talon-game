@@ -143,15 +143,15 @@ const PowerFunction = {
   [PowerOption.REINFORCE_SHIELD]: {
     execute: (powerState, store) => {
       store.dispatch(
-        ActionCreator.setShipArcReinforced(
+        ActionCreator.setShipArcReinforceImpulse(
           powerState.shipId,
           powerState.arcKey,
-          true
+          powerState.impulse
         )
       );
     },
     isLegal: (shipId, arcKey, state) =>
-      !Selector.isShipArcReinforced(shipId, arcKey, state),
+      Selector.shipArcReinforceImpulse(shipId, arcKey, state) === undefined,
     label: (powerState, state) =>
       `${shipName(powerState.shipId, state)} reinforce ${
         powerState.arcKey

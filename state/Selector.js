@@ -44,12 +44,6 @@ Selector.isImpulsePhase = (state) => {
   return phaseKey && phaseKey.startsWith("impulse");
 };
 
-Selector.isShipArcReinforced = (shipId, arcKey, state) => {
-  const key = StateUtils.shipArcKey(shipId, arcKey);
-
-  return state.shipArcToIsReinforced[key] || false;
-};
-
 Selector.isShipSideSlipped = (shipId, state) =>
   state.shipToIsSideSlipped[shipId] || false;
 
@@ -79,6 +73,12 @@ Selector.ship = (shipId, state) => state.shipInstances[shipId];
 
 Selector.shipAfterburnerCount = (shipId, state) =>
   state.shipToAfterburnerCount[shipId] || 0;
+
+Selector.shipArcReinforceImpulse = (shipId, arcKey, state) => {
+  const key = StateUtils.shipArcKey(shipId, arcKey);
+
+  return state.shipArcToReinforceImpulse[key];
+};
 
 Selector.shipArcShieldCount = (shipId, arcKey, state) => {
   const key = StateUtils.shipArcKey(shipId, arcKey);

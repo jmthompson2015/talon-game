@@ -20,7 +20,7 @@ AppState.create = ({
 
   playerToMorgue = {},
   playerToStrategy = {},
-  shipArcToIsReinforced = {},
+  shipArcToReinforceImpulse = {},
   shipArcToShieldCount = {},
   shipToAfterburnerCount = {},
   shipToBatteryCount = {},
@@ -57,7 +57,7 @@ AppState.create = ({
 
     playerToMorgue,
     playerToStrategy,
-    shipArcToIsReinforced,
+    shipArcToReinforceImpulse,
     shipArcToShieldCount,
     shipToAfterburnerCount,
     shipToBatteryCount,

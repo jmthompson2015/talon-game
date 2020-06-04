@@ -181,16 +181,16 @@ QUnit.test("setShipAfterburnerCount()", (assert) => {
   assert.equal(result.shipToAfterburnerCount[shipId], afterburnerCount);
 });
 
-QUnit.test("setShipArcReinforced()", (assert) => {
+QUnit.test("setShipArcReinforceImpulse()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
   const arcKey = Arc.FORWARD;
-  const isReinforced = true;
-  const action = ActionCreator.setShipArcReinforced(
+  const impulse = "B";
+  const action = ActionCreator.setShipArcReinforceImpulse(
     shipId,
     arcKey,
-    isReinforced
+    impulse
   );
 
   // Run.
@@ -198,10 +198,7 @@ QUnit.test("setShipArcReinforced()", (assert) => {
 
   // Verify.
   assert.ok(result);
-  assert.equal(
-    result.shipArcToIsReinforced[`${shipId}${arcKey}`],
-    isReinforced
-  );
+  assert.equal(result.shipArcToReinforceImpulse[`${shipId}${arcKey}`], impulse);
 });
 
 QUnit.test("setShipArcShieldCount()", (assert) => {

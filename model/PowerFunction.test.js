@@ -115,17 +115,23 @@ QUnit.test("execute() enable side slip", (assert) => {
 QUnit.test("execute() reinforce shield", (assert) => {
   // Setup.
   const store = TestData.createStore();
+  store.dispatch(ActionCreator.setVerbose(true));
   const powerKey = PowerOption.REINFORCE_SHIELD;
   const shipId = 1; // TERRAN_CA
   const arcKey = Arc.FORWARD;
-  const powerState = PowerState.create({ powerKey, shipId, arcKey });
+  const impulse = "B";
+  const powerState = PowerState.create({ powerKey, shipId, arcKey, impulse });
 
   // Run.
   PowerFunction[powerKey].execute(powerState, store);
-  const result = Selector.isShipArcReinforced(shipId, arcKey, store.getState());
+  const result = Selector.shipArcReinforceImpulse(
+    shipId,
+    arcKey,
+    store.getState()
+  );
 
   // Verify.
-  assert.equal(result, true);
+  assert.equal(result, impulse);
 });
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -296,6 +302,7 @@ QUnit.test("isLegal() reinforce shield", (assert) => {
   const powerOption = PowerOption.REINFORCE_SHIELD;
   const shipId = 1; // TERRAN_CA
   const arcKey = Arc.FORWARD;
+  const impulse = "B";
 
   // Run.
   const result1 = PowerFunction[powerOption].isLegal(
@@ -308,7 +315,9 @@ QUnit.test("isLegal() reinforce shield", (assert) => {
   assert.equal(result1, true);
 
   // Run.
-  store.dispatch(ActionCreator.setShipArcReinforced(shipId, arcKey, true));
+  store.dispatch(
+    ActionCreator.setShipArcReinforceImpulse(shipId, arcKey, impulse)
+  );
   const result2 = PowerFunction[powerOption].isLegal(
     shipId,
     arcKey,

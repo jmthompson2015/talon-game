@@ -125,18 +125,18 @@ Reducer.root = (state, action) => {
         [action.shipId]: action.afterburnerCount,
       };
       return { ...state, shipToAfterburnerCount: newShipMap };
-    case ActionType.SET_SHIP_ARC_REINFORCED:
+    case ActionType.SET_SHIP_ARC_REINFORCE_IMPULSE:
       log(
-        `Reducer SET_SHIP_ARC_REINFORCED shipId = ${action.shipId} arcKey = ${action.arcKey} ` +
-          `isReinforced ? ${action.isReinforced}`,
+        `Reducer SET_SHIP_ARC_REINFORCE_IMPULSE shipId = ${action.shipId} ` +
+          `arcKey = ${action.arcKey} impulse = ${action.impulse}`,
         state
       );
       key = StateUtils.shipArcKey(action.shipId, action.arcKey);
       newShipMap = {
-        ...state.shipArcToIsReinforced,
-        [key]: action.isReinforced,
+        ...state.shipArcToReinforceImpulse,
+        [key]: action.impulse,
       };
-      return { ...state, shipArcToIsReinforced: newShipMap };
+      return { ...state, shipArcToReinforceImpulse: newShipMap };
     case ActionType.SET_SHIP_ARC_SHIELD_COUNT:
       key = StateUtils.shipArcKey(action.shipId, action.arcKey);
       newShipMap = { ...state.shipArcToShieldCount, [key]: action.shieldCount };
