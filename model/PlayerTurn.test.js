@@ -8,6 +8,29 @@ import TestData from "./TestData.js";
 
 QUnit.module("PlayerTurn");
 
+QUnit.test("execute() change initiative", (assert) => {
+  // Setup.
+  const store = TestData.createStore();
+  store.dispatch(ActionCreator.setCurrentRound(1));
+  store.dispatch(ActionCreator.setCurrentPhase(Phase.IMPULSE_A));
+  store.dispatch(ActionCreator.setCurrentPlayerOrder([1, 2]));
+  store.dispatch(ActionCreator.setShipChangeInitiativeCount(1, 1)); // Terran CA
+  store.dispatch(ActionCreator.setShipChangeInitiativeCount(3, 1)); // Terran CA
+  store.dispatch(ActionCreator.setShipDefendInitiativeCount(2, 1)); // Talon CA
+
+  // Run.
+  const done = assert.async();
+  const callback = () => {
+    assert.ok(true, "test resumed from async operation");
+    const state = store.getState();
+    assert.equal(Selector.initiativePlayer(state).id, 2); // Terran player
+    // Verify.
+    done();
+  };
+
+  PlayerTurn.execute(store).then(callback);
+});
+
 QUnit.test("execute() two player", (assert) => {
   // Setup.
   const store = TestData.createStore();

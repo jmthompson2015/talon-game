@@ -13,6 +13,39 @@ import ShipState from "./ShipState.js";
 
 QUnit.module("Selector");
 
+QUnit.test("changeInitiativeCount()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const ship1 = ShipState.create({
+    id: 1,
+    shipKey: Ship.TERRAN_CA,
+    nameIndex: 1,
+  });
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+  const action2 = ActionCreator.setShip("a1", 1);
+  const state2 = Reducer.root(state1, action2);
+  const ship2 = ShipState.create({
+    id: 2,
+    shipKey: Ship.TERRAN_CA,
+    nameIndex: 3,
+  });
+  const action3 = ActionCreator.addShip(ship2);
+  const state3 = Reducer.root(state2, action3);
+  const action4 = ActionCreator.setShip("b1", 2);
+  const state4 = Reducer.root(state3, action4);
+  const action5 = ActionCreator.setShipChangeInitiativeCount(1, 1);
+  const state5 = Reducer.root(state4, action5);
+  const action6 = ActionCreator.setShipChangeInitiativeCount(2, 1);
+  const state = Reducer.root(state5, action6);
+
+  // Run.
+  const result = Selector.changeInitiativeCount(Team.TERRAN, state);
+
+  // Verify.
+  assert.equal(result, 2);
+});
+
 QUnit.test("currentStep()", (assert) => {
   // Setup.
   const state0 = AppState.create();
@@ -32,6 +65,39 @@ QUnit.test("currentStep()", (assert) => {
   // Verify.
   assert.ok(result2);
   assert.equal(result2.key, stepKey);
+});
+
+QUnit.test("defendInitiativeCount()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const ship1 = ShipState.create({
+    id: 1,
+    shipKey: Ship.TERRAN_CA,
+    nameIndex: 1,
+  });
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+  const action2 = ActionCreator.setShip("a1", 1);
+  const state2 = Reducer.root(state1, action2);
+  const ship2 = ShipState.create({
+    id: 2,
+    shipKey: Ship.TERRAN_CA,
+    nameIndex: 3,
+  });
+  const action3 = ActionCreator.addShip(ship2);
+  const state3 = Reducer.root(state2, action3);
+  const action4 = ActionCreator.setShip("b1", 2);
+  const state4 = Reducer.root(state3, action4);
+  const action5 = ActionCreator.setShipDefendInitiativeCount(1, 1);
+  const state5 = Reducer.root(state4, action5);
+  const action6 = ActionCreator.setShipDefendInitiativeCount(2, 1);
+  const state = Reducer.root(state5, action6);
+
+  // Run.
+  const result = Selector.defendInitiativeCount(Team.TERRAN, state);
+
+  // Verify.
+  assert.equal(result, 2);
 });
 
 QUnit.test("delay()", (assert) => {

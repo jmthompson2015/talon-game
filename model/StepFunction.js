@@ -9,16 +9,6 @@ import GameOver from "./GameOver.js";
 
 const StepFunction = {};
 
-StepFunction[Step.CHECK_INITIATIVE] = (store) => {
-  if (!GameOver.isGameOver(store)) {
-    // 4.2 Check for initiative change.
-    const currentPlayer = Selector.currentPlayer(store.getState());
-    console.log(`StepFunction.checkInitiative() ${currentPlayer.name}`);
-  }
-
-  return Promise.resolve();
-};
-
 StepFunction[Step.FIRE_WEAPONS] = (store) => {
   if (!GameOver.isGameOver(store)) {
     // 8 Firing: Any/all ships May Fire, if able.
@@ -118,12 +108,9 @@ StepFunction.execute = (store) =>
     if (GameOver.isGameOver(store)) {
       resolve();
     } else {
-      const phaseKey0 = store.getState().currentPhaseKey;
-      // const phaseKey =
-      //   phaseKey0 && phaseKey0.startsWith("impulse") ? "impulse" : phaseKey0;
       const phaseKey = Selector.isImpulsePhase(store.getState())
         ? "impulse"
-        : phaseKey0;
+        : store.getState().currentPhaseKey;
       const stepKeys = Step.keysByPhase(phaseKey);
       const reduceFunction = (promise, stepKey) =>
         promise.then(() => {

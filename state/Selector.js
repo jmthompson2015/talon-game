@@ -4,6 +4,14 @@ import StateUtils from "./StateUtilities.js";
 
 const Selector = {};
 
+Selector.changeInitiativeCount = (teamKey, state) => {
+  const shipIds = Selector.shipsByTeam(teamKey, state);
+  const reduceFunction = (accum, shipId) =>
+    accum + Selector.shipChangeInitiativeCount(shipId, state);
+
+  return R.reduce(reduceFunction, 0, shipIds);
+};
+
 Selector.currentPhase = (state) => Resolver.phase(state.currentPhaseKey);
 
 Selector.currentPlayer = (state) =>
@@ -14,6 +22,14 @@ Selector.currentPlayerOrder = (state) => state.currentPlayerOrder;
 Selector.currentRound = (state) => state.currentRound;
 
 Selector.currentStep = (state) => Resolver.step(state.currentStepKey);
+
+Selector.defendInitiativeCount = (teamKey, state) => {
+  const shipIds = Selector.shipsByTeam(teamKey, state);
+  const reduceFunction = (accum, shipId) =>
+    accum + Selector.shipDefendInitiativeCount(shipId, state);
+
+  return R.reduce(reduceFunction, 0, shipIds);
+};
 
 Selector.delay = (state) => state.delay;
 

@@ -14,7 +14,6 @@ const Step = {
   MOVE_SHIPS: "moveShips",
   FIRE_WEAPONS: "fireWeapons",
   REPAIR_CRITICAL_DAMAGE: "repairCriticalDamage",
-  CHECK_INITIATIVE: "checkInitiative",
   // Power phase.
   CHARGE_WEAPON: "chargeWeapon",
   ADJUST_POWER_CURVE: "adjustPowerCurve",
@@ -49,11 +48,6 @@ const Step = {
       name: "Repair critical damage",
       phaseKey: "impulse",
       key: "repairCriticalDamage",
-    },
-    checkInitiative: {
-      name: "Check initiative",
-      phaseKey: "impulse",
-      key: "checkInitiative",
     },
     // Power phase.
     chargeWeapon: {

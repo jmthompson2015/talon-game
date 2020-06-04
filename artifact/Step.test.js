@@ -29,7 +29,7 @@ QUnit.test("Step.keys()", (assert) => {
 
   // Verify.
   assert.ok(result);
-  const length = 10;
+  const length = 9;
   assert.equal(result.length, length);
   assert.equal(R.head(result), Step.REMOVE_SHIELD_REINFORCEMENT);
   assert.equal(R.last(result), Step.RETREAT);
@@ -42,10 +42,10 @@ QUnit.test("Step.keysByPhase() Impulse_X", (assert) => {
 
   // Verify.
   assert.ok(result);
-  const length = 6;
+  const length = 5;
   assert.equal(result.length, length);
   assert.equal(R.head(result), Step.REMOVE_SHIELD_REINFORCEMENT);
-  assert.equal(R.last(result), Step.CHECK_INITIATIVE);
+  assert.equal(R.last(result), Step.REPAIR_CRITICAL_DAMAGE);
 });
 
 QUnit.test("Step.keysByPhase() Power Phase", (assert) => {
@@ -68,10 +68,10 @@ QUnit.test("Step.valuesByPhase() Impulse_X", (assert) => {
 
   // Verify.
   assert.ok(result);
-  const length = 6;
+  const length = 5;
   assert.equal(result.length, length);
   assert.equal(R.head(result).key, Step.REMOVE_SHIELD_REINFORCEMENT);
-  assert.equal(R.last(result).key, Step.CHECK_INITIATIVE);
+  assert.equal(R.last(result).key, Step.REPAIR_CRITICAL_DAMAGE);
 });
 
 QUnit.test("Step.valuesByPhase() Power Phase", (assert) => {
