@@ -148,12 +148,33 @@ Reducer.root = (state, action) => {
       };
       return { ...state, shipToBatteryCount: newShipMap };
     case ActionType.SET_SHIP_CHANGE_INITIATIVE_COUNT:
+      log(
+        `Reducer SET_SHIP_CHANGE_INITIATIVE_COUNT shipId = ${action.shipId} ` +
+          `changeInitiativeCount = ${action.changeInitiativeCount}`,
+        state
+      );
       newShipMap = {
         ...state.shipToChangeInitiativeCount,
         [action.shipId]: action.changeInitiativeCount,
       };
       return { ...state, shipToChangeInitiativeCount: newShipMap };
+    case ActionType.SET_SHIP_CURRENT_TURN_RADIUS:
+      log(
+        `Reducer SET_SHIP_CURRENT_TURN_RADIUS shipId = ${action.shipId} ` +
+          `turnRadius = ${action.turnRadius}`,
+        state
+      );
+      newShipMap = {
+        ...state.shipToCurrentTurnRadius,
+        [action.shipId]: action.turnRadius,
+      };
+      return { ...state, shipToCurrentTurnRadius: newShipMap };
     case ActionType.SET_SHIP_DEFEND_INITIATIVE_COUNT:
+      log(
+        `Reducer SET_SHIP_DEFEND_INITIATIVE_COUNT shipId = ${action.shipId} ` +
+          `defendInitiativeCount = ${action.defendInitiativeCount}`,
+        state
+      );
       newShipMap = {
         ...state.shipToDefendInitiativeCount,
         [action.shipId]: action.defendInitiativeCount,
@@ -183,17 +204,16 @@ Reducer.root = (state, action) => {
       };
       return { ...state, shipToPowerCurveIndex: newShipMap };
     case ActionType.SET_SHIP_SIDE_SLIPPED:
+      log(
+        `Reducer SET_SHIP_SIDE_SLIPPED shipId = ${action.shipId} ` +
+          `isSideSlipped ? ${action.isSideSlipped}`,
+        state
+      );
       newShipMap = {
         ...state.shipToIsSideSlipped,
         [action.shipId]: action.isSideSlipped,
       };
       return { ...state, shipToIsSideSlipped: newShipMap };
-    case ActionType.SET_SHIP_TURN_RADIUS:
-      newShipMap = {
-        ...state.shipToTurnRadius,
-        [action.shipId]: action.turnRadius,
-      };
-      return { ...state, shipToTurnRadius: newShipMap };
     case ActionType.SET_SHIP_WEAPON_INDEX_RED:
       log(
         `Reducer SET_SHIP_WEAPON_INDEX_RED shipId = ${action.shipId} ` +

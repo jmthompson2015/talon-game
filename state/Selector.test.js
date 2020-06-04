@@ -46,6 +46,19 @@ QUnit.test("changeInitiativeCount()", (assert) => {
   assert.equal(result, 2);
 });
 
+QUnit.test("currentImpulseLetter()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const action = ActionCreator.setCurrentPhase(Phase.IMPULSE_A);
+  const state = Reducer.root(state0, action);
+
+  // Run.
+  const result = Selector.currentImpulseLetter(state);
+
+  // Verify.
+  assert.equal(result, "A");
+});
+
 QUnit.test("currentStep()", (assert) => {
   // Setup.
   const state0 = AppState.create();
@@ -266,6 +279,21 @@ QUnit.test("shipChangeInitiativeCount()", (assert) => {
   assert.equal(result, changeInitiativeCount);
 });
 
+QUnit.test("shipCurrentTurnRadius()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const shipId = 3;
+  const turnRadius = 4;
+  const action = ActionCreator.setShipCurrentTurnRadius(shipId, turnRadius);
+  const state = Reducer.root(state0, action);
+
+  // Run.
+  const result = Selector.shipCurrentTurnRadius(shipId, state);
+
+  // Verify.
+  assert.equal(result, turnRadius);
+});
+
 QUnit.test("shipDefendInitiativeCount()", (assert) => {
   // Setup.
   const state0 = AppState.create();
@@ -312,6 +340,45 @@ QUnit.test("shipMissiles()", (assert) => {
 
   // Verify.
   assert.equal(result, missiles);
+});
+
+QUnit.test("shipPower()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const shipId = 1;
+  const ship1 = ShipState.create({ id: shipId, shipKey: Ship.TERRAN_CA });
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+  const powerCurveIndex = 4;
+  const action2 = ActionCreator.setShipPowerCurveIndex(shipId, powerCurveIndex);
+  const state = Reducer.root(state1, action2);
+
+  // Run.
+  const result = Selector.shipPower(shipId, state);
+
+  // Verify.
+  assert.equal(result, 5);
+});
+
+QUnit.test("shipPowerCurve()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const shipId = 1;
+  const ship1 = ShipState.create({ id: shipId, shipKey: Ship.TERRAN_CA });
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+  const powerCurveIndex = 4;
+  const action2 = ActionCreator.setShipPowerCurveIndex(shipId, powerCurveIndex);
+  const state = Reducer.root(state1, action2);
+
+  // Run.
+  const result = Selector.shipPowerCurve(shipId, state);
+
+  // Verify.
+  assert.equal(result.isDefault, false);
+  assert.equal(result.power, 5);
+  assert.equal(result.speed, 1);
+  assert.equal(result.turnRadius, 1);
 });
 
 QUnit.test("shipPowerCurveIndex()", (assert) => {
@@ -388,19 +455,40 @@ QUnit.test("shipsByTeam()", (assert) => {
   assert.equal(Selector.shipsByTeam(Team.TERRAN, state4).length, 2);
 });
 
+QUnit.test("shipSpeed()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const shipId = 1;
+  const ship1 = ShipState.create({ id: shipId, shipKey: Ship.TERRAN_CA });
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+  const powerCurveIndex = 4;
+  const action2 = ActionCreator.setShipPowerCurveIndex(shipId, powerCurveIndex);
+  const state = Reducer.root(state1, action2);
+
+  // Run.
+  const result = Selector.shipSpeed(shipId, state);
+
+  // Verify.
+  assert.equal(result, 1);
+});
+
 QUnit.test("shipTurnRadius()", (assert) => {
   // Setup.
   const state0 = AppState.create();
-  const shipId = 3;
-  const turnRadius = 4;
-  const action = ActionCreator.setShipTurnRadius(shipId, turnRadius);
-  const state = Reducer.root(state0, action);
+  const shipId = 1;
+  const ship1 = ShipState.create({ id: shipId, shipKey: Ship.TERRAN_CA });
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+  const powerCurveIndex = 4;
+  const action2 = ActionCreator.setShipPowerCurveIndex(shipId, powerCurveIndex);
+  const state = Reducer.root(state1, action2);
 
   // Run.
   const result = Selector.shipTurnRadius(shipId, state);
 
   // Verify.
-  assert.equal(result, turnRadius);
+  assert.equal(result, 1);
 });
 
 QUnit.test("shipWeaponIndexRed()", (assert) => {

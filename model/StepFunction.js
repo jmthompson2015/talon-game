@@ -7,6 +7,9 @@ import ActionCreator from "../state/ActionCreator.js";
 import Selector from "../state/Selector.js";
 
 import GameOver from "./GameOver.js";
+import OptionGenerator from "./OptionGenerator.js";
+import PowerFunction from "./PowerFunction.js";
+import StrategyResolver from "./StrategyResolver.js";
 
 const StepFunction = {};
 
@@ -33,8 +36,7 @@ StepFunction[Step.MOVE_SHIPS] = (store) => {
 StepFunction[Step.REMOVE_SHIELD_REINFORCEMENT] = (store) => {
   if (!GameOver.isGameOver(store)) {
     // 6.2.3 Remove all expired Shield Reinforcement.
-    const currentPhase = Selector.currentPhase(store.getState());
-    const currentImpulse = R.last(currentPhase.key);
+    const currentImpulse = Selector.currentImpulseLetter(store.getState());
     const currentPlayer = Selector.currentPlayer(store.getState());
     const shipIds = Selector.shipsByPlayer(currentPlayer.id, store.getState());
     const arcKeys = Arc.keys();
@@ -54,6 +56,7 @@ StepFunction[Step.REMOVE_SHIELD_REINFORCEMENT] = (store) => {
     const forEachFunction2 = (shipId) => {
       R.forEach(forEachFunction1(shipId), arcKeys);
     };
+
     R.forEach(forEachFunction2, shipIds);
   }
 
@@ -71,13 +74,45 @@ StepFunction[Step.REPAIR_CRITICAL_DAMAGE] = (store) => {
 };
 
 StepFunction[Step.SPEND_AVAILABLE_POWER] = (store) => {
+  let finalAnswer;
+
   if (!GameOver.isGameOver(store)) {
     // 6.1 Spend Available Power: Spend AP, if able or use Battery if available.
     const currentPlayer = Selector.currentPlayer(store.getState());
-    console.log(`StepFunction.spendAvailablePower() ${currentPlayer.name}`);
+    const phase = Selector.currentPhase(store.getState());
+    const delay = Selector.delay(store.getState());
+    const shipIds = Selector.shipsByPlayer(currentPlayer.id, store.getState());
+
+    const reduceFunction = (promise, shipId) => {
+      const ship = Selector.ship(shipId, store.getState());
+      const power = Selector.shipPower(shipId, store.getState());
+      let answer;
+
+      if (phase.numbers.includes(power)) {
+        const options = OptionGenerator.generateShipPowerOptions(
+          ship,
+          store.getState()
+        );
+        const strategy = StrategyResolver.resolve(currentPlayer.strategy);
+        answer = strategy
+          .choosePowerOption(options, store.getState(), delay)
+          .then((powerState) => {
+            const powerFunction = PowerFunction[powerState.powerKey];
+            powerFunction.execute(powerState, store);
+          });
+      } else {
+        answer = Promise.resolve();
+      }
+
+      return answer;
+    };
+
+    finalAnswer = R.reduce(reduceFunction, Promise.resolve(), shipIds);
+  } else {
+    finalAnswer = Promise.resolve();
   }
 
-  return Promise.resolve();
+  return finalAnswer;
 };
 
 // /////////////////////////////////////////////////////////////////////////////

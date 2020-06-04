@@ -289,7 +289,7 @@ QUnit.test("isLegal() power through turn", (assert) => {
   assert.equal(result1, false);
 
   // Run.
-  store.dispatch(ActionCreator.setShipTurnRadius(shipId, 1));
+  store.dispatch(ActionCreator.setShipCurrentTurnRadius(shipId, 1));
   const result2 = PowerFunction[powerOption].isLegal(shipId, store.getState());
 
   // Verify.

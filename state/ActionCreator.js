@@ -94,6 +94,12 @@ ActionCreator.setShipChangeInitiativeCount = makeActionCreator(
   "changeInitiativeCount"
 );
 
+ActionCreator.setShipCurrentTurnRadius = makeActionCreator(
+  ActionType.SET_SHIP_CURRENT_TURN_RADIUS,
+  "shipId",
+  "turnRadius"
+);
+
 ActionCreator.setShipDefendInitiativeCount = makeActionCreator(
   ActionType.SET_SHIP_DEFEND_INITIATIVE_COUNT,
   "shipId",
@@ -122,12 +128,6 @@ ActionCreator.setShipSideSlipped = makeActionCreator(
   ActionType.SET_SHIP_SIDE_SLIPPED,
   "shipId",
   "isSideSlipped"
-);
-
-ActionCreator.setShipTurnRadius = makeActionCreator(
-  ActionType.SET_SHIP_TURN_RADIUS,
-  "shipId",
-  "turnRadius"
 );
 
 ActionCreator.setShipWeaponIndexRed = makeActionCreator(

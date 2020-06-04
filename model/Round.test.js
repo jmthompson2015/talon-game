@@ -1,3 +1,4 @@
+import ActionCreator from "../state/ActionCreator.js";
 import Selector from "../state/Selector.js";
 
 import Round from "./Round.js";
@@ -10,6 +11,7 @@ const ROUND_LIMIT = 2;
 QUnit.test("execute() ", (assert) => {
   // Setup.
   const store = TestData.createStore();
+  store.dispatch(ActionCreator.setDelay(0));
 
   // Run.
   const done = assert.async();

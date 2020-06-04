@@ -12,6 +12,17 @@ Selector.changeInitiativeCount = (teamKey, state) => {
   return R.reduce(reduceFunction, 0, shipIds);
 };
 
+Selector.currentImpulseLetter = (state) => {
+  const phase = Selector.currentPhase(state);
+  let answer;
+
+  if (phase && phase.key.startsWith("impulse")) {
+    answer = R.last(phase.key);
+  }
+
+  return answer;
+};
+
 Selector.currentPhase = (state) => Resolver.phase(state.currentPhaseKey);
 
 Selector.currentPlayer = (state) =>
@@ -92,12 +103,29 @@ Selector.shipBatteryCount = (shipId, state) =>
 Selector.shipChangeInitiativeCount = (shipId, state) =>
   state.shipToChangeInitiativeCount[shipId] || 0;
 
+Selector.shipCurrentTurnRadius = (shipId, state) =>
+  state.shipToCurrentTurnRadius[shipId];
+
 Selector.shipDefendInitiativeCount = (shipId, state) =>
   state.shipToDefendInitiativeCount[shipId] || 0;
 
 Selector.shipHullIndex = (shipId, state) => state.shipToHullIndex[shipId] || 0;
 
 Selector.shipMissiles = (shipId, state) => state.shipToMissiles[shipId];
+
+Selector.shipPower = (shipId, state) => {
+  const powerCurve = Selector.shipPowerCurve(shipId, state);
+
+  return powerCurve ? powerCurve.power : undefined;
+};
+
+Selector.shipPowerCurve = (shipId, state) => {
+  const powerCurveIndex = Selector.shipPowerCurveIndex(shipId, state);
+  const ship = Selector.ship(shipId, state);
+  const shipKey = ship ? ship.shipType.key : undefined;
+
+  return Resolver.shipPowerCurve(shipKey, powerCurveIndex);
+};
 
 Selector.shipPowerCurveIndex = (shipId, state) =>
   state.shipToPowerCurveIndex[shipId];
@@ -124,7 +152,17 @@ Selector.shipsByTeam = (teamKey, state) => {
   return R.filter(filterFunction, shipIds);
 };
 
-Selector.shipTurnRadius = (shipId, state) => state.shipToTurnRadius[shipId];
+Selector.shipSpeed = (shipId, state) => {
+  const powerCurve = Selector.shipPowerCurve(shipId, state);
+
+  return powerCurve ? powerCurve.speed : undefined;
+};
+
+Selector.shipTurnRadius = (shipId, state) => {
+  const powerCurve = Selector.shipPowerCurve(shipId, state);
+
+  return powerCurve ? powerCurve.turnRadius : undefined;
+};
 
 Selector.shipWeaponIndexRed = (shipId, weaponIndex, state) => {
   const key = StateUtils.shipWeaponIndexKey(shipId, weaponIndex);

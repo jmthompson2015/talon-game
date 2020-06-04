@@ -22,9 +22,9 @@ QUnit.test("execute() change initiative", (assert) => {
   const done = assert.async();
   const callback = () => {
     assert.ok(true, "test resumed from async operation");
+    // Verify.
     const state = store.getState();
     assert.equal(Selector.initiativePlayer(state).id, 2); // Terran player
-    // Verify.
     done();
   };
 
@@ -42,12 +42,12 @@ QUnit.test("execute() two player", (assert) => {
   const done = assert.async();
   const callback = () => {
     assert.ok(true, "test resumed from async operation");
+    // Verify.
     const state = store.getState();
     assert.equal(Selector.currentRound(state), 1);
     assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
     assert.equal(Selector.currentPlayer(state), undefined);
     assert.equal(Selector.currentStep(state), undefined);
-    // Verify.
     done();
   };
 
@@ -65,12 +65,12 @@ QUnit.test("execute() four player", (assert) => {
   const done = assert.async();
   const callback = () => {
     assert.ok(true, "test resumed from async operation");
+    // Verify.
     const state = store.getState();
     assert.equal(Selector.currentRound(state), 1);
     assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
     assert.equal(Selector.currentPlayer(state), undefined);
     assert.equal(Selector.currentStep(state), undefined);
-    // Verify.
     done();
   };
 
@@ -88,12 +88,12 @@ QUnit.test("execute() six player", (assert) => {
   const done = assert.async();
   const callback = () => {
     assert.ok(true, "test resumed from async operation");
+    // Verify.
     const state = store.getState();
     assert.equal(Selector.currentRound(state), 1);
     assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
     assert.equal(Selector.currentPlayer(state), undefined);
     assert.equal(Selector.currentStep(state), undefined);
-    // Verify.
     done();
   };
 

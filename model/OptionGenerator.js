@@ -62,7 +62,7 @@ OptionGenerator.generateMoveOptions = (player, state) => {
 };
 
 // /////////////////////////////////////////////////////////////////////////////
-OptionGenerator.generateArcReinforceShield = (ship, arc, state) => {
+OptionGenerator.generateArcReinforceShield = (ship, arc, impulse, state) => {
   const powerKey = PowerOption.REINFORCE_SHIELD;
   const shipId = ship.id;
   const arcKey = arc.key;
@@ -70,7 +70,7 @@ OptionGenerator.generateArcReinforceShield = (ship, arc, state) => {
   let answer;
 
   if (pp.isLegal(shipId, arcKey, state)) {
-    answer = PowerState.create({ powerKey, shipId, arcKey });
+    answer = PowerState.create({ powerKey, shipId, arcKey, impulse });
   }
 
   return answer;
@@ -124,10 +124,11 @@ OptionGenerator.generateChargeYellows = (ship, state) => {
 };
 
 OptionGenerator.generateReinforceShields = (ship, state) => {
+  const impulse = Selector.currentImpulseLetter(state);
   const reduceFunction = (accum, arc) => {
     return push(
       accum,
-      OptionGenerator.generateArcReinforceShield(ship, arc, state)
+      OptionGenerator.generateArcReinforceShield(ship, arc, impulse, state)
     );
   };
 

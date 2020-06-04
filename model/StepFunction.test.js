@@ -21,12 +21,12 @@ QUnit.test("execute()", (assert) => {
   const done = assert.async();
   const callback = () => {
     assert.ok(true, "test resumed from async operation");
+    // Verify.
     const state = store.getState();
     assert.equal(Selector.currentRound(state), 1);
     assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
     assert.equal(Selector.currentPlayer(state).id, 1);
     assert.equal(Selector.currentStep(state), undefined);
-    // Verify.
     done();
   };
 
@@ -48,6 +48,7 @@ QUnit.test("removeShieldReinforcement()", (assert) => {
   const done = assert.async();
   const callback = () => {
     assert.ok(true, "test resumed from async operation");
+    // Verify.
     const state = store.getState();
     assert.equal(Selector.currentRound(state), 1);
     assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
@@ -62,11 +63,38 @@ QUnit.test("removeShieldReinforcement()", (assert) => {
       undefined
     );
     assert.equal(Selector.shipArcReinforceImpulse(4, Arc.REAR, state), "B");
-    // Verify.
     done();
   };
 
   StepFunction.removeShieldReinforcement(store).then(callback);
+});
+
+QUnit.test("spendAvailablePower()", (assert) => {
+  // Setup.
+  const store = TestData.createStore();
+  store.dispatch(ActionCreator.setDelay(0));
+  store.dispatch(ActionCreator.setCurrentRound(1));
+  store.dispatch(ActionCreator.setCurrentPhase(Phase.IMPULSE_A));
+  store.dispatch(ActionCreator.setCurrentPlayerOrder([1, 2]));
+  store.dispatch(ActionCreator.setCurrentPlayer(1));
+  store.dispatch(ActionCreator.setShipPowerCurveIndex(3, 3));
+  store.dispatch(ActionCreator.setShipPowerCurveIndex(4, 3));
+  store.dispatch(ActionCreator.setVerbose(true));
+
+  // Run.
+  const done = assert.async();
+  const callback = () => {
+    assert.ok(true, "test resumed from async operation");
+    // Verify.
+    const state = store.getState();
+    assert.equal(Selector.currentRound(state), 1);
+    assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
+    assert.equal(Selector.currentPlayer(state).id, 1);
+    assert.equal(Selector.currentStep(state), undefined);
+    done();
+  };
+
+  StepFunction.spendAvailablePower(store).then(callback);
 });
 
 const StepFunctionTest = {};

@@ -128,10 +128,11 @@ const PowerFunction = {
         store.getState()
       );
       store.dispatch(
-        ActionCreator.setShipTurnRadius(powerState.shipId, oldCount - 1)
+        ActionCreator.setShipCurrentTurnRadius(powerState.shipId, oldCount - 1)
       );
     },
-    isLegal: (shipId, state) => Selector.shipTurnRadius(shipId, state) > 0,
+    isLegal: (shipId, state) =>
+      Selector.shipCurrentTurnRadius(shipId, state) > 0,
     label: (powerState, state) =>
       `${shipName(powerState.shipId, state)} power through turn`,
   },

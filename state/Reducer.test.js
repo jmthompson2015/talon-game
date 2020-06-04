@@ -257,6 +257,21 @@ QUnit.test("setShipChangeInitiativeCount()", (assert) => {
   );
 });
 
+QUnit.test("setShipCurrentTurnRadius()", (assert) => {
+  // Setup.
+  const state = AppState.create();
+  const shipId = 1;
+  const turnRadius = 2;
+  const action = ActionCreator.setShipCurrentTurnRadius(shipId, turnRadius);
+
+  // Run.
+  const result = Reducer.root(state, action);
+
+  // Verify.
+  assert.ok(result);
+  assert.equal(result.shipToCurrentTurnRadius[shipId], turnRadius);
+});
+
 QUnit.test("setShipDefendInitiativeCount()", (assert) => {
   // Setup.
   const state = AppState.create();
@@ -337,21 +352,6 @@ QUnit.test("setShipSideSlipped()", (assert) => {
   // Verify.
   assert.ok(result);
   assert.equal(result.shipToIsSideSlipped[shipId], isSideSlipped);
-});
-
-QUnit.test("setShipTurnRadius()", (assert) => {
-  // Setup.
-  const state = AppState.create();
-  const shipId = 1;
-  const turnRadius = 2;
-  const action = ActionCreator.setShipTurnRadius(shipId, turnRadius);
-
-  // Run.
-  const result = Reducer.root(state, action);
-
-  // Verify.
-  assert.ok(result);
-  assert.equal(result.shipToTurnRadius[shipId], turnRadius);
 });
 
 QUnit.test("setShipWeaponIndexRed()", (assert) => {
