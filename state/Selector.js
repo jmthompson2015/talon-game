@@ -1,3 +1,4 @@
+import Heading from "../artifact/Heading.js";
 import Resolver from "../artifact/Resolver.js";
 
 import StateUtils from "./StateUtilities.js";
@@ -85,6 +86,13 @@ Selector.ship = (shipId, state) => state.shipInstances[shipId];
 Selector.shipAfterburnerCount = (shipId, state) =>
   state.shipToAfterburnerCount[shipId] || 0;
 
+Selector.shipAN = (shipId, state) => {
+  const filterFunction = (entry) => entry[1] === shipId;
+  const entries = R.filter(filterFunction, Object.entries(state.anToTokens));
+
+  return entries && entries.length > 0 ? entries[0][0] : undefined;
+};
+
 Selector.shipArcReinforceImpulse = (shipId, arcKey, state) => {
   const key = StateUtils.shipArcKey(shipId, arcKey);
 
@@ -104,10 +112,13 @@ Selector.shipChangeInitiativeCount = (shipId, state) =>
   state.shipToChangeInitiativeCount[shipId] || 0;
 
 Selector.shipCurrentTurnRadius = (shipId, state) =>
-  state.shipToCurrentTurnRadius[shipId];
+  state.shipToCurrentTurnRadius[shipId] || 0;
 
 Selector.shipDefendInitiativeCount = (shipId, state) =>
   state.shipToDefendInitiativeCount[shipId] || 0;
+
+Selector.shipHeading = (shipId, state) =>
+  state.shipToHeading[shipId] || Heading.THIRTY_DEGREES;
 
 Selector.shipHullIndex = (shipId, state) => state.shipToHullIndex[shipId] || 0;
 

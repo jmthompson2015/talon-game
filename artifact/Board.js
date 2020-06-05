@@ -1,4 +1,8 @@
-const { BoardCalculator, CoordinateCalculator } = ReactGameBoard;
+const {
+  BoardCalculator,
+  CoordinateCalculator,
+  HexBoardUtilities,
+} = ReactGameBoard;
 
 const Board = {};
 
@@ -13,6 +17,22 @@ Board.coordinateCalculator = new CoordinateCalculator(
   Board.FILE_COUNT,
   Board.RANK_COUNT
 );
+
+Board.neighborInDirection = (an, directionIndex) => {
+  const q = Board.coordinateCalculator.anToFile(an);
+  const r = Board.coordinateCalculator.anToRank(an);
+  const cube = HexBoardUtilities.axialToCube({ q, r });
+  const direction = HexBoardUtilities.cubeDirection(directionIndex);
+
+  const cube2 = HexBoardUtilities.createCube({
+    x: cube.x + direction.x,
+    y: cube.y + direction.y,
+    z: cube.z + direction.z,
+  });
+  const hex2 = HexBoardUtilities.cubeToAxial(cube2);
+
+  return Board.coordinateCalculator.fileRankToAN(hex2.q, hex2.r);
+};
 
 Object.freeze(Board);
 

@@ -1,10 +1,15 @@
 import Arc from "../artifact/Arc.js";
+import Board from "../artifact/Board.js";
+import Heading from "../artifact/Heading.js";
+import MoveOption from "../artifact/MoveOption.js";
 import PowerOption from "../artifact/PowerOption.js";
 import Resolver from "../artifact/Resolver.js";
 
+import MoveState from "../state/MoveState.js";
 import PowerState from "../state/PowerState.js";
 import Selector from "../state/Selector.js";
 
+import MoveFunction from "./MoveFunction.js";
 import PowerFunction from "./PowerFunction.js";
 
 const OptionGenerator = {};
@@ -42,20 +47,96 @@ const createPowerState = (powerKey, ship, state) => {
   return answer;
 };
 
+const directionIndex = (headingKey) => Heading.keys().indexOf(headingKey);
+
 const reduceIndexed = R.addIndex(R.reduce);
 
 // /////////////////////////////////////////////////////////////////////////////
-OptionGenerator.generateShipMoveOptions = (/* player, ship, state */) => {};
+const generateShipMove = (ship, state) => {
+  const moveKey = MoveOption.MOVE_STRAIGHT;
+  const shipId = ship.id;
+  const an1 = Selector.shipAN(shipId, state);
+  const headingKey = Selector.shipHeading(shipId, state);
+  const direction = directionIndex(headingKey);
+  const an2 = Board.neighborInDirection(an1, direction);
+  const mm = MoveFunction[moveKey];
+  let answer;
+
+  if (mm.isLegal(shipId, state)) {
+    answer = MoveState.create({ moveKey, shipId, an1, an2 });
+  }
+
+  return answer;
+};
+
+const generateSideSlip = (moveKey, ship, state) => {
+  const shipId = ship.id;
+  const an1 = Selector.shipAN(shipId, state);
+  const headingKey0 = Selector.shipHeading(shipId, state);
+  const headingKey =
+    moveKey === MoveOption.SIDE_SLIP_RIGHT
+      ? Heading.right(headingKey0)
+      : Heading.left(headingKey0);
+  const direction = directionIndex(headingKey);
+  const an2 = Board.neighborInDirection(an1, direction);
+  const mm = MoveFunction[moveKey];
+  let answer;
+
+  if (mm.isLegal(shipId, state)) {
+    answer = MoveState.create({ moveKey, shipId, an1, an2 });
+  }
+
+  return answer;
+};
+
+const generateTurnMove = (moveKey, ship, state) => {
+  const shipId = ship.id;
+  const an1 = Selector.shipAN(shipId, state);
+  const headingKey0 = Selector.shipHeading(shipId, state);
+  const headingKey =
+    moveKey === MoveOption.TURN_RIGHT_AND_MOVE
+      ? Heading.right(headingKey0)
+      : Heading.left(headingKey0);
+  const direction = directionIndex(headingKey);
+  const an2 = Board.neighborInDirection(an1, direction);
+  const mm = MoveFunction[moveKey];
+  let answer;
+
+  if (mm.isLegal(shipId, state)) {
+    answer = MoveState.create({ moveKey, shipId, an1, an2, headingKey });
+  }
+
+  return answer;
+};
+
+OptionGenerator.generateShipMoveOptions = (ship, state) => {
+  const moveKeys = MoveOption.keys();
+  const reduceFunction = (accum, moveKey) => {
+    switch (moveKey) {
+      case MoveOption.MOVE_STRAIGHT:
+        return push(accum, generateShipMove(ship, state));
+      case MoveOption.SIDE_SLIP_LEFT:
+      case MoveOption.SIDE_SLIP_RIGHT:
+        return push(accum, generateSideSlip(moveKey, ship, state));
+      case MoveOption.TURN_LEFT_AND_MOVE:
+      case MoveOption.TURN_RIGHT_AND_MOVE:
+        return push(accum, generateTurnMove(moveKey, ship, state));
+      default:
+      // Nothing to do.
+    }
+
+    return accum;
+  };
+
+  return R.reduce(reduceFunction, [], moveKeys);
+};
 
 OptionGenerator.generateMoveOptions = (player, state) => {
   const shipIds = Selector.shipsByPlayer(player.id, state);
   const reduceFunction = (accum, shipId) => {
     const ship = Selector.ship(shipId, state);
 
-    return concat(
-      OptionGenerator.generateShipMoveOptions(player, ship, state),
-      accum
-    );
+    return concat(OptionGenerator.generateShipMoveOptions(ship, state), accum);
   };
 
   return R.reduce(reduceFunction, [], shipIds);

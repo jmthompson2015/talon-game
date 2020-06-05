@@ -1,5 +1,7 @@
 import Arc from "./Arc.js";
+import Heading from "./Heading.js";
 import Hull from "./Hull.js";
+import MoveOption from "./MoveOption.js";
 import Phase from "./Phase.js";
 import PowerOption from "./PowerOption.js";
 import Ship from "./Ship.js";
@@ -11,7 +13,11 @@ const Resolver = {};
 
 Resolver.arc = (arcKey) => Arc.properties[arcKey];
 
+Resolver.heading = (headingKey) => Heading.properties[headingKey];
+
 Resolver.hull = (hullKey) => Hull.properties[hullKey];
+
+Resolver.moveOption = (moveKey) => MoveOption.properties[moveKey];
 
 Resolver.phase = (phaseKey) => Phase.properties[phaseKey];
 

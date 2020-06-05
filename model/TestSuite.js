@@ -1,4 +1,5 @@
 import GameOverTest from "./GameOver.test.js";
+import MoveFunctionTest from "./MoveFunction.test.js";
 import OptionGeneratorTest from "./OptionGenerator.test.js";
 import PhaseFunctionTest from "./PhaseFunction.test.js";
 import PlayerTurnTest from "./PlayerTurn.test.js";

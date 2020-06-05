@@ -1,5 +1,7 @@
 import Arc from "./Arc.js";
+import Heading from "./Heading.js";
 import Hull from "./Hull.js";
+import MoveOption from "./MoveOption.js";
 import Phase from "./Phase.js";
 import Resolver from "./Resolver.js";
 import Ship from "./Ship.js";
@@ -17,12 +19,28 @@ QUnit.test("arc()", (assert) => {
   R.forEach(forEachFunction, Arc.keys());
 });
 
+QUnit.test("heading()", (assert) => {
+  // Run / Verify.
+  const forEachFunction = (key) => {
+    assert.equal(Resolver.heading(key), Heading.properties[key]);
+  };
+  R.forEach(forEachFunction, Heading.keys());
+});
+
 QUnit.test("hull()", (assert) => {
   // Run / Verify.
   const forEachFunction = (key) => {
     assert.equal(Resolver.hull(key), Hull.properties[key]);
   };
   R.forEach(forEachFunction, Hull.keys());
+});
+
+QUnit.test("moveOption()", (assert) => {
+  // Run / Verify.
+  const forEachFunction = (key) => {
+    assert.equal(Resolver.moveOption(key), MoveOption.properties[key]);
+  };
+  R.forEach(forEachFunction, MoveOption.keys());
 });
 
 QUnit.test("phase()", (assert) => {

@@ -180,6 +180,16 @@ Reducer.root = (state, action) => {
         [action.shipId]: action.defendInitiativeCount,
       };
       return { ...state, shipToDefendInitiativeCount: newShipMap };
+    case ActionType.SET_SHIP_HEADING:
+      log(
+        `Reducer SET_SHIP_HEADING shipId = ${action.shipId} headingKey = ${action.headingKey}`,
+        state
+      );
+      newShipMap = {
+        ...state.shipToHeading,
+        [action.shipId]: action.headingKey,
+      };
+      return { ...state, shipToHeading: newShipMap };
     case ActionType.SET_SHIP_HULL_INDEX:
       newShipMap = {
         ...state.shipToHullIndex,

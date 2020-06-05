@@ -106,6 +106,12 @@ ActionCreator.setShipDefendInitiativeCount = makeActionCreator(
   "defendInitiativeCount"
 );
 
+ActionCreator.setShipHeading = makeActionCreator(
+  ActionType.SET_SHIP_HEADING,
+  "shipId",
+  "headingKey"
+);
+
 ActionCreator.setShipHullIndex = makeActionCreator(
   ActionType.SET_SHIP_HULL_INDEX,
   "shipId",

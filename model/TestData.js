@@ -1,4 +1,5 @@
 import Arc from "../artifact/Arc.js";
+import Heading from "../artifact/Heading.js";
 import Ship from "../artifact/Ship.js";
 import Team from "../artifact/Team.js";
 
@@ -69,10 +70,19 @@ const createPlayers = (playerCount) => {
   return answer;
 };
 
-const createShip = (shipId, shipKey, nameIndex, playerId, an, store) => {
+const createShip = (
+  shipId,
+  shipKey,
+  nameIndex,
+  playerId,
+  an,
+  headingKey,
+  store
+) => {
   ShipState.create({ id: shipId, shipKey, nameIndex, playerId, store });
   const ship = Selector.ship(shipId, store.getState());
   store.dispatch(ActionCreator.setShip(an, shipId));
+  store.dispatch(ActionCreator.setShipHeading(shipId, headingKey));
   const powerCurveIndex = Ship.defaultPowerCurveIndex(ship.shipType);
   store.dispatch(ActionCreator.setShipPowerCurveIndex(shipId, powerCurveIndex));
 
@@ -111,10 +121,10 @@ TestData.createStore = (playerCount = 2) => {
   store.dispatch(ActionCreator.setInitiativePlayer(players[0].id));
 
   // Create ships.
-  createShip(1, Ship.TERRAN_CA, 1, 2, "a1", store);
-  createShip(2, Ship.TERRAN_CA, 3, 2, "b1", store);
-  createShip(3, Ship.TALON_CA, 0, 1, "a10", store);
-  createShip(4, Ship.TALON_CA, 3, 1, "b10", store);
+  createShip(1, Ship.TERRAN_CA, 1, 2, "a10", Heading.THIRTY_DEGREES, store);
+  createShip(2, Ship.TERRAN_CA, 3, 2, "b10", Heading.THIRTY_DEGREES, store);
+  createShip(3, Ship.TALON_CA, 0, 1, "a2", Heading.ONE_FIFTY_DEGREES, store);
+  createShip(4, Ship.TALON_CA, 3, 1, "b2", Heading.ONE_FIFTY_DEGREES, store);
 
   return store;
 };

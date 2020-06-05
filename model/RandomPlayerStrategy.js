@@ -14,6 +14,13 @@ RandomPlayerStrategy.delayedResolve = (choice, resolve, delay = DELAY) => {
   }
 };
 
+RandomPlayerStrategy.chooseMoveOption = (options, state, delay = DELAY) =>
+  new Promise((resolve) => {
+    const answer =
+      options.length <= 1 ? options[0] : ArrayUtils.randomElement(options);
+    RandomPlayerStrategy.delayedResolve(answer, resolve, delay);
+  });
+
 RandomPlayerStrategy.choosePowerOption = (options, state, delay = DELAY) =>
   new Promise((resolve) => {
     const answer =

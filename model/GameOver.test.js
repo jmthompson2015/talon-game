@@ -22,8 +22,8 @@ QUnit.test("getWinner() undefined", (assert) => {
 QUnit.test("getWinner() Talon", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a1"));
-  store.dispatch(ActionCreator.clearShip("b1"));
+  store.dispatch(ActionCreator.clearShip("a10"));
+  store.dispatch(ActionCreator.clearShip("b10"));
 
   // Run.
   const result = GameOver.getWinner(store.getState());
@@ -35,8 +35,8 @@ QUnit.test("getWinner() Talon", (assert) => {
 QUnit.test("getWinner() Terran", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a10"));
-  store.dispatch(ActionCreator.clearShip("b10"));
+  store.dispatch(ActionCreator.clearShip("a2"));
+  store.dispatch(ActionCreator.clearShip("b2"));
 
   // Run.
   const result = GameOver.getWinner(store.getState());
@@ -59,8 +59,8 @@ QUnit.test("isGameOver() false", (assert) => {
 QUnit.test("isGameOver() Talon true", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a1"));
-  store.dispatch(ActionCreator.clearShip("b1"));
+  store.dispatch(ActionCreator.clearShip("a10"));
+  store.dispatch(ActionCreator.clearShip("b10"));
 
   // Run.
   const result = GameOver.isGameOver(store);
@@ -75,8 +75,8 @@ QUnit.test("isGameOver() Talon true", (assert) => {
 QUnit.test("isGameOver() Terran true", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a10"));
-  store.dispatch(ActionCreator.clearShip("b10"));
+  store.dispatch(ActionCreator.clearShip("a2"));
+  store.dispatch(ActionCreator.clearShip("b2"));
 
   // Run.
   const result = GameOver.isGameOver(store);

@@ -6,7 +6,7 @@ QUnit.module("ActionCreator");
 QUnit.test("all action types", (assert) => {
   // Setup.
   const actionTypeKeys = Object.getOwnPropertyNames(ActionType);
-  assert.equal(actionTypeKeys.length, 29);
+  assert.equal(actionTypeKeys.length, 30);
 
   // Run / Verify.
   actionTypeKeys.forEach((key) => {

@@ -206,6 +206,27 @@ QUnit.test("shipAfterburnerCount()", (assert) => {
   assert.equal(result, afterburners);
 });
 
+QUnit.test("shipAN()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const ship1 = ShipState.create({
+    id: 1,
+    shipKey: Ship.TERRAN_CA,
+    nameIndex: 1,
+  });
+  const an = "a1";
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+  const action2 = ActionCreator.setShip(an, 1);
+  const state = Reducer.root(state1, action2);
+
+  // Run.
+  const result = Selector.shipAN(ship1.id, state);
+
+  // Verify.
+  assert.equal(result, an);
+});
+
 QUnit.test("shipArcReinforceImpulse()", (assert) => {
   // Setup.
   const state0 = AppState.create();
@@ -310,6 +331,21 @@ QUnit.test("shipDefendInitiativeCount()", (assert) => {
 
   // Verify.
   assert.equal(result, defendInitiativeCount);
+});
+
+QUnit.test("shipHeading()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const shipId = 3;
+  const headingKey = 4;
+  const action = ActionCreator.setShipHeading(shipId, headingKey);
+  const state = Reducer.root(state0, action);
+
+  // Run.
+  const result = Selector.shipHeading(shipId, state);
+
+  // Verify.
+  assert.equal(result, headingKey);
 });
 
 QUnit.test("shipHullIndex()", (assert) => {

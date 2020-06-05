@@ -33,6 +33,34 @@ QUnit.test("execute()", (assert) => {
   StepFunction.execute(store).then(callback);
 });
 
+QUnit.test("moveShips()", (assert) => {
+  // Setup.
+  const store = TestData.createStore();
+  store.dispatch(ActionCreator.setDelay(0));
+  store.dispatch(ActionCreator.setCurrentRound(1));
+  store.dispatch(ActionCreator.setCurrentPhase(Phase.IMPULSE_A));
+  store.dispatch(ActionCreator.setCurrentPlayerOrder([1, 2]));
+  store.dispatch(ActionCreator.setCurrentPlayer(1));
+  store.dispatch(ActionCreator.setShipPowerCurveIndex(3, 1));
+  store.dispatch(ActionCreator.setShipPowerCurveIndex(4, 1));
+  store.dispatch(ActionCreator.setVerbose(true));
+
+  // Run.
+  const done = assert.async();
+  const callback = () => {
+    assert.ok(true, "test resumed from async operation");
+    // Verify.
+    const state = store.getState();
+    assert.equal(Selector.currentRound(state), 1);
+    assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
+    assert.equal(Selector.currentPlayer(state).id, 1);
+    assert.equal(Selector.currentStep(state), undefined);
+    done();
+  };
+
+  StepFunction.moveShips(store).then(callback);
+});
+
 QUnit.test("removeShieldReinforcement()", (assert) => {
   // Setup.
   const store = TestData.createStore();

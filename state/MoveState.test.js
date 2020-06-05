@@ -1,35 +1,35 @@
-import PowerState from "./PowerState.js";
+import MoveState from "./MoveState.js";
 
-QUnit.module("PowerState");
+QUnit.module("MoveState");
 
-const PROPS = ["powerKey", "shipId", "arcKey", "impulse", "weaponIndex"];
+const PROPS = ["moveKey", "shipId", "an1", "an2", "headingKey"];
 
 const createTestData = () =>
-  PowerState.create({
-    powerKey: 1,
+  MoveState.create({
+    moveKey: 1,
     shipId: 2,
-    arcKey: 3,
-    impulse: 4,
-    weaponIndex: 5,
+    an1: 3,
+    an2: 4,
+    headingKey: 5,
   });
 
 QUnit.test("create()", (assert) => {
   // Run.
-  const power = createTestData();
+  const move = createTestData();
 
   // Verify.
   PROPS.forEach((prop, i) => {
-    assert.equal(power[prop], i + 1);
+    assert.equal(move[prop], i + 1);
   });
 });
 
 QUnit.test("create() immutable", (assert) => {
   // Setup.
-  const power = createTestData();
+  const move = createTestData();
 
   // Run / Verify.
   try {
-    power.id = 12;
+    move.id = 12;
     assert.ok(false, "Should have thrown an exception");
   } catch (e) {
     assert.ok(true);

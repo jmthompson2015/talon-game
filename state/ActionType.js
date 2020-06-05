@@ -20,6 +20,7 @@ ActionType.SET_SHIP_BATTERY_COUNT = "setShipBatteryCount";
 ActionType.SET_SHIP_CHANGE_INITIATIVE_COUNT = "setShipChangeInitiativeCount";
 ActionType.SET_SHIP_CURRENT_TURN_RADIUS = "setShipCurrentTurnRadius";
 ActionType.SET_SHIP_DEFEND_INITIATIVE_COUNT = "setShipDefendInitiativeCount";
+ActionType.SET_SHIP_HEADING = "setShipHeading";
 ActionType.SET_SHIP_HULL_INDEX = "setShipHullIndex";
 ActionType.SET_SHIP_MISSILES = "setShipMissiles";
 ActionType.SET_SHIP_POWER_CURVE_INDEX = "setShipPowerCurveIndex";

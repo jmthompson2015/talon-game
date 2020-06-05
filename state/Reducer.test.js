@@ -294,6 +294,21 @@ QUnit.test("setShipDefendInitiativeCount()", (assert) => {
   );
 });
 
+QUnit.test("setShipHeading()", (assert) => {
+  // Setup.
+  const state = AppState.create();
+  const shipId = 1;
+  const headingKey = 2;
+  const action = ActionCreator.setShipHeading(shipId, headingKey);
+
+  // Run.
+  const result = Reducer.root(state, action);
+
+  // Verify.
+  assert.ok(result);
+  assert.equal(result.shipToHeading[shipId], headingKey);
+});
+
 QUnit.test("setShipHullIndex()", (assert) => {
   // Setup.
   const state = AppState.create();

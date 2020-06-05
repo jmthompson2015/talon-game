@@ -7,6 +7,7 @@ import ActionCreator from "../state/ActionCreator.js";
 import Selector from "../state/Selector.js";
 
 import GameOver from "./GameOver.js";
+import MoveFunction from "./MoveFunction.js";
 import OptionGenerator from "./OptionGenerator.js";
 import PowerFunction from "./PowerFunction.js";
 import StrategyResolver from "./StrategyResolver.js";
@@ -24,13 +25,45 @@ StepFunction[Step.FIRE_WEAPONS] = (store) => {
 };
 
 StepFunction[Step.MOVE_SHIPS] = (store) => {
+  let finalAnswer;
+
   if (!GameOver.isGameOver(store)) {
     // 7.1 Moving: Move Ships if required or use Afterburner if available.
     const currentPlayer = Selector.currentPlayer(store.getState());
-    console.log(`StepFunction.moveShips() ${currentPlayer.name}`);
+    const phase = Selector.currentPhase(store.getState());
+    const delay = Selector.delay(store.getState());
+    const shipIds = Selector.shipsByPlayer(currentPlayer.id, store.getState());
+
+    const reduceFunction = (promise, shipId) => {
+      const ship = Selector.ship(shipId, store.getState());
+      const speed = Selector.shipSpeed(shipId, store.getState());
+      let answer;
+
+      if (phase.numbers.includes(speed)) {
+        const options = OptionGenerator.generateShipMoveOptions(
+          ship,
+          store.getState()
+        );
+        const strategy = StrategyResolver.resolve(currentPlayer.strategy);
+        answer = strategy
+          .chooseMoveOption(options, store.getState(), delay)
+          .then((moveState) => {
+            const moveFunction = MoveFunction[moveState.moveKey];
+            moveFunction.execute(moveState, store);
+          });
+      } else {
+        answer = Promise.resolve();
+      }
+
+      return answer;
+    };
+
+    finalAnswer = R.reduce(reduceFunction, Promise.resolve(), shipIds);
+  } else {
+    finalAnswer = Promise.resolve();
   }
 
-  return Promise.resolve();
+  return finalAnswer;
 };
 
 StepFunction[Step.REMOVE_SHIELD_REINFORCEMENT] = (store) => {
