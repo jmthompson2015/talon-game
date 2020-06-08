@@ -45,7 +45,7 @@ const MoveFunction = {
   [MoveOption.TURN_RIGHT_AND_MOVE]: {
     execute: (moveState, store) => {
       const { shipId, an1, an2 } = moveState;
-      const heading1Key = Selector.shipHeading(shipId, store.getState());
+      const heading1Key = Selector.shipHeading(shipId, store.getState()).key;
       const heading2Key = Heading.right(heading1Key);
       store.dispatch(ActionCreator.setShipHeading(shipId, heading2Key));
       store.dispatch(ActionCreator.clearShip(an1, shipId));
@@ -59,7 +59,7 @@ const MoveFunction = {
   [MoveOption.TURN_LEFT_AND_MOVE]: {
     execute: (moveState, store) => {
       const { shipId, an1, an2 } = moveState;
-      const heading1Key = Selector.shipHeading(shipId, store.getState());
+      const heading1Key = Selector.shipHeading(shipId, store.getState()).key;
       const heading2Key = Heading.left(heading1Key);
       store.dispatch(ActionCreator.setShipHeading(shipId, heading2Key));
       store.dispatch(ActionCreator.clearShip(an1, shipId));

@@ -224,30 +224,36 @@ Reducer.root = (state, action) => {
         [action.shipId]: action.isSideSlipped,
       };
       return { ...state, shipToIsSideSlipped: newShipMap };
-    case ActionType.SET_SHIP_WEAPON_INDEX_RED:
+    case ActionType.SET_SHIP_WEAPON_GROUP_RED:
       log(
-        `Reducer SET_SHIP_WEAPON_INDEX_RED shipId = ${action.shipId} ` +
-          `weaponIndex = ${action.weaponIndex} redCount = ${action.redCount}`,
+        `Reducer SET_SHIP_WEAPON_GROUP_RED shipId = ${action.shipId} ` +
+          `weaponGroupIndex = ${action.weaponGroupIndex} redCount = ${action.redCount}`,
         state
       );
-      key = StateUtils.shipWeaponIndexKey(action.shipId, action.weaponIndex);
+      key = StateUtils.shipWeaponGroupKey(
+        action.shipId,
+        action.weaponGroupIndex
+      );
       newShipMap = {
-        ...state.shipWeaponIndexToRed,
+        ...state.shipWeaponGroupToRed,
         [key]: action.redCount,
       };
-      return { ...state, shipWeaponIndexToRed: newShipMap };
-    case ActionType.SET_SHIP_WEAPON_INDEX_YELLOW:
+      return { ...state, shipWeaponGroupToRed: newShipMap };
+    case ActionType.SET_SHIP_WEAPON_GROUP_YELLOW:
       log(
-        `Reducer SET_SHIP_WEAPON_INDEX_YELLOW shipId = ${action.shipId} ` +
-          `weaponIndex = ${action.weaponIndex} yellowCount = ${action.yellowCount}`,
+        `Reducer SET_SHIP_WEAPON_GROUP_YELLOW shipId = ${action.shipId} ` +
+          `weaponGroupIndex = ${action.weaponGroupIndex} yellowCount = ${action.yellowCount}`,
         state
       );
-      key = StateUtils.shipWeaponIndexKey(action.shipId, action.weaponIndex);
+      key = StateUtils.shipWeaponGroupKey(
+        action.shipId,
+        action.weaponGroupIndex
+      );
       newShipMap = {
-        ...state.shipWeaponIndexToYellow,
+        ...state.shipWeaponGroupToYellow,
         [key]: action.yellowCount,
       };
-      return { ...state, shipWeaponIndexToYellow: newShipMap };
+      return { ...state, shipWeaponGroupToYellow: newShipMap };
     case ActionType.SET_USER_MESSAGE:
       log(
         `Reducer SET_USER_MESSAGE userMessage = ${action.userMessage}`,

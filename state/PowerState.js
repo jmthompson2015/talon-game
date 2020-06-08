@@ -2,7 +2,7 @@ import Resolver from "../artifact/Resolver.js";
 
 const PowerState = {};
 
-PowerState.create = ({ arcKey, impulse, powerKey, shipId, weaponIndex }) =>
+PowerState.create = ({ arcKey, impulse, powerKey, shipId, weaponGroupIndex }) =>
   Immutable({
     // Required.
     powerKey,
@@ -10,7 +10,7 @@ PowerState.create = ({ arcKey, impulse, powerKey, shipId, weaponIndex }) =>
     // Situational.
     arcKey,
     impulse,
-    weaponIndex,
+    weaponGroupIndex,
     // Managed.
     powerOptionType: Resolver.powerOption(powerKey),
   });

@@ -2,8 +2,8 @@ const StateUtilities = {};
 
 StateUtilities.shipArcKey = (shipId, arcKey) => `${shipId}${arcKey}`;
 
-StateUtilities.shipWeaponIndexKey = (shipId, weaponIndex) =>
-  `${shipId}${weaponIndex}`;
+StateUtilities.shipWeaponGroupKey = (shipId, weaponGroupIndex) =>
+  `${shipId}${weaponGroupIndex}`;
 
 Object.freeze(StateUtilities);
 

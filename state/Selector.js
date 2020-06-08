@@ -59,6 +59,26 @@ Selector.isImpulsePhase = (state) => {
 Selector.isShipSideSlipped = (shipId, state) =>
   state.shipToIsSideSlipped[shipId] || false;
 
+Selector.isShipWeaponGroupCharged = (shipId, weaponGroupIndex, state) => {
+  const ship = Selector.ship(shipId, state);
+  const weaponGroup = Resolver.shipWeaponGroup(
+    ship.shipType.key,
+    weaponGroupIndex
+  );
+  const redCount = Selector.shipWeaponGroupRed(shipId, weaponGroupIndex, state);
+  const yellowCount = Selector.shipWeaponGroupYellow(
+    shipId,
+    weaponGroupIndex,
+    state
+  );
+
+  return (
+    weaponGroup &&
+    redCount >= weaponGroup.red &&
+    yellowCount >= weaponGroup.yellow
+  );
+};
+
 Selector.player = (playerId, state) => state.playerInstances[playerId];
 
 Selector.playerCount = (state) => Object.keys(state.playerInstances).length;
@@ -117,10 +137,19 @@ Selector.shipCurrentTurnRadius = (shipId, state) =>
 Selector.shipDefendInitiativeCount = (shipId, state) =>
   state.shipToDefendInitiativeCount[shipId] || 0;
 
-Selector.shipHeading = (shipId, state) =>
-  state.shipToHeading[shipId] || Heading.THIRTY_DEGREES;
+Selector.shipHeading = (shipId, state) => {
+  const headingKey = state.shipToHeading[shipId] || Heading.THIRTY_DEGREES;
+
+  return Resolver.heading(headingKey);
+};
 
 Selector.shipHullIndex = (shipId, state) => state.shipToHullIndex[shipId] || 0;
+
+Selector.shipKey = (shipId, state) => {
+  const ship = Selector.ship(shipId, state);
+
+  return ship ? ship.shipType.key : undefined;
+};
 
 Selector.shipMissiles = (shipId, state) => state.shipToMissiles[shipId];
 
@@ -175,16 +204,16 @@ Selector.shipTurnRadius = (shipId, state) => {
   return powerCurve ? powerCurve.turnRadius : undefined;
 };
 
-Selector.shipWeaponIndexRed = (shipId, weaponIndex, state) => {
-  const key = StateUtils.shipWeaponIndexKey(shipId, weaponIndex);
+Selector.shipWeaponGroupRed = (shipId, weaponGroupIndex, state) => {
+  const key = StateUtils.shipWeaponGroupKey(shipId, weaponGroupIndex);
 
-  return state.shipWeaponIndexToRed[key];
+  return state.shipWeaponGroupToRed[key];
 };
 
-Selector.shipWeaponIndexYellow = (shipId, weaponIndex, state) => {
-  const key = StateUtils.shipWeaponIndexKey(shipId, weaponIndex);
+Selector.shipWeaponGroupYellow = (shipId, weaponGroupIndex, state) => {
+  const key = StateUtils.shipWeaponGroupKey(shipId, weaponGroupIndex);
 
-  return state.shipWeaponIndexToYellow[key];
+  return state.shipWeaponGroupToYellow[key];
 };
 
 Selector.winner = (state) =>

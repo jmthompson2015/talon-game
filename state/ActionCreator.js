@@ -136,17 +136,17 @@ ActionCreator.setShipSideSlipped = makeActionCreator(
   "isSideSlipped"
 );
 
-ActionCreator.setShipWeaponIndexRed = makeActionCreator(
-  ActionType.SET_SHIP_WEAPON_INDEX_RED,
+ActionCreator.setShipWeaponGroupRed = makeActionCreator(
+  ActionType.SET_SHIP_WEAPON_GROUP_RED,
   "shipId",
-  "weaponIndex",
+  "weaponGroupIndex",
   "redCount"
 );
 
-ActionCreator.setShipWeaponIndexYellow = makeActionCreator(
-  ActionType.SET_SHIP_WEAPON_INDEX_YELLOW,
+ActionCreator.setShipWeaponGroupYellow = makeActionCreator(
+  ActionType.SET_SHIP_WEAPON_GROUP_YELLOW,
   "shipId",
-  "weaponIndex",
+  "weaponGroupIndex",
   "yellowCount"
 );
 

@@ -7,7 +7,6 @@ import PowerOption from "./PowerOption.js";
 import Ship from "./Ship.js";
 import Step from "./Step.js";
 import Team from "./Team.js";
-import Weapon from "./Weapon.js";
 
 const Resolver = {};
 
@@ -49,17 +48,15 @@ Resolver.shipShield = (shipKey, arcKey) => {
   return ship ? ship.shields[arcKey] : null;
 };
 
-Resolver.shipWeaponGroup = (shipKey, weaponIndex) => {
+Resolver.shipWeaponGroup = (shipKey, weaponGroupIndex) => {
   const ship = Resolver.ship(shipKey);
 
-  return ship ? ship.weaponGroups[weaponIndex] : null;
+  return ship ? ship.weaponGroups[weaponGroupIndex] : null;
 };
 
 Resolver.step = (stepKey) => Step.properties[stepKey];
 
 Resolver.team = (teamKey) => Team.properties[teamKey];
-
-Resolver.weapon = (weaponKey) => Weapon.properties[weaponKey];
 
 Object.freeze(Resolver);
 

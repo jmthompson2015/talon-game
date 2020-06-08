@@ -11,17 +11,45 @@ import MoveFunction from "./MoveFunction.js";
 import OptionGenerator from "./OptionGenerator.js";
 import PowerFunction from "./PowerFunction.js";
 import StrategyResolver from "./StrategyResolver.js";
+import WeaponFunction from "./WeaponFunction.js";
 
 const StepFunction = {};
 
 StepFunction[Step.FIRE_WEAPONS] = (store) => {
+  let finalAnswer;
+
   if (!GameOver.isGameOver(store)) {
     // 8 Firing: Any/all ships May Fire, if able.
     const currentPlayer = Selector.currentPlayer(store.getState());
-    console.log(`StepFunction.fireWeapons() ${currentPlayer.name}`);
+    const delay = Selector.delay(store.getState());
+    const shipIds = Selector.shipsByPlayer(currentPlayer.id, store.getState());
+
+    const reduceFunction = (promise, shipId) => {
+      const attacker = Selector.ship(shipId, store.getState());
+      const options = OptionGenerator.generateShipWeaponOptions(
+        attacker,
+        store.getState()
+      );
+
+      if (options.length > 0) {
+        const strategy = StrategyResolver.resolve(currentPlayer.strategy);
+        return strategy
+          .chooseWeaponOption(options, store.getState(), delay)
+          .then((weaponState) => {
+            const weaponFunction = WeaponFunction[weaponState.weaponKey];
+            weaponFunction.execute(weaponState, store);
+          });
+      }
+
+      return Promise.resolve();
+    };
+
+    finalAnswer = R.reduce(reduceFunction, Promise.resolve(), shipIds);
+  } else {
+    finalAnswer = Promise.resolve();
   }
 
-  return Promise.resolve();
+  return finalAnswer;
 };
 
 StepFunction[Step.MOVE_SHIPS] = (store) => {

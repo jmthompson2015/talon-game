@@ -32,8 +32,8 @@ AppState.create = ({
   shipToIsSideSlipped = {},
   shipToMissiles = {},
   shipToPowerCurveIndex = {},
-  shipWeaponIndexToRed = {},
-  shipWeaponIndexToYellow = {},
+  shipWeaponGroupToRed = {},
+  shipWeaponGroupToYellow = {},
 
   playerInstances = {},
   shipInstances = {},
@@ -70,8 +70,8 @@ AppState.create = ({
     shipToMissiles,
     shipToPowerCurveIndex,
     shipToIsSideSlipped,
-    shipWeaponIndexToRed,
-    shipWeaponIndexToYellow,
+    shipWeaponGroupToRed,
+    shipWeaponGroupToYellow,
 
     playerInstances,
     shipInstances,

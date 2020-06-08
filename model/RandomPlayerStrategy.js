@@ -28,6 +28,13 @@ RandomPlayerStrategy.choosePowerOption = (options, state, delay = DELAY) =>
     RandomPlayerStrategy.delayedResolve(answer, resolve, delay);
   });
 
+RandomPlayerStrategy.chooseWeaponOption = (options, state, delay = DELAY) =>
+  new Promise((resolve) => {
+    const answer =
+      options.length <= 1 ? options[0] : ArrayUtils.randomElement(options);
+    RandomPlayerStrategy.delayedResolve(answer, resolve, delay);
+  });
+
 Object.freeze(RandomPlayerStrategy);
 
 export default RandomPlayerStrategy;

@@ -49,21 +49,24 @@ const PowerFunction = {
   },
   [PowerOption.CHARGE_RED]: {
     execute: (powerState, store) => {
-      const oldCount = Selector.shipWeaponIndexRed(
+      const oldCount = Selector.shipWeaponGroupRed(
         powerState.shipId,
-        powerState.weaponIndex,
+        powerState.weaponGroupIndex,
         store.getState()
       );
-      store.dispatch(ActionCreator.setShipWeaponIndexRed(oldCount + 1));
+      store.dispatch(ActionCreator.setShipWeaponGroupRed(oldCount + 1));
     },
-    isLegal: (shipId, weaponIndex, state) => {
-      const currentRed = Selector.shipWeaponIndexRed(
+    isLegal: (shipId, weaponGroupIndex, state) => {
+      const currentRed = Selector.shipWeaponGroupRed(
         shipId,
-        weaponIndex,
+        weaponGroupIndex,
         state
       );
       const ship = Selector.ship(shipId, state);
-      const weaponGroup = Resolver.shipWeaponGroup(ship.shipKey, weaponIndex);
+      const weaponGroup = Resolver.shipWeaponGroup(
+        ship.shipKey,
+        weaponGroupIndex
+      );
       const maxRed = weaponGroup.red;
 
       return state.currentPhaseKey === Phase.POWER_PHASE && currentRed < maxRed;
@@ -73,21 +76,24 @@ const PowerFunction = {
   },
   [PowerOption.CHARGE_YELLOW]: {
     execute: (powerState, store) => {
-      const oldCount = Selector.shipWeaponIndexRed(
+      const oldCount = Selector.shipWeaponGroupRed(
         powerState.shipId,
-        powerState.weaponIndex,
+        powerState.weaponGroupIndex,
         store.getState()
       );
-      store.dispatch(ActionCreator.setShipWeaponIndexRed(oldCount + 1));
+      store.dispatch(ActionCreator.setShipWeaponGroupRed(oldCount + 1));
     },
-    isLegal: (shipId, weaponIndex, state) => {
-      const currentYellow = Selector.shipWeaponIndexYellow(
+    isLegal: (shipId, weaponGroupIndex, state) => {
+      const currentYellow = Selector.shipWeaponGroupYellow(
         shipId,
-        weaponIndex,
+        weaponGroupIndex,
         state
       );
       const ship = Selector.ship(shipId, state);
-      const weaponGroup = Resolver.shipWeaponGroup(ship.shipKey, weaponIndex);
+      const weaponGroup = Resolver.shipWeaponGroup(
+        ship.shipKey,
+        weaponGroupIndex
+      );
       const maxYellow = weaponGroup.yellow;
 
       return currentYellow < maxYellow;

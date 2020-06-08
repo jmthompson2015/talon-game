@@ -28,10 +28,18 @@ QUnit.test("Team.keys()", (assert) => {
 
   // Verify.
   assert.ok(result);
-  const length = 2;
-  assert.equal(result.length, length);
+  assert.equal(result.length, 2);
   assert.equal(R.head(result), Team.TALON);
   assert.equal(R.last(result), Team.TERRAN);
+});
+
+QUnit.test("Team.other()", (assert) => {
+  // Run / Verify.
+  assert.equal(Team.other(Team.TALON), Team.TERRAN);
+  assert.equal(Team.other(Team.TERRAN), Team.TALON);
+
+  assert.equal(Team.other(undefined), undefined);
+  assert.equal(Team.other(null), null);
 });
 
 const TeamTest = {};

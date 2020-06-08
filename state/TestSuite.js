@@ -7,5 +7,6 @@ import ReducerTest from "./Reducer.test.js";
 import SelectorTest from "./Selector.test.js";
 import ShipStateTest from "./ShipState.test.js";
 import StateUtilitiesTest from "./StateUtilities.test.js";
+import WeaponStateTest from "./WeaponState.test.js";
 
 QUnit.start();

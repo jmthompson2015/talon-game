@@ -8,5 +8,6 @@ import RandomPlayerStrategyTest from "./RandomPlayerStrategy.test.js";
 import RoundTest from "./Round.test.js";
 import StepFunctionTest from "./StepFunction.test.js";
 import StrategyResolverTest from "./StrategyResolver.test.js";
+import WeaponFunctionTest from "./WeaponFunction.test.js";
 
 QUnit.start();

@@ -25,7 +25,7 @@ QUnit.test("execute() move straight", (assert) => {
   // Verify.
   assert.equal(Selector.shipAN(shipId, store.getState()), an2);
   assert.equal(
-    Selector.shipHeading(shipId, store.getState()),
+    Selector.shipHeading(shipId, store.getState()).key,
     Heading.THIRTY_DEGREES
   );
 });
@@ -45,7 +45,7 @@ QUnit.test("execute() side slip right", (assert) => {
   // Verify.
   assert.equal(Selector.shipAN(shipId, store.getState()), an2);
   assert.equal(
-    Selector.shipHeading(shipId, store.getState()),
+    Selector.shipHeading(shipId, store.getState()).key,
     Heading.THIRTY_DEGREES
   );
 });
@@ -65,7 +65,7 @@ QUnit.test("execute() side slip left", (assert) => {
   // Verify.
   assert.equal(Selector.shipAN(shipId, store.getState()), an2);
   assert.equal(
-    Selector.shipHeading(shipId, store.getState()),
+    Selector.shipHeading(shipId, store.getState()).key,
     Heading.THIRTY_DEGREES
   );
 });
@@ -85,7 +85,7 @@ QUnit.test("execute() turn right and move", (assert) => {
 
   // Verify.
   assert.equal(Selector.shipAN(shipId, store.getState()), an2);
-  assert.equal(Selector.shipHeading(shipId, store.getState()), headingKey);
+  assert.equal(Selector.shipHeading(shipId, store.getState()).key, headingKey);
 });
 
 QUnit.test("execute() turn left and move", (assert) => {
@@ -103,7 +103,7 @@ QUnit.test("execute() turn left and move", (assert) => {
 
   // Verify.
   assert.equal(Selector.shipAN(shipId, store.getState()), an2);
-  assert.equal(Selector.shipHeading(shipId, store.getState()), headingKey);
+  assert.equal(Selector.shipHeading(shipId, store.getState()).key, headingKey);
 });
 
 // /////////////////////////////////////////////////////////////////////////////

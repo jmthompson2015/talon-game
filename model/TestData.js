@@ -99,10 +99,10 @@ const createShip = (
   const forEachIndexed = R.addIndex(R.forEach);
   const forEachFunction2 = (weaponGroup, i) => {
     store.dispatch(
-      ActionCreator.setShipWeaponIndexRed(shipId, i, weaponGroup.red)
+      ActionCreator.setShipWeaponGroupRed(shipId, i, weaponGroup.red)
     );
     store.dispatch(
-      ActionCreator.setShipWeaponIndexYellow(shipId, i, weaponGroup.yellow)
+      ActionCreator.setShipWeaponGroupYellow(shipId, i, weaponGroup.yellow)
     );
   };
   forEachIndexed(forEachFunction2, ship.shipType.weaponGroups);

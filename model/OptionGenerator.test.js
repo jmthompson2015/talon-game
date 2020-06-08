@@ -11,6 +11,8 @@ import TestData from "./TestData.js";
 
 QUnit.module("OptionGenerator");
 
+const forEachIndexed = R.addIndex(R.forEach);
+
 const verifyMoveState = (
   assert,
   moveState,
@@ -110,13 +112,17 @@ const verifyPowerState = (
   powerKey,
   shipId,
   arcKey,
-  weaponIndex
+  weaponGroupIndex
 ) => {
   assert.ok(powerState);
   assert.equal(powerState.powerKey, powerKey, "powerKey");
   assert.equal(powerState.shipId, shipId, "shipId");
   assert.equal(powerState.arcKey, arcKey, "arcKey");
-  assert.equal(powerState.weaponIndex, weaponIndex, "weaponIndex");
+  assert.equal(
+    powerState.weaponGroupIndex,
+    weaponGroupIndex,
+    "weaponGroupIndex"
+  );
 };
 
 QUnit.test("generateShipPowerOptions()", (assert) => {
@@ -190,6 +196,85 @@ QUnit.test("generateShipPowerOptions()", (assert) => {
     shipId,
     Arc.LEFT
   );
+});
+
+// /////////////////////////////////////////////////////////////////////////////
+const verifyWeaponState = (
+  assert,
+  weaponState,
+  attackerId,
+  weaponGroupIndex,
+  defenderIds
+) => {
+  assert.ok(weaponState);
+  assert.equal(weaponState.attackerId, attackerId, "attackerId");
+  assert.equal(
+    weaponState.weaponGroupIndex,
+    weaponGroupIndex,
+    "weaponGroupIndex"
+  );
+  assert.equal(weaponState.defenderIds.length, defenderIds.length);
+  forEachIndexed((defenderId, i) => {
+    assert.equal(
+      weaponState.defenderIds[i],
+      defenderId,
+      `defenderId[${i}] = ${weaponState.defenderIds[i]}`
+    );
+  }, defenderIds);
+};
+
+QUnit.test("generateShipWeaponOptions() Talon CA", (assert) => {
+  // Setup.
+  const store = TestData.createStore();
+  store.dispatch(ActionCreator.clearShip("a2"));
+  store.dispatch(ActionCreator.setShip("a9", 3));
+  const attackerId = 3;
+  const attacker = Selector.ship(attackerId, store.getState());
+
+  // Run.
+  const result = OptionGenerator.generateShipWeaponOptions(
+    attacker,
+    store.getState()
+  );
+
+  // Verify.
+  assert.ok(result);
+  assert.equal(Array.isArray(result), true);
+  assert.equal(result.length, 3);
+  const weaponState0 = result[0];
+  assert.ok(weaponState0);
+  verifyWeaponState(assert, weaponState0, attackerId, 0, [1]);
+
+  const weaponState1 = result[1];
+  assert.ok(weaponState1);
+  verifyWeaponState(assert, weaponState1, attackerId, 0, [2]);
+
+  const weaponState2 = result[2];
+  assert.ok(weaponState2);
+  verifyWeaponState(assert, weaponState2, attackerId, 1, [1]);
+});
+
+QUnit.test("generateShipWeaponOptions() Terran CA", (assert) => {
+  // Setup.
+  const store = TestData.createStore();
+  store.dispatch(ActionCreator.clearShip("a2"));
+  store.dispatch(ActionCreator.setShip("a9", 3));
+  const attackerId = 1;
+  const attacker = Selector.ship(attackerId, store.getState());
+
+  // Run.
+  const result = OptionGenerator.generateShipWeaponOptions(
+    attacker,
+    store.getState()
+  );
+
+  // Verify.
+  assert.ok(result);
+  assert.equal(Array.isArray(result), true);
+  assert.equal(result.length, 1);
+  const weaponState0 = result[0];
+  assert.ok(weaponState0);
+  verifyWeaponState(assert, weaponState0, attackerId, 0, [3]);
 });
 
 const OptionGeneratorTest = {};

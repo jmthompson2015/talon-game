@@ -369,15 +369,15 @@ QUnit.test("setShipSideSlipped()", (assert) => {
   assert.equal(result.shipToIsSideSlipped[shipId], isSideSlipped);
 });
 
-QUnit.test("setShipWeaponIndexRed()", (assert) => {
+QUnit.test("setShipWeaponGroupRed()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const weaponIndex = 2;
+  const weaponGroupIndex = 2;
   const redCount = 3;
-  const action = ActionCreator.setShipWeaponIndexRed(
+  const action = ActionCreator.setShipWeaponGroupRed(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     redCount
   );
 
@@ -387,20 +387,20 @@ QUnit.test("setShipWeaponIndexRed()", (assert) => {
   // Verify.
   assert.ok(result);
   assert.equal(
-    result.shipWeaponIndexToRed[`${shipId}${weaponIndex}`],
+    result.shipWeaponGroupToRed[`${shipId}${weaponGroupIndex}`],
     redCount
   );
 });
 
-QUnit.test("setShipWeaponIndexYellow()", (assert) => {
+QUnit.test("setShipWeaponGroupYellow()", (assert) => {
   // Setup.
   const state = AppState.create();
   const shipId = 1;
-  const weaponIndex = 2;
+  const weaponGroupIndex = 2;
   const yellowCount = 3;
-  const action = ActionCreator.setShipWeaponIndexYellow(
+  const action = ActionCreator.setShipWeaponGroupYellow(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     yellowCount
   );
 
@@ -410,7 +410,7 @@ QUnit.test("setShipWeaponIndexYellow()", (assert) => {
   // Verify.
   assert.ok(result);
   assert.equal(
-    result.shipWeaponIndexToYellow[`${shipId}${weaponIndex}`],
+    result.shipWeaponGroupToYellow[`${shipId}${weaponGroupIndex}`],
     yellowCount
   );
 });

@@ -4,13 +4,17 @@ import Heading from "../artifact/Heading.js";
 import MoveOption from "../artifact/MoveOption.js";
 import PowerOption from "../artifact/PowerOption.js";
 import Resolver from "../artifact/Resolver.js";
+import Team from "../artifact/Team.js";
+import Weapon from "../artifact/Weapon.js";
 
 import MoveState from "../state/MoveState.js";
 import PowerState from "../state/PowerState.js";
 import Selector from "../state/Selector.js";
+import WeaponState from "../state/WeaponState.js";
 
 import MoveFunction from "./MoveFunction.js";
 import PowerFunction from "./PowerFunction.js";
+import WeaponFunction from "./WeaponFunction.js";
 
 const OptionGenerator = {};
 
@@ -35,7 +39,6 @@ const push = (array, element) => {
 };
 
 const createPowerState = (powerKey, ship, state) => {
-  // const powerKey = PowerOption.CHANGE_INITIATIVE;
   const shipId = ship.id;
   const pp = PowerFunction[powerKey];
   let answer;
@@ -56,7 +59,7 @@ const generateShipMove = (ship, state) => {
   const moveKey = MoveOption.MOVE_STRAIGHT;
   const shipId = ship.id;
   const an1 = Selector.shipAN(shipId, state);
-  const headingKey = Selector.shipHeading(shipId, state);
+  const headingKey = Selector.shipHeading(shipId, state).key;
   const direction = directionIndex(headingKey);
   const an2 = Board.neighborInDirection(an1, direction);
   const mm = MoveFunction[moveKey];
@@ -72,7 +75,7 @@ const generateShipMove = (ship, state) => {
 const generateSideSlip = (moveKey, ship, state) => {
   const shipId = ship.id;
   const an1 = Selector.shipAN(shipId, state);
-  const headingKey0 = Selector.shipHeading(shipId, state);
+  const headingKey0 = Selector.shipHeading(shipId, state).key;
   const headingKey =
     moveKey === MoveOption.SIDE_SLIP_RIGHT
       ? Heading.right(headingKey0)
@@ -92,7 +95,7 @@ const generateSideSlip = (moveKey, ship, state) => {
 const generateTurnMove = (moveKey, ship, state) => {
   const shipId = ship.id;
   const an1 = Selector.shipAN(shipId, state);
-  const headingKey0 = Selector.shipHeading(shipId, state);
+  const headingKey0 = Selector.shipHeading(shipId, state).key;
   const headingKey =
     moveKey === MoveOption.TURN_RIGHT_AND_MOVE
       ? Heading.right(headingKey0)
@@ -157,27 +160,31 @@ OptionGenerator.generateArcReinforceShield = (ship, arc, impulse, state) => {
   return answer;
 };
 
-OptionGenerator.generateWeaponChargeRed = (ship, weaponIndex, state) => {
+OptionGenerator.generateWeaponChargeRed = (ship, weaponGroupIndex, state) => {
   const powerKey = PowerOption.CHARGE_RED;
   const shipId = ship.id;
   const pp = PowerFunction[powerKey];
   let answer;
 
-  if (pp.isLegal(shipId, weaponIndex, state)) {
-    answer = PowerState.create({ powerKey, shipId, weaponIndex });
+  if (pp.isLegal(shipId, weaponGroupIndex, state)) {
+    answer = PowerState.create({ powerKey, shipId, weaponGroupIndex });
   }
 
   return answer;
 };
 
-OptionGenerator.generateWeaponChargeYellow = (ship, weaponIndex, state) => {
+OptionGenerator.generateWeaponChargeYellow = (
+  ship,
+  weaponGroupIndex,
+  state
+) => {
   const powerKey = PowerOption.CHARGE_YELLOW;
   const shipId = ship.id;
   const pp = PowerFunction[powerKey];
   let answer;
 
-  if (pp.isLegal(shipId, weaponIndex, state)) {
-    answer = PowerState.create({ powerKey, shipId, weaponIndex });
+  if (pp.isLegal(shipId, weaponGroupIndex, state)) {
+    answer = PowerState.create({ powerKey, shipId, weaponGroupIndex });
   }
 
   return answer;
@@ -253,6 +260,82 @@ OptionGenerator.generatePowerOptions = (player, state) => {
     const ship = Selector.ship(shipId, state);
 
     return concat(OptionGenerator.generateShipPowerOptions(ship, state), accum);
+  };
+
+  return R.reduce(reduceFunction, [], shipIds);
+};
+
+// /////////////////////////////////////////////////////////////////////////////
+const generateFireWeapon = (
+  weaponKey,
+  attacker,
+  weaponGroup,
+  weaponGroupIndex,
+  state
+) => {
+  const attackerId = attacker.id;
+  const attackPlayer = Selector.player(attacker.playerId, state);
+  const otherTeamKey = Team.other(attackPlayer.teamKey);
+  const defenderIds = Selector.shipsByTeam(otherTeamKey, state);
+
+  const mm = WeaponFunction[weaponKey];
+  const reduceFunction = (accum, defenderId) => {
+    if (mm.isLegal(attackerId, weaponGroupIndex, defenderId, state)) {
+      accum.push(
+        WeaponState.create({
+          weaponKey,
+          attackerId,
+          weaponGroupIndex,
+          defenderIds: [defenderId],
+        })
+      );
+    }
+    return accum;
+  };
+
+  return R.reduce(reduceFunction, [], defenderIds);
+};
+
+OptionGenerator.generateShipWeaponOptions = (attacker, state) => {
+  const { weaponGroups } = attacker.shipType;
+  const reduceFunction = (accum, weaponGroup, weaponGroupIndex) => {
+    switch (weaponGroup.weaponKey) {
+      case Weapon.ANTI_MATTER_TORPEDO:
+      case Weapon.DISRUPTOR:
+      case Weapon.FUSION_CANNON:
+      case Weapon.PHASER:
+      case Weapon.WAVE_MOTION_GUN:
+        return concat(
+          accum,
+          generateFireWeapon(
+            weaponGroup.weaponKey,
+            attacker,
+            weaponGroup,
+            weaponGroupIndex,
+            state
+          )
+        );
+      case Weapon.MISSILE:
+        break;
+      default:
+      // Nothing to do.
+    }
+
+    return accum;
+  };
+
+  return reduceIndexed(reduceFunction, [], weaponGroups);
+};
+
+OptionGenerator.generateWeaponOptions = (player, state) => {
+  const shipIds = Selector.shipsByPlayer(player.id, state);
+  const reduceFunction = (accum, shipId) => {
+    const ship = Selector.ship(shipId, state);
+
+    return concat(
+      OptionGenerator.generateShipWeaponOptions(ship, state),
+      accum
+    );
   };
 
   return R.reduce(reduceFunction, [], shipIds);

@@ -1,4 +1,5 @@
 import Arc from "../artifact/Arc.js";
+import Heading from "../artifact/Heading.js";
 import Phase from "../artifact/Phase.js";
 import Ship from "../artifact/Ship.js";
 import Step from "../artifact/Step.js";
@@ -163,6 +164,53 @@ QUnit.test("isShipSideSlipped()", (assert) => {
 
   // Verify.
   assert.equal(result, isSideSlipped);
+});
+
+QUnit.test("isShipWeaponCharged()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const ship1 = ShipState.create({
+    id: 1,
+    shipKey: Ship.TERRAN_CA,
+    nameIndex: 1,
+  });
+  const action1 = ActionCreator.addShip(ship1);
+  const state1 = Reducer.root(state0, action1);
+
+  const shipId = 1;
+  const weaponGroupIndex = 0;
+
+  // Run.
+  const result1 = Selector.isShipWeaponGroupCharged(
+    shipId,
+    weaponGroupIndex,
+    state1
+  );
+
+  // Verify.
+  assert.equal(result1, false);
+
+  // Run.
+  const action2 = ActionCreator.setShipWeaponGroupRed(
+    shipId,
+    weaponGroupIndex,
+    1
+  );
+  const state2 = Reducer.root(state1, action2);
+  const action3 = ActionCreator.setShipWeaponGroupYellow(
+    shipId,
+    weaponGroupIndex,
+    1
+  );
+  const state = Reducer.root(state2, action3);
+  const result2 = Selector.isShipWeaponGroupCharged(
+    shipId,
+    weaponGroupIndex,
+    state
+  );
+
+  // Verify.
+  assert.equal(result2, true);
 });
 
 QUnit.test("playersByTeam()", (assert) => {
@@ -337,7 +385,7 @@ QUnit.test("shipHeading()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
-  const headingKey = 4;
+  const headingKey = Heading.ONE_FIFTY_DEGREES;
   const action = ActionCreator.setShipHeading(shipId, headingKey);
   const state = Reducer.root(state0, action);
 
@@ -345,7 +393,8 @@ QUnit.test("shipHeading()", (assert) => {
   const result = Selector.shipHeading(shipId, state);
 
   // Verify.
-  assert.equal(result, headingKey);
+  assert.ok(result);
+  assert.equal(result.key, headingKey);
 });
 
 QUnit.test("shipHullIndex()", (assert) => {
@@ -361,6 +410,22 @@ QUnit.test("shipHullIndex()", (assert) => {
 
   // Verify.
   assert.equal(result, hullIndex);
+});
+
+QUnit.test("shipKey()", (assert) => {
+  // Setup.
+  const state0 = AppState.create();
+  const shipId = 1;
+  const ship1 = ShipState.create({ id: shipId, shipKey: Ship.TERRAN_CA });
+  const action1 = ActionCreator.addShip(ship1);
+  const state = Reducer.root(state0, action1);
+
+  // Run.
+  const result = Selector.shipKey(1, state);
+
+  // Verify.
+  assert.ok(result);
+  assert.equal(result, Ship.TERRAN_CA);
 });
 
 QUnit.test("shipMissiles()", (assert) => {
@@ -531,17 +596,17 @@ QUnit.test("shipWeaponIndexRed()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
-  const weaponIndex = 4;
+  const weaponGroupIndex = 4;
   const redCount = 5;
-  const action = ActionCreator.setShipWeaponIndexRed(
+  const action = ActionCreator.setShipWeaponGroupRed(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     redCount
   );
   const state = Reducer.root(state0, action);
 
   // Run.
-  const result = Selector.shipWeaponIndexRed(shipId, weaponIndex, state);
+  const result = Selector.shipWeaponGroupRed(shipId, weaponGroupIndex, state);
 
   // Verify.
   assert.equal(result, redCount);
@@ -551,17 +616,21 @@ QUnit.test("shipWeaponIndexYellow()", (assert) => {
   // Setup.
   const state0 = AppState.create();
   const shipId = 3;
-  const weaponIndex = 4;
+  const weaponGroupIndex = 4;
   const yellowCount = 5;
-  const action = ActionCreator.setShipWeaponIndexYellow(
+  const action = ActionCreator.setShipWeaponGroupYellow(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     yellowCount
   );
   const state = Reducer.root(state0, action);
 
   // Run.
-  const result = Selector.shipWeaponIndexYellow(shipId, weaponIndex, state);
+  const result = Selector.shipWeaponGroupYellow(
+    shipId,
+    weaponGroupIndex,
+    state
+  );
 
   // Verify.
   assert.equal(result, yellowCount);

@@ -1,5 +1,6 @@
 import ArcTest from "./Arc.test.js";
 import BoardTest from "./Board.test.js";
+import DieTest from "./Die.test.js";
 import HeadingTest from "./Heading.test.js";
 import HullTest from "./Hull.test.js";
 import MoveOptionTest from "./MoveOption.test.js";

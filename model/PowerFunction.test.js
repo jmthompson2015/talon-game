@@ -47,14 +47,14 @@ QUnit.test("execute() charge red", (assert) => {
   store.dispatch(ActionCreator.setCurrentPhase(Phase.POWER_PHASE));
   const powerKey = PowerOption.CHARGE_RED;
   const shipId = 1; // TERRAN_CA
-  const weaponIndex = 0;
-  const powerState = PowerState.create({ powerKey, shipId, weaponIndex });
+  const weaponGroupIndex = 0;
+  const powerState = PowerState.create({ powerKey, shipId, weaponGroupIndex });
 
   // Run.
   PowerFunction[powerKey].execute(powerState, store);
-  const result = Selector.shipWeaponIndexRed(
+  const result = Selector.shipWeaponGroupRed(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     store.getState()
   );
 
@@ -67,14 +67,14 @@ QUnit.test("execute() charge yellow", (assert) => {
   const store = TestData.createStore();
   const powerKey = PowerOption.CHARGE_YELLOW;
   const shipId = 1; // TERRAN_CA
-  const weaponIndex = 0;
-  const powerState = PowerState.create({ powerKey, shipId, weaponIndex });
+  const weaponGroupIndex = 0;
+  const powerState = PowerState.create({ powerKey, shipId, weaponGroupIndex });
 
   // Run.
   PowerFunction[powerKey].execute(powerState, store);
-  const result = Selector.shipWeaponIndexYellow(
+  const result = Selector.shipWeaponGroupYellow(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     store.getState()
   );
 
@@ -181,12 +181,12 @@ QUnit.test("isLegal() charge red", (assert) => {
   store.dispatch(ActionCreator.setCurrentPhase(Phase.POWER_PHASE));
   const powerOption = PowerOption.CHARGE_RED;
   const shipId = 1; // TERRAN_CA
-  const weaponIndex = 0;
+  const weaponGroupIndex = 0;
 
   // Run.
   const result1 = PowerFunction[powerOption].isLegal(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     store.getState()
   );
 
@@ -194,10 +194,10 @@ QUnit.test("isLegal() charge red", (assert) => {
   assert.equal(result1, false);
 
   // Run.
-  store.dispatch(ActionCreator.setShipWeaponIndexRed(shipId, weaponIndex, 0));
+  store.dispatch(ActionCreator.setShipWeaponGroupRed(shipId, weaponGroupIndex, 0));
   const result2 = PowerFunction[powerOption].isLegal(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     store.getState()
   );
 
@@ -210,12 +210,12 @@ QUnit.test("isLegal() charge yellow", (assert) => {
   const store = TestData.createStore();
   const powerOption = PowerOption.CHARGE_YELLOW;
   const shipId = 1; // TERRAN_CA
-  const weaponIndex = 0;
+  const weaponGroupIndex = 0;
 
   // Run.
   const result1 = PowerFunction[powerOption].isLegal(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     store.getState()
   );
 
@@ -224,11 +224,11 @@ QUnit.test("isLegal() charge yellow", (assert) => {
 
   // Run.
   store.dispatch(
-    ActionCreator.setShipWeaponIndexYellow(shipId, weaponIndex, 0)
+    ActionCreator.setShipWeaponGroupYellow(shipId, weaponGroupIndex, 0)
   );
   const result2 = PowerFunction[powerOption].isLegal(
     shipId,
-    weaponIndex,
+    weaponGroupIndex,
     store.getState()
   );
 

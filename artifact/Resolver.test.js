@@ -140,13 +140,5 @@ QUnit.test("team()", (assert) => {
   R.forEach(forEachFunction, Team.keys());
 });
 
-QUnit.test("weapon()", (assert) => {
-  // Run / Verify.
-  const forEachFunction = (key) => {
-    assert.equal(Resolver.weapon(key), Weapon.properties[key]);
-  };
-  R.forEach(forEachFunction, Weapon.keys());
-});
-
 const ResolverTest = {};
 export default ResolverTest;

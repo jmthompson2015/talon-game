@@ -16,7 +16,7 @@ const checkInitiative = (store) => {
   const team1Key = initiativePlayer ? initiativePlayer.teamKey : undefined;
 
   if (team1Key) {
-    const team2Key = team1Key === Team.TALON ? Team.TERRAN : Team.TALON;
+    const team2Key = Team.other(team1Key);
     const team2Change = Selector.changeInitiativeCount(
       team2Key,
       store.getState()

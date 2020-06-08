@@ -1,4 +1,5 @@
 import Arc from "../artifact/Arc.js";
+import Heading from "../artifact/Heading.js";
 import Phase from "../artifact/Phase.js";
 
 import ActionCreator from "../state/ActionCreator.js";
@@ -31,6 +32,37 @@ QUnit.test("execute()", (assert) => {
   };
 
   StepFunction.execute(store).then(callback);
+});
+
+QUnit.test("fireWeapons()", (assert) => {
+  // Setup.
+  const store = TestData.createStore();
+  store.dispatch(ActionCreator.clearShip("a2"));
+  store.dispatch(ActionCreator.setShip("a9", 3));
+  store.dispatch(ActionCreator.setDelay(0));
+  store.dispatch(ActionCreator.setCurrentRound(1));
+  store.dispatch(ActionCreator.setCurrentPhase(Phase.IMPULSE_A));
+  store.dispatch(ActionCreator.setCurrentPlayerOrder([1, 2]));
+  store.dispatch(ActionCreator.setCurrentPlayer(1));
+  store.dispatch(ActionCreator.setShipHeading(3, Heading.TWO_TEN_DEGREES));
+  store.dispatch(ActionCreator.setVerbose(true));
+
+  // Run.
+  const done = assert.async();
+  const callback = () => {
+    assert.ok(true, "test resumed from async operation");
+    // Verify.
+    const state = store.getState();
+    assert.equal(Selector.currentRound(state), 1);
+    assert.equal(Selector.currentPhase(state).key, Phase.IMPULSE_A);
+    assert.equal(Selector.currentPlayer(state).id, 1);
+    assert.equal(Selector.currentStep(state), undefined);
+    assert.equal(Selector.shipWeaponGroupRed(3, 0, state), 0);
+    assert.equal(Selector.shipWeaponGroupYellow(3, 0, state), 0);
+    done();
+  };
+
+  StepFunction.fireWeapons(store).then(callback);
 });
 
 QUnit.test("moveShips()", (assert) => {
