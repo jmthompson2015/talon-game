@@ -1,6 +1,7 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 import Arc from "../artifact/Arc.js";
+import PhaseStep from "../artifact/PhaseStep.js";
 import Step from "../artifact/Step.js";
 
 import ActionCreator from "../state/ActionCreator.js";
@@ -226,7 +227,7 @@ StepFunction.execute = (store) =>
       const phaseKey = Selector.isImpulsePhase(store.getState())
         ? "impulse"
         : store.getState().currentPhaseKey;
-      const stepKeys = Step.keysByPhase(phaseKey);
+      const stepKeys = PhaseStep[phaseKey];
       const reduceFunction = (promise, stepKey) =>
         promise.then(() => {
           store.dispatch(ActionCreator.setCurrentStep(stepKey));
