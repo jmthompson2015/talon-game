@@ -194,7 +194,9 @@ QUnit.test("isLegal() charge red", (assert) => {
   assert.equal(result1, false);
 
   // Run.
-  store.dispatch(ActionCreator.setShipWeaponGroupRed(shipId, weaponGroupIndex, 0));
+  store.dispatch(
+    ActionCreator.setShipWeaponGroupRed(shipId, weaponGroupIndex, 0)
+  );
   const result2 = PowerFunction[powerOption].isLegal(
     shipId,
     weaponGroupIndex,
@@ -286,14 +288,14 @@ QUnit.test("isLegal() power through turn", (assert) => {
   const result1 = PowerFunction[powerOption].isLegal(shipId, store.getState());
 
   // Verify.
-  assert.equal(result1, false);
+  assert.equal(result1, true);
 
   // Run.
-  store.dispatch(ActionCreator.setShipCurrentTurnRadius(shipId, 1));
+  store.dispatch(ActionCreator.setShipCurrentTurnRadius(shipId, 0));
   const result2 = PowerFunction[powerOption].isLegal(shipId, store.getState());
 
   // Verify.
-  assert.equal(result2, true);
+  assert.equal(result2, false);
 });
 
 QUnit.test("isLegal() reinforce shield", (assert) => {

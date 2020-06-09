@@ -23,11 +23,10 @@ QUnit.test("execute() move straight", (assert) => {
   MoveFunction[moveKey].execute(moveState, store);
 
   // Verify.
-  assert.equal(Selector.shipAN(shipId, store.getState()), an2);
-  assert.equal(
-    Selector.shipHeading(shipId, store.getState()).key,
-    Heading.THIRTY_DEGREES
-  );
+  const state = store.getState();
+  assert.equal(Selector.shipAN(shipId, state), an2);
+  assert.equal(Selector.shipHeading(shipId, state).key, Heading.THIRTY_DEGREES);
+  assert.equal(Selector.shipCurrentTurnRadius(shipId, state), 1);
 });
 
 QUnit.test("execute() side slip right", (assert) => {
@@ -84,8 +83,10 @@ QUnit.test("execute() turn right and move", (assert) => {
   MoveFunction[moveKey].execute(moveState, store);
 
   // Verify.
-  assert.equal(Selector.shipAN(shipId, store.getState()), an2);
-  assert.equal(Selector.shipHeading(shipId, store.getState()).key, headingKey);
+  const state = store.getState();
+  assert.equal(Selector.shipAN(shipId, state), an2);
+  assert.equal(Selector.shipHeading(shipId, state).key, headingKey);
+  assert.equal(Selector.shipCurrentTurnRadius(shipId, state), 2);
 });
 
 QUnit.test("execute() turn left and move", (assert) => {
@@ -102,8 +103,10 @@ QUnit.test("execute() turn left and move", (assert) => {
   MoveFunction[moveKey].execute(moveState, store);
 
   // Verify.
-  assert.equal(Selector.shipAN(shipId, store.getState()), an2);
-  assert.equal(Selector.shipHeading(shipId, store.getState()).key, headingKey);
+  const state = store.getState();
+  assert.equal(Selector.shipAN(shipId, state), an2);
+  assert.equal(Selector.shipHeading(shipId, state).key, headingKey);
+  assert.equal(Selector.shipCurrentTurnRadius(shipId, state), 2);
 });
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -170,14 +173,14 @@ QUnit.test("isLegal() turn right and move", (assert) => {
   const result1 = MoveFunction[moveOption].isLegal(shipId, store.getState());
 
   // Verify.
-  assert.equal(result1, true);
+  assert.equal(result1, false);
 
   // Run.
-  store.dispatch(ActionCreator.setShipCurrentTurnRadius(shipId, 2));
+  store.dispatch(ActionCreator.setShipCurrentTurnRadius(shipId, 0));
   const result2 = MoveFunction[moveOption].isLegal(shipId, store.getState());
 
   // Verify.
-  assert.equal(result2, false);
+  assert.equal(result2, true);
 });
 
 QUnit.test("isLegal() turn left and move", (assert) => {
@@ -190,14 +193,14 @@ QUnit.test("isLegal() turn left and move", (assert) => {
   const result1 = MoveFunction[moveOption].isLegal(shipId, store.getState());
 
   // Verify.
-  assert.equal(result1, true);
+  assert.equal(result1, false);
 
   // Run.
-  store.dispatch(ActionCreator.setShipCurrentTurnRadius(shipId, 2));
+  store.dispatch(ActionCreator.setShipCurrentTurnRadius(shipId, 0));
   const result2 = MoveFunction[moveOption].isLegal(shipId, store.getState());
 
   // Verify.
-  assert.equal(result2, false);
+  assert.equal(result2, true);
 });
 
 // /////////////////////////////////////////////////////////////////////////////

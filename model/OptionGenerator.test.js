@@ -35,6 +35,7 @@ QUnit.test("generateShipMoveOptions()", (assert) => {
   const store = TestData.createStore();
   const shipId = 1; // TERRAN_CA
   const ship = Selector.ship(shipId, store.getState());
+  store.dispatch(ActionCreator.setShipCurrentTurnRadius(shipId, 0));
   store.dispatch(ActionCreator.setShipSideSlipped(shipId, true));
 
   // Run.

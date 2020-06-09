@@ -1,5 +1,6 @@
 import Arc from "../artifact/Arc.js";
 import Heading from "../artifact/Heading.js";
+import Resolver from "../artifact/Resolver.js";
 import Ship from "../artifact/Ship.js";
 import Team from "../artifact/Team.js";
 
@@ -85,6 +86,10 @@ const createShip = (
   store.dispatch(ActionCreator.setShipHeading(shipId, headingKey));
   const powerCurveIndex = Ship.defaultPowerCurveIndex(ship.shipType);
   store.dispatch(ActionCreator.setShipPowerCurveIndex(shipId, powerCurveIndex));
+  const powerCurve = Resolver.shipPowerCurve(shipKey, powerCurveIndex);
+  store.dispatch(
+    ActionCreator.setShipCurrentTurnRadius(shipId, powerCurve.turnRadius)
+  );
 
   // Set shields to full.
   const forEachFunction1 = (arcKey) => {
