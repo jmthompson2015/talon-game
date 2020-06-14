@@ -53,8 +53,8 @@ QUnit.test("applyDamage() rear 7", (assert) => {
 QUnit.test("execute() fire anti-matter torpedo", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a9", 3));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h11", 3));
   const weaponKey = Weapon.ANTI_MATTER_TORPEDO;
   const attackerId = 1; // TERRAN_CA
   const defenderIds = [3];
@@ -93,8 +93,8 @@ QUnit.test("execute() fire anti-matter torpedo", (assert) => {
 QUnit.test("execute() fire disruptor", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a9", 3));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h11", 3));
   const weaponKey = Weapon.DISRUPTOR;
   const attackerId = 3; // TALON_CA
   const defenderIds = [1, 2];
@@ -135,8 +135,8 @@ QUnit.test("execute() fire disruptor", (assert) => {
 QUnit.test("execute() fire fusion cannon", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a9", 3));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h11", 3));
   const weaponKey = Weapon.FUSION_CANNON;
   const attackerId = 3; // TALON_CA
   const defenderIds = [1, 2];
@@ -177,8 +177,8 @@ QUnit.test("execute() fire fusion cannon", (assert) => {
 QUnit.test("execute() fire phaser", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a9", 3));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h11", 3));
   const weaponKey = Weapon.PHASER;
   const attackerId = 1; // TERRAN_CA
   const defenderIds = [3];
@@ -217,8 +217,8 @@ QUnit.test("execute() fire phaser", (assert) => {
 QUnit.test("execute() fire wave motion gun", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a9", 3));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h11", 3));
   const weaponKey = Weapon.WAVE_MOTION_GUN;
   const attackerId = 1; // TERRAN_CA
   const defenderIds = [3];
@@ -263,8 +263,8 @@ QUnit.test("isLegal() fire anti-matter torpedo", (assert) => {
   const defenderId = 3;
   const weaponKey = Weapon.ANTI_MATTER_TORPEDO;
   store.dispatch(ActionCreator.setVerbose(true));
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a7", defenderId));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h9", defenderId));
 
   // Run.
   const result1 = WeaponFunction[weaponKey].isLegal(
@@ -286,8 +286,8 @@ QUnit.test("isLegal() fire disruptor", (assert) => {
   const defenderId = 3;
   const weaponKey = Weapon.DISRUPTOR;
   store.dispatch(ActionCreator.setVerbose(true));
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a7", defenderId));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h9", defenderId));
 
   // Run.
   const result1 = WeaponFunction[weaponKey].isLegal(
@@ -309,8 +309,8 @@ QUnit.test("isLegal() fire fusion cannon", (assert) => {
   const defenderId = 3;
   const weaponKey = Weapon.FUSION_CANNON;
   store.dispatch(ActionCreator.setVerbose(true));
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a7", defenderId));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h9", defenderId));
 
   // Run.
   const result1 = WeaponFunction[weaponKey].isLegal(
@@ -332,8 +332,8 @@ QUnit.test("isLegal() fire missile", (assert) => {
   const defenderId = 3;
   const weaponKey = Weapon.MISSILE;
   store.dispatch(ActionCreator.setVerbose(true));
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a7", defenderId));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h9", defenderId));
 
   // Run.
   const result1 = WeaponFunction[weaponKey].isLegal(
@@ -355,8 +355,8 @@ QUnit.test("isLegal() fire phaser", (assert) => {
   const defenderId = 3;
   const weaponKey = Weapon.PHASER;
   store.dispatch(ActionCreator.setVerbose(true));
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a7", defenderId));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h9", defenderId));
 
   // Run.
   const result1 = WeaponFunction[weaponKey].isLegal(
@@ -378,8 +378,8 @@ QUnit.test("isLegal() fire wave motion gun", (assert) => {
   const defenderId = 3;
   const weaponKey = Weapon.WAVE_MOTION_GUN;
   store.dispatch(ActionCreator.setVerbose(true));
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a7", defenderId));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h9", defenderId));
 
   // Run.
   const result1 = WeaponFunction[weaponKey].isLegal(

@@ -55,8 +55,8 @@ QUnit.test("generateShipMoveOptions()", (assert) => {
     moveState0,
     MoveOption.MOVE_STRAIGHT,
     shipId,
-    "a10",
-    "b10"
+    "h12",
+    "i11"
   );
 
   const moveState1 = result[1];
@@ -66,8 +66,8 @@ QUnit.test("generateShipMoveOptions()", (assert) => {
     moveState1,
     MoveOption.SIDE_SLIP_RIGHT,
     shipId,
-    "a10",
-    "b9"
+    "h12",
+    "i12"
   );
 
   const moveState2 = result[2];
@@ -77,8 +77,8 @@ QUnit.test("generateShipMoveOptions()", (assert) => {
     moveState2,
     MoveOption.SIDE_SLIP_LEFT,
     shipId,
-    "a10",
-    "a11"
+    "h12",
+    "h11"
   );
 
   const moveState3 = result[3];
@@ -88,8 +88,8 @@ QUnit.test("generateShipMoveOptions()", (assert) => {
     moveState3,
     MoveOption.TURN_RIGHT_AND_MOVE,
     shipId,
-    "a10",
-    "b9",
+    "h12",
+    "i12",
     Heading.EAST
   );
 
@@ -100,8 +100,8 @@ QUnit.test("generateShipMoveOptions()", (assert) => {
     moveState4,
     MoveOption.TURN_LEFT_AND_MOVE,
     shipId,
-    "a10",
-    "a11",
+    "h12",
+    "h11",
     Heading.THREE_THIRTY_DEGREES
   );
 });
@@ -227,8 +227,8 @@ const verifyWeaponState = (
 QUnit.test("generateShipWeaponOptions() Talon CA", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a9", 3));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h11", 3));
   const attackerId = 3;
   const attacker = Selector.ship(attackerId, store.getState());
 
@@ -258,8 +258,8 @@ QUnit.test("generateShipWeaponOptions() Talon CA", (assert) => {
 QUnit.test("generateShipWeaponOptions() Terran CA", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a9", 3));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h11", 3));
   const attackerId = 1;
   const attacker = Selector.ship(attackerId, store.getState());
 

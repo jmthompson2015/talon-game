@@ -11,8 +11,82 @@ const Board = {};
 
 Board.IS_SQUARE = false;
 Board.IS_FLAT = false;
+Board.UNUSED = Immutable([
+  "a1",
+  "a2",
+  "a3",
+  "a4",
+  "a5",
+  "a6",
+  "a7",
+  "a8",
+  "a9",
+  "a10",
+  "b1",
+  "b2",
+  "b3",
+  "b4",
+  "b5",
+  "b6",
+  "b7",
+  "b8",
+  "c1",
+  "c2",
+  "c3",
+  "c4",
+  "c5",
+  "c6",
+  "d1",
+  "d2",
+  "d3",
+  "d4",
+  "e1",
+  "e2",
+  "q11",
+  "q12",
+  "r9",
+  "r10",
+  "r11",
+  "r12",
+  "s7",
+  "s8",
+  "s9",
+  "s10",
+  "s11",
+  "s12",
+  "t5",
+  "t6",
+  "t7",
+  "t8",
+  "t9",
+  "t10",
+  "t11",
+  "t12",
+  "u3",
+  "u4",
+  "u5",
+  "u6",
+  "u7",
+  "u8",
+  "u9",
+  "u10",
+  "u11",
+  "u12",
+  "v1",
+  "v2",
+  "v3",
+  "v4",
+  "v5",
+  "v6",
+  "v7",
+  "v8",
+  "v9",
+  "v10",
+  "v11",
+  "v12",
+]);
 
-Board.FILE_COUNT = 16;
+Board.FILE_COUNT = 16 + 6;
 Board.RANK_COUNT = 12;
 
 Board.boardCalculator = new BoardCalculator(Board.IS_SQUARE, Board.IS_FLAT);
@@ -93,9 +167,9 @@ const indexToArc = {
 };
 
 Board.relativeArc = (an1, heading, an2) => {
-  const bearingIndex = 6 - Heading.keys().indexOf(heading.key);
+  const bearingIndex = Heading.keys().indexOf(heading.key);
   const relativeIndex = Board.cubeDirectionIndex(an1, an2);
-  let index = relativeIndex - bearingIndex - 1;
+  let index = relativeIndex - bearingIndex;
 
   while (index < 0) {
     index += 6;

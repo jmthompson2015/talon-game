@@ -28,8 +28,13 @@
     "qunit": "^2.9.2"
   },
   "dependencies": {
+    "prop-types": "^15.7.2",
     "ramda": "^0.27.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-dom-factories": "^1.0.2",
     "redux": "^4.0.5",
-    "seamless-immutable": "^7.1.4"
+    "seamless-immutable": "^7.1.4",
+    "tachyons": "^4.12.0"
   }
 }

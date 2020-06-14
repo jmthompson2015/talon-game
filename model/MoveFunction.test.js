@@ -15,8 +15,8 @@ QUnit.test("execute() move straight", (assert) => {
   const store = TestData.createStore();
   const moveKey = MoveOption.MOVE_STRAIGHT;
   const shipId = 1; // TERRAN_CA
-  const an1 = "a10";
-  const an2 = "b10";
+  const an1 = "h12";
+  const an2 = "i11";
   const moveState = MoveState.create({ moveKey, shipId, an1, an2 });
 
   // Run.
@@ -34,8 +34,8 @@ QUnit.test("execute() side slip right", (assert) => {
   const store = TestData.createStore();
   const moveKey = MoveOption.SIDE_SLIP_RIGHT;
   const shipId = 1; // TERRAN_CA
-  const an1 = "a10";
-  const an2 = "b9";
+  const an1 = "h12";
+  const an2 = "i12";
   const moveState = MoveState.create({ moveKey, shipId, an1, an2 });
 
   // Run.
@@ -54,8 +54,8 @@ QUnit.test("execute() side slip left", (assert) => {
   const store = TestData.createStore();
   const moveKey = MoveOption.SIDE_SLIP_LEFT;
   const shipId = 1; // TERRAN_CA
-  const an1 = "a10";
-  const an2 = "a11";
+  const an1 = "h12";
+  const an2 = "h11";
   const moveState = MoveState.create({ moveKey, shipId, an1, an2 });
 
   // Run.
@@ -74,8 +74,8 @@ QUnit.test("execute() turn right and move", (assert) => {
   const store = TestData.createStore();
   const moveKey = MoveOption.TURN_RIGHT_AND_MOVE;
   const shipId = 1; // TERRAN_CA
-  const an1 = "a10";
-  const an2 = "b9";
+  const an1 = "h12";
+  const an2 = "i12";
   const headingKey = Heading.EAST;
   const moveState = MoveState.create({ moveKey, shipId, an1, an2, headingKey });
 
@@ -94,8 +94,8 @@ QUnit.test("execute() turn left and move", (assert) => {
   const store = TestData.createStore();
   const moveKey = MoveOption.TURN_LEFT_AND_MOVE;
   const shipId = 1; // TERRAN_CA
-  const an1 = "a10";
-  const an2 = "a11";
+  const an1 = "h12";
+  const an2 = "h11";
   const headingKey = Heading.THREE_THIRTY_DEGREES;
   const moveState = MoveState.create({ moveKey, shipId, an1, an2, headingKey });
 

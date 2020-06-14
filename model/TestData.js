@@ -126,10 +126,10 @@ TestData.createStore = (playerCount = 2) => {
   store.dispatch(ActionCreator.setInitiativePlayer(players[0].id));
 
   // Create ships.
-  createShip(1, Ship.TERRAN_CA, 1, 2, "a10", Heading.THIRTY_DEGREES, store);
-  createShip(2, Ship.TERRAN_CA, 3, 2, "b10", Heading.THIRTY_DEGREES, store);
-  createShip(3, Ship.TALON_CA, 0, 1, "a2", Heading.ONE_FIFTY_DEGREES, store);
-  createShip(4, Ship.TALON_CA, 3, 1, "b2", Heading.ONE_FIFTY_DEGREES, store);
+  createShip(1, Ship.TERRAN_CA, 1, 2, "h12", Heading.THIRTY_DEGREES, store);
+  createShip(2, Ship.TERRAN_CA, 3, 2, "i12", Heading.THIRTY_DEGREES, store);
+  createShip(3, Ship.TALON_CA, 0, 1, "m1", Heading.ONE_FIFTY_DEGREES, store);
+  createShip(4, Ship.TALON_CA, 3, 1, "n1", Heading.ONE_FIFTY_DEGREES, store);
 
   return store;
 };

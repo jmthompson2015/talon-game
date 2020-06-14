@@ -5,10 +5,12 @@ const Team = {
   properties: {
     talon: {
       name: "Talon Empire",
+      color: "rgba(210,105,30,0.8)", // Chocolate
       key: "talon",
     },
     terran: {
       name: "Terran Confederation",
+      color: "rgba(100,149,237,0.8)", // CornflowerBlue
       key: "terran",
     },
   },

@@ -30,8 +30,8 @@ QUnit.test("Heading.keys()", (assert) => {
   assert.ok(result);
   const length = 6;
   assert.equal(result.length, length);
-  assert.equal(R.head(result), Heading.THIRTY_DEGREES);
-  assert.equal(R.last(result), Heading.THREE_THIRTY_DEGREES);
+  assert.equal(R.head(result), Heading.EAST);
+  assert.equal(R.last(result), Heading.ONE_FIFTY_DEGREES);
 });
 
 QUnit.test("Heading.left()", (assert) => {

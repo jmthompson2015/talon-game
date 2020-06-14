@@ -37,8 +37,8 @@ QUnit.test("execute()", (assert) => {
 QUnit.test("fireWeapons()", (assert) => {
   // Setup.
   const store = TestData.createStore();
-  store.dispatch(ActionCreator.clearShip("a2"));
-  store.dispatch(ActionCreator.setShip("a9", 3));
+  store.dispatch(ActionCreator.clearShip("m1"));
+  store.dispatch(ActionCreator.setShip("h11", 3));
   store.dispatch(ActionCreator.setDelay(0));
   store.dispatch(ActionCreator.setCurrentRound(1));
   store.dispatch(ActionCreator.setCurrentPhase(Phase.IMPULSE_A));

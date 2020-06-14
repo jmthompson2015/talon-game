@@ -75,9 +75,9 @@ QUnit.test("neighborInDirection()", (assert) => {
 
 QUnit.test("relativeArc()", (assert) => {
   // Setup.
-  const an1 = "b10";
+  const an1 = "f4";
   const heading = Resolver.heading(Heading.THIRTY_DEGREES);
-  const an2 = "a9";
+  const an2 = "g4";
 
   // Run.
   const result = Board.relativeArc(an1, heading, an2);
