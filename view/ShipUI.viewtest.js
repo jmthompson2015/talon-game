@@ -5,6 +5,7 @@ import Selector from "../state/Selector.js";
 
 import TestData from "../model/TestData.js";
 
+import Endpoint from "./Endpoint.js";
 import ShipUI from "./ShipUI.js";
 
 const createArcToShield = (shipId, state) => {
@@ -47,7 +48,8 @@ const createShipUI = (shipId, size) => {
       hullIndex: Selector.shipHullIndex(shipId, state),
       weaponGroupToRed,
       weaponGroupToYellow,
-    }
+    },
+    Endpoint.LOCAL_RESOURCE
   );
 };
 
